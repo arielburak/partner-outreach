@@ -1364,7 +1364,43 @@ function exportLog(){
   const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='outreach_log_'+todayStr()+'.csv';a.click();
 }
 
-loadFu();updateFuBadge();
+loadFu();
+
+// One-time migration: fix incomplete log entries from Mar 19 2026 batch
+(function(){
+  if(localStorage.getItem('log_fix_v1'))return;
+  const fixes={
+    'Ruben Munoz':{target:'Dechert',alt1:'Goodwin'},
+    'Rubén H. Muñoz':{target:'Dechert',alt1:'Goodwin'},
+    'David Vondle':{target:'Dechert',alt1:'Goodwin'},
+    'Jordan Hersch':{target:'Fox Rothschild',alt1:'Robinson & Cole'},
+    'Carrie Longstaff':{target:'Alston & Bird',alt1:'Perkins Coie'},
+    'Adam Leamon':{target:'Sidley',alt1:'Goodwin'},
+    'Aaron Rabinowitz':{target:'DLA Piper',alt1:'Dechert'},
+    'Xochitl Strohbehn':{target:'Brown Rudnick',alt1:'DLA Piper'},
+    'Christian Witzke':{target:'Sidley',alt1:'Fried Frank'},
+    'Scott Ross':{target:'Goulston & Storrs',alt1:'Akerman'},
+    'Raffi Zerounian':{target:'Fox Rothschild',alt1:'Mintz'},
+    'Jeff Zanchelli':{target:'Holland & Knight',alt1:'Akerman'},
+    'Jenny Slocum':{target:'Fox Rothschild',alt1:'Nixon Peabody'},
+    'Michael Robotti':{target:'Jones Day',alt1:"O'Melveny & Myers"},
+    'Mike Robotti':{target:'Jones Day',alt1:"O'Melveny & Myers"}
+  };
+  let changed=false;
+  fuLog.forEach(function(e){
+    if(!e.date_sent||e.date_sent===''){e.date_sent='2026-03-19';changed=true;}
+    if(!e.stage||e.stage===''){e.stage='initial';changed=true;}
+    const f=fixes[e.name];
+    if(f){e.target=f.target;e.alt1=f.alt1;changed=true;}
+  });
+  if(changed){
+    try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
+    localStorage.setItem('log_fix_v1','done');
+    if(typeof fbSaveNow==='function')setTimeout(fbSaveNow,2000);
+  }
+})();
+
+updateFuBadge();
 
 // === FOLLOW-UP FILTERS & FIRM EDITING ===
 let fuFilter='all';
