@@ -187,43 +187,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .fu-filter-bar .filter-btn.overdue-btn.active{background:#e74c3c;border-color:#e74c3c;}
 </style>
 
-<div class="log-view" id="stats-view" style="display:none">
-  <div style="padding:24px 28px 0;">
-    <div style="display:flex;gap:12px;margin-bottom:20px;">
-      <div style="flex:1;border:1px solid #e0e4ea;border-radius:8px;padding:16px 20px;">
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#8a8a9e;margin-bottom:6px;">Today</div>
-        <div style="font-size:28px;font-weight:700;color:#1a3060;" id="stats-today">0</div>
-      </div>
-      <div style="flex:1;border:1px solid #e0e4ea;border-radius:8px;padding:16px 20px;">
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#8a8a9e;margin-bottom:6px;">This Week</div>
-        <div style="font-size:28px;font-weight:700;color:#1a3060;" id="stats-week">0</div>
-      </div>
-      <div style="flex:1;border:1px solid #e0e4ea;border-radius:8px;padding:16px 20px;">
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#8a8a9e;margin-bottom:6px;">This Month</div>
-        <div style="font-size:28px;font-weight:700;color:#1a3060;" id="stats-month">0</div>
-      </div>
-    </div>
-  </div>
-  <div style="padding:0 28px 20px;flex:1;overflow:hidden;display:flex;flex-direction:column;">
-    <div style="font-size:13px;font-weight:600;color:#1a3060;margin-bottom:10px;">Scheduled Follow-ups</div>
-    <div style="overflow-y:auto;flex:1;">
-      <table class="log-table" style="width:100%">
-        <thead><tr>
-          <th style="width:80px">Due</th>
-          <th>Name</th>
-          <th>Firm</th>
-          <th>City</th>
-          <th>Firms Pitched</th>
-          <th style="width:90px">Stage</th>
-        </tr></thead>
-        <tbody id="fu-sched-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
+
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+</head>
 <body>
 <div class="tab-bar">
   <div class="tab active" id="tab-general" onclick="switchTab('general')">General Outreach <span class="tab-badge">694</span></div>
@@ -672,6 +640,50 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     </table>
   </div>
 </div>
+
+<div class="stats-view" id="stats-view" style="display:none;flex-direction:column;height:100%;overflow:hidden;">
+  <div class="stats-header" style="padding:24px 28px 0;flex-shrink:0;">
+    <h2 style="margin:0 0 16px;font-size:18px;font-weight:700;color:#1a3060;">Outreach Dashboard</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;">
+      <div style="background:linear-gradient(135deg,#1a3060,#2a5298);border-radius:12px;padding:20px 24px;color:#fff;">
+        <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.8px;opacity:0.7;margin-bottom:8px;">Today</div>
+        <div style="font-size:36px;font-weight:800;line-height:1;" id="stats-today">0</div>
+        <div style="font-size:11px;opacity:0.5;margin-top:4px;">messages sent</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#0d5e3a,#27ae60);border-radius:12px;padding:20px 24px;color:#fff;">
+        <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.8px;opacity:0.7;margin-bottom:8px;">This Week</div>
+        <div style="font-size:36px;font-weight:800;line-height:1;" id="stats-week">0</div>
+        <div style="font-size:11px;opacity:0.5;margin-top:4px;">messages sent</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#7a4100,#e67e22);border-radius:12px;padding:20px 24px;color:#fff;">
+        <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.8px;opacity:0.7;margin-bottom:8px;">This Month</div>
+        <div style="font-size:36px;font-weight:800;line-height:1;" id="stats-month">0</div>
+        <div style="font-size:11px;opacity:0.5;margin-top:4px;">messages sent</div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:0 28px 20px;flex:1;overflow:hidden;display:flex;flex-direction:column;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+      <div style="width:4px;height:18px;background:#e67e22;border-radius:2px;"></div>
+      <h3 style="margin:0;font-size:14px;font-weight:700;color:#1a3060;">Scheduled Follow-ups</h3>
+      <span id="fu-sched-count" style="font-size:11px;background:#fff3e0;color:#e67e22;padding:2px 8px;border-radius:10px;font-weight:600;">0</span>
+    </div>
+    <div style="overflow-y:auto;flex:1;border:1px solid #e8eaef;border-radius:10px;">
+      <table class="log-table" style="width:100%">
+        <thead><tr>
+          <th style="width:100px;position:sticky;top:0;background:#f8f9fb;z-index:1;">Due</th>
+          <th style="position:sticky;top:0;background:#f8f9fb;z-index:1;">Name</th>
+          <th style="position:sticky;top:0;background:#f8f9fb;z-index:1;">Firm</th>
+          <th style="position:sticky;top:0;background:#f8f9fb;z-index:1;">City</th>
+          <th style="position:sticky;top:0;background:#f8f9fb;z-index:1;">Firms Pitched</th>
+          <th style="width:110px;position:sticky;top:0;background:#f8f9fb;z-index:1;">Stage</th>
+        </tr></thead>
+        <tbody id="fu-sched-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 <script>
 const NON_SIGNED=new Set(["Akin, Gump, Strauss, Hauer & Feld, LLP", "Alston & Bird LLP", "Cravath, Swaine & Moore LLP", "Fried, Frank, Harris, Shriver & Jacobson LLP", "King & Spalding LLP", "Kirkland & Ellis LLP", "Morrison & Foerster LLP", "O'Melveny & Myers LLP", "Orrick, Herrington & Sutcliffe LLP", "Paul, Weiss, Rifkind, Wharton & Garrison LLP", "Ropes & Gray LLP", "Skadden, Arps, Slate, Meagher & Flom LLP", "White & Case LLP", "Willkie Farr & Gallagher LLP", "Wilson Sonsini Goodrich & Rosati"]);
@@ -1395,6 +1407,7 @@ function renderLogTab(){
     return '<tr><td class="log-date">'+fmtD(e.date_sent)+'</td><td class="log-name">'+e.name+'</td><td>'+e.firm+'</td><td>'+e.city+'</td><td class="log-firms">'+firms+'</td><td><span class="log-stage-pill" style="'+sg.s+'">'+sg.l+'</span></td></tr>';
   }).join('');
   const tb=document.getElementById('log-tbody');
+  var countEl=document.getElementById('fu-sched-count');if(countEl)countEl.textContent=entries.length;
   if(tb)tb.innerHTML=rows||'<tr><td colspan="6" style="color:#444;text-align:center;padding:20px">No messages sent yet</td></tr>';
 }
 
@@ -1535,17 +1548,18 @@ function renderStatsTab(){
   const monthStr=today.slice(0,7);
   let cToday=0,cWeek=0,cMonth=0;
   fuLog.forEach(function(e){
-    if(!e.date_sent)return;
-    if(e.date_sent===today)cToday++;
-    if(e.date_sent>=monStr)cWeek++;
-    if(e.date_sent.slice(0,7)===monthStr)cMonth++;
+    var d=e.date_sent||e.date||'';
+    if(!d)return;
+    if(d===today)cToday++;
+    if(d>=monStr)cWeek++;
+    if(d.slice(0,7)===monthStr)cMonth++;
   });
   document.getElementById('stats-today').textContent=cToday;
   document.getElementById('stats-week').textContent=cWeek;
   document.getElementById('stats-month').textContent=cMonth;
   // Render scheduled follow-ups
-  const entries=Object.values(fuData).filter(function(f){return !f.done;});
-  entries.sort(function(a,b){return new Date(a.due_date)-new Date(b.due_date);});
+  const entries=Object.values(fuData).filter(function(f){return !f.done&&(f.nextDate||f.due_date);});
+  entries.sort(function(a,b){var da=a.nextDate||a.due_date||'9999';var db=b.nextDate||b.due_date||'9999';return da<db?-1:da>db?1:0;});
   const sm={'initial':{l:'Initial',s:'background:#1a3060;color:#4f8ef7'}};
   function getSm(stg){
     if(typeof stg==='number'){
@@ -1557,9 +1571,9 @@ function renderStatsTab(){
   }
   const rows=entries.map(function(fu){
     const sg=getSm(fu.stage);
-    const diff=daysDiff(fu.due_date);
+    var dd=fu.nextDate||fu.due_date||'';var diff=dd?daysDiff(dd):999;
     const dueCl=diff<0?'color:#e74c3c;font-weight:700':diff===0?'color:#f0a500;font-weight:700':'';
-    const dueStr=diff<0?Math.abs(diff)+'d overdue':diff===0?'Today':fmtD(fu.due_date);
+    const dueStr=diff<0?Math.abs(diff)+'d overdue':diff===0?'Today':fmtD(dd);
     const firms=[fu.target,fu.alt1].filter(Boolean).join(' + ');
     return '<tr><td style="'+dueCl+'">'+dueStr+'</td><td>'+fu.name+'</td><td>'+(fu.firm||'')+'</td><td>'+(fu.city||'')+'</td><td>'+firms+'</td><td><span class="log-stage-badge" style="'+sg.s+'">'+sg.l+'</span></td></tr>';
   }).join('');
