@@ -1313,7 +1313,7 @@ function buildFuMsg(fu,stage){
 
 function fuBuildQ(){
   const entries=Object.values(fuData).filter(f=>!f.done);
-  entries.sort((a,b)=>new Date(a.due_date)-new Date(b.due_date));
+  entries.sort((a,b)=>{var da=a.nextDate||a.due_date||'9999';var db=b.nextDate||b.due_date||'9999';return da<db?-1:da>db?1:0;});
   fuQ=entries.map(e=>e.key);fuQi=0;
 }
 
@@ -1330,11 +1330,12 @@ function renderFuTab(){
   document.getElementById('fu-city').textContent=fu.city;
   const sb=document.getElementById('fu-stage-badge');
   const sLabel=stage===1?'Follow-up 1':stage%2===0?'Follow-up '+(stage/2):('Check-in '+(Math.floor(stage/2)));const sCl=stage===1?'fu-stage-badge fu-s1':stage%2===0?'fu-stage-badge fu-s2':'fu-stage-badge fu-s3';sb.textContent=sLabel;sb.className=sCl;
-  const de=document.getElementById('fu-due'),diff=daysDiff(fu.due_date);
+  const fuDD=fu.nextDate||fu.due_date||'';
+  const de=document.getElementById('fu-due'),diff=fuDD?daysDiff(fuDD):999;
   if(diff<0)de.innerHTML='<span class="fu-overdue">'+Math.abs(diff)+'d overdue</span>';
   else if(diff===0)de.innerHTML='<span class="fu-soon">Due today</span>';
   else if(diff<=3)de.innerHTML='<span class="fu-soon">Due in '+diff+'d</span>';
-  else de.innerHTML='<span class="fu-upcoming">Due '+fmtD(fu.due_date)+'</span>';
+  else de.innerHTML='<span class="fu-upcoming">Due '+fmtD(fuDD)+'</span>';
   const fe=document.getElementById('fu-firms-sent');
   if(stage===1)fe.textContent='Originally pitched: '+fu.target+(fu.alt1?' + '+fu.alt1:'');
   else{const prevS=stage-1,prevDate=fu.stage_dates[prevS]||fu.initial_date;fe.textContent='Stage '+(stage-1)+' sent '+fmtD(prevDate)+' · Touch #'+stage;}
@@ -1407,7 +1408,6 @@ function renderLogTab(){
     return '<tr><td class="log-date">'+fmtD(e.date_sent)+'</td><td class="log-name">'+e.name+'</td><td>'+e.firm+'</td><td>'+e.city+'</td><td class="log-firms">'+firms+'</td><td><span class="log-stage-pill" style="'+sg.s+'">'+sg.l+'</span></td></tr>';
   }).join('');
   const tb=document.getElementById('log-tbody');
-  var countEl=document.getElementById('fu-sched-count');if(countEl)countEl.textContent=entries.length;
   if(tb)tb.innerHTML=rows||'<tr><td colspan="6" style="color:#444;text-align:center;padding:20px">No messages sent yet</td></tr>';
 }
 
@@ -1441,13 +1441,23 @@ function _migrateLogV1(){
   };
   let changed=false;
   fuLog.forEach(function(e){
-    if(!e.date_sent||e.date_sent===''){e.date_sent='2026-03-19';changed=true;}
+    if(!e.date_sent&&!e.date){e.date_sent='2026-03-19';changed=true;}
+    if(!e.date_sent&&e.date){e.date_sent=e.date;changed=true;}
     if(!e.stage||e.stage===''){e.stage='initial';changed=true;}
     const f=fixes[e.name];
     if(f){e.target=f.target;e.alt1=f.alt1;changed=true;}
   });
+  // Also fix fuData (follow-up entries) with same corrections
+  Object.keys(fuData).forEach(function(k){
+    var fu=fuData[k];
+    var f=fixes[fu.name];
+    if(f&&(fu.target!==f.target||fu.alt1!==f.alt1)){
+      fu.target=f.target;fu.alt1=f.alt1;changed=true;
+    }
+  });
   if(changed){
     try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
+    try{localStorage.setItem(FU_SK,JSON.stringify(fuData));}catch(e){}
     if(_fbInitialized&&typeof fbSaveNow==='function')fbSaveNow();
   }
 }
@@ -1471,15 +1481,17 @@ fuBuildQ=function(){
   const entries=Object.values(fuData).filter(f=>!f.done);
   const today=todayStr();
   const filtered=entries.filter(e=>{
-    const d=daysDiff(e.due_date);
+    const dd=e.nextDate||e.due_date||'';
+    if(!dd)return fuFilter==='all';
+    const d=daysDiff(dd);
     if(fuFilter==='overdue') return d<=0;
     if(fuFilter==='upcoming') return d>0;
     return true;
   });
-  filtered.sort((a,b)=>new Date(a.due_date)-new Date(b.due_date));
+  filtered.sort((a,b)=>{var da=a.nextDate||a.due_date||'9999';var db=b.nextDate||b.due_date||'9999';return da<db?-1:da>db?1:0;});
   fuQ=filtered.map(e=>e.key);fuQi=0;
   // Update overdue count badge
-  const overdueN=entries.filter(e=>daysDiff(e.due_date)<=0).length;
+  const overdueN=entries.filter(e=>{var dd=e.nextDate||e.due_date;return dd&&daysDiff(dd)<=0;}).length;
   const oc=document.getElementById('fu-overdue-count');
   if(oc)oc.textContent=overdueN>0?overdueN+' overdue':'';
 };
