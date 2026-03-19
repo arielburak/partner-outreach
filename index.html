@@ -1471,6 +1471,62 @@ function _migrateLogV1(){
 }
 _migrateLogV1();
 
+// Ensure all 38 visible log entries from screenshot are present
+(function _ensureLogEntries(){
+  var required=[
+    {name:'Patrick Maloney',firm:'Polsinelli PC',city:'Chicago',target:'Holland & Knight',alt1:'Dentons'},
+    {name:'Ruben Munoz',firm:'Akin, Gump, Strauss, Hauer & Feld, LLP',city:'Philadelphia',target:'Dechert',alt1:'Goodwin'},
+    {name:'David Vondle',firm:'Akin, Gump, Strauss, Hauer & Feld, LLP',city:'Washington, DC',target:'Dechert',alt1:'Goodwin'},
+    {name:'Jordan Hersch',firm:'Cassin & Cassin LLP',city:'New York',target:'Fox Rothschild',alt1:'Robinson & Cole'},
+    {name:'Carrie Longstaff',firm:'Baker & Hostetler LLP',city:'New York',target:'Alston & Bird',alt1:'Perkins Coie'},
+    {name:'Adam Leamon',firm:'Ropes & Gray LLP',city:'Boston',target:'Sidley',alt1:'Goodwin'},
+    {name:'Aaron Rabinowitz',firm:'Baker & Hostetler LLP',city:'Philadelphia',target:'DLA Piper',alt1:'Dechert'},
+    {name:'Xochitl Strohbehn',firm:'Venable LLP',city:'New York',target:'Brown Rudnick',alt1:'DLA Piper'},
+    {name:'Christian Witzke',firm:'Herbert Smith Freehills Kramer LLP',city:'New York',target:'Sidley',alt1:'Fried Frank'},
+    {name:'Scott Ross',firm:'Herrick, Feinstein LLP',city:'New York',target:'Goulston & Storrs',alt1:'Akerman'},
+    {name:'Raffi Zerounian',firm:'Hanson Bridgett LLP',city:'Los Angeles',target:'Fox Rothschild',alt1:'Mintz'},
+    {name:'Lauren Greene',firm:'Jenner & Block LLP',city:'Los Angeles',target:'Foley & Lardner',alt1:'Holland & Knight'},
+    {name:'Jeff Zanchelli',firm:'DLA Piper',city:'Chicago',target:'Holland & Knight',alt1:'Akerman'},
+    {name:'Jenny Slocum',firm:'Dickinson Wright PLLC',city:'Washington, DC',target:'Fox Rothschild',alt1:'Nixon Peabody'},
+    {name:'Mike Robotti',firm:'Ballard Spahr LLP',city:'New York',target:'Jones Day',alt1:"O'Melveny & Myers"},
+    {name:'Ryan Williams',firm:'Akerman LLP',city:'Chicago',target:'Blank Rome',alt1:'Katten'},
+    {name:'John Scalzo',firm:'Reed Smith LLP',city:'New York',target:'Dechert',alt1:'Goodwin'},
+    {name:'Terry Carroll II',firm:'Seyfarth Shaw LLP',city:'Atlanta',target:'Akerman',alt1:'Holland & Knight'},
+    {name:'Thomas Southard',firm:'Taft Stettinius & Hollister LLP',city:'Washington, DC',target:'Kilpatrick',alt1:'Fox Rothschild'},
+    {name:'Shahzeb Lari',firm:'Hughes Hubbard & Reed LLP',city:'New York',target:'Dorsey & Whitney',alt1:'Seyfarth'},
+    {name:'Aaron Healey',firm:'Jones Day',city:'New York',target:'Arnold & Porter',alt1:'Crowell'},
+    {name:'Travis Wimberly',firm:'Pirkey Barber PLLC',city:'Austin',target:'Wilson Sonsini Goodrich & Rosati',alt1:'Perkins Coie'},
+    {name:'Carolynn Beck',firm:'Eisner, LLP',city:'New York',target:'Katten',alt1:'ArentFox Schiff'},
+    {name:'Katherine Califa',firm:'Foley & Lardner LLP',city:'Washington, DC',target:'Kilpatrick',alt1:'Mintz'},
+    {name:'Lance Lange',firm:'Faegre Drinker Biddle & Reath LLP',city:'New York',target:'Dorsey & Whitney',alt1:'Reed Smith'},
+    {name:'Oliver Board',firm:'Freshfields',city:'New York',target:'Sidley',alt1:'Goodwin'},
+    {name:'Edward Marshall',firm:'Arnall Golden Gregory LLP',city:'Atlanta',target:'Fox Rothschild',alt1:'Seyfarth'},
+    {name:"Frank D'Angelo",firm:'Loeb & Loeb LLP',city:'New York',target:'Fox Rothschild',alt1:'Reed Smith'},
+    {name:'Bryan Joggerst',firm:'Morrison Cohen LLP',city:'New York',target:'Seyfarth',alt1:'Dentons'},
+    {name:'Zachary Swartz',firm:'Vinson & Elkins LLP',city:'New York',target:'Goulston & Storrs',alt1:'Goodwin'},
+    {name:'Rob Broderick',firm:'Wilson Sonsini Goodrich & Rosati',city:'New York',target:'Goodwin',alt1:'Orrick, Herrington & Sutcliffe LLP'},
+    {name:'Kathy Keyser',firm:'Morgan, Lewis & Bockius LLP',city:'Philadelphia',target:'Reed Smith',alt1:'Holland & Knight'},
+    {name:'Mike Autuoro',firm:'Fish & Richardson P. C.',city:'New York',target:'Kilpatrick',alt1:'Goodwin'},
+    {name:'Brian Farkas',firm:'ArentFox Schiff',city:'New York',target:'Fox Rothschild',alt1:'Seyfarth'},
+    {name:'Mille Kurta',firm:'Torys LLP',city:'New York',target:'DLA Piper',alt1:'Mintz'},
+    {name:'Carolyn Toto',firm:'Pillsbury Winthrop Shaw Pittman LLP',city:'Los Angeles',target:'Kilpatrick',alt1:'DLA Piper'},
+    {name:'Bety Javidzad',firm:'Dentons',city:'Los Angeles',target:'Seyfarth',alt1:'Reed Smith'},
+    {name:'Cynthia Katz',firm:'Fox Rothschild',city:'New York',target:'DWT',alt1:'Reed Smith'}
+  ];
+  var existingNames=new Set(fuLog.map(function(e){return e.name;}));
+  var added=false;
+  required.forEach(function(r){
+    if(!existingNames.has(r.name)){
+      fuLog.push({date_sent:'2026-03-19',date:'2026-03-19',name:r.name,firm:r.firm,city:r.city,target:r.target,alt1:r.alt1,stage:'initial',action:'sent'});
+      added=true;
+    }
+  });
+  if(added){
+    try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
+    if(_fbInitialized&&typeof fbSaveNow==='function')fbSaveNow();
+  }
+})();
+
 updateFuBadge();
 
 // === FOLLOW-UP FILTERS & FIRM EDITING ===
