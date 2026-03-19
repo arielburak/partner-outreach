@@ -1164,7 +1164,7 @@ function next(){
   const actualF2=pitchOverride.firm2!==undefined?pitchOverride.firm2:(p.alt1||'');
   fuData[k]={name:p.name,firm:p.firm,city:p.city||'',target:actualF1,alt1:actualF2,sentDate:today,nextDate:addDays(today,8),stage:1,practice:p.practice||''};
   saveFu();
-  fuLog.push({date:today,name:p.name,firm:p.firm,city:p.city||'',target:actualF1,alt1:actualF2,action:'sent'});
+  fuLog.push({date_sent:today,date:today,name:p.name,firm:p.firm,city:p.city||'',target:actualF1,alt1:actualF2,stage:'initial',action:'sent',practice:p.practice||''});
   try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
   try{fbSaveNow();}catch(e){scheduleFbSave();}
   pitchOverride={};
@@ -1403,9 +1403,10 @@ function renderLogTab(){
     'not_interested':{l:'Not Interested',s:'background:#2a0a0a;color:#e74c3c'}};
   function getSm(stg){if(sm[stg])return sm[stg];const n=parseInt((stg||'').replace('followup_',''));if(!n)return{l:stg||'',s:''};return n===1?{l:'Follow-up 1',s:'background:#2a1500;color:#f0a500'}:n%2===0?{l:'Follow-up '+(n/2),s:'background:#2a1500;color:#f0a500'}:{l:'Check-in',s:'background:#1a0a2a;color:#c084fc'};}
   const rows=fuLog.map(e=>{
-    const sg=getSm(e.stage);
+    const sg=getSm(e.stage||e.action||'');
     const firms=[e.target,e.alt1].filter(Boolean).join(' + ');
-    return '<tr><td class="log-date">'+fmtD(e.date_sent)+'</td><td class="log-name">'+e.name+'</td><td>'+e.firm+'</td><td>'+e.city+'</td><td class="log-firms">'+firms+'</td><td><span class="log-stage-pill" style="'+sg.s+'">'+sg.l+'</span></td></tr>';
+    const d=e.date_sent||e.date||'';
+    return '<tr><td class="log-date">'+fmtD(d)+'</td><td class="log-name">'+e.name+'</td><td>'+e.firm+'</td><td>'+e.city+'</td><td class="log-firms">'+firms+'</td><td><span class="log-stage-pill" style="'+sg.s+'">'+sg.l+'</span></td></tr>';
   }).join('');
   const tb=document.getElementById('log-tbody');
   if(tb)tb.innerHTML=rows||'<tr><td colspan="6" style="color:#444;text-align:center;padding:20px">No messages sent yet</td></tr>';
