@@ -1401,7 +1401,7 @@ function renderLogTab(){
     if(!e.date_sent&&!e.date){e.date_sent=todayStr();_logDirty=true;}
     if(!e.stage){e.stage=e.action==='sent'?'initial':(e.action||'initial');_logDirty=true;}
   });
-  if(_logDirty){try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(x){}scheduleFbSave();}
+  if(_logDirty){try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(x){}}
   const count=fuLog.length;
   const lct=document.getElementById('log-count-text');
   if(lct)lct.textContent=count+' message'+(count===1?'':'s')+' sent';
