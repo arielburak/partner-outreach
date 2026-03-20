@@ -1509,7 +1509,7 @@ function _ensureLogEntries(){
     {name:'Kathy Keyser',firm:'Morgan, Lewis & Bockius LLP',city:'Philadelphia',target:'Reed Smith',alt1:'Holland & Knight'},
     {name:'Mike Autuoro',firm:'Fish & Richardson P. C.',city:'New York',target:'Kilpatrick',alt1:'Goodwin'},
     {name:'Brian Farkas',firm:'ArentFox Schiff',city:'New York',target:'Fox Rothschild',alt1:'Seyfarth'},
-    {name:'Mille Kurta',firm:'Torys LLP',city:'New York',target:'DLA Piper',alt1:'Mintz'},
+    {name:'Mile Kurta',firm:'Torys LLP',city:'New York',target:'DLA Piper',alt1:'Mintz'},
     {name:'Carolyn Toto',firm:'Pillsbury Winthrop Shaw Pittman LLP',city:'Los Angeles',target:'Kilpatrick',alt1:'DLA Piper'},
     {name:'Bety Javidzad',firm:'Dentons',city:'Los Angeles',target:'Seyfarth',alt1:'Reed Smith'},
     {name:'Cynthia Katz',firm:'Fox Rothschild',city:'New York',target:'DWT',alt1:'Reed Smith'}
@@ -1526,6 +1526,22 @@ function _ensureLogEntries(){
     if(status[genKey]!=='sent'){status[genKey]='sent';added=true;}
     var foxKey='fox_'+r.name;
     if(status[foxKey]!=='sent'&&r.firm==='Fox Rothschild'){status[foxKey]='sent';added=true;}
+  });
+  // Safety net: scan ALL fuLog entries and mark as sent so nobody in the log reappears in queue
+  fuLog.forEach(function(e){
+    if(!e.name)return;
+    // Figure out which tab this entry belongs to by checking DS tabs
+    var tabs=['general','fox','international','chambers'];
+    tabs.forEach(function(t){
+      if(DS[t]){
+        DS[t].forEach(function(d){
+          if(d.name===e.name){
+            var sk2=t+'_'+d.name;
+            if(status[sk2]!=='sent'){status[sk2]='sent';added=true;}
+          }
+        });
+      }
+    });
   });
   if(added){
     try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
