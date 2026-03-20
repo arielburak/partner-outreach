@@ -1449,7 +1449,10 @@ function _migrateLogV1(){
     'Mike Robotti':{target:'Jones Day',alt1:"O'Melveny & Myers"}
   };
   let changed=false;
+  // Fix name typos
+  var nameFixes={'Mille Kurta':'Mile Kurta'};
   fuLog.forEach(function(e){
+    if(nameFixes[e.name]){e.name=nameFixes[e.name];changed=true;}
     if(!e.date_sent&&!e.date){e.date_sent='2026-03-19';changed=true;}
     if(!e.date_sent&&e.date){e.date_sent=e.date;changed=true;}
     if(!e.stage||e.stage===''){e.stage='initial';changed=true;}
