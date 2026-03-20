@@ -762,7 +762,7 @@ const FB_CONFIG={apiKey:"AIzaSyBBGbuBdtCwYa8v7J9-iG7UtZQ05exGtAk",authDomain:"pa
 let _fbApp=null,_fbDb=null,_fbRef=null,_fbInitialized=false,_fbSaveDebounce=null;
 function updateFbStatus(s,msg){const el=document.getElementById('fb-status');if(!el)return;if(s==='synced'){el.innerHTML='✓ Saved to cloud';el.style.cssText='font-size:10px;padding:4px 11px;border-radius:6px;border:1px solid #27ae60;background:#eafaf1;color:#1e8449;font-weight:600;white-space:nowrap;';}else if(s==='saving'){el.innerHTML='↑ Saving...';el.style.cssText='font-size:10px;padding:4px 11px;border-radius:6px;border:1px solid #e8d080;background:#fff0e0;color:#b8860b;font-weight:600;white-space:nowrap;';}else if(s==='error'){el.innerHTML='⚠ Sync error <u style="cursor:pointer;margin-left:4px" onclick="initFirebase()" title="'+(msg||'').replace(/"/g,"'")+'">retry</u>';el.style.cssText='font-size:10px;padding:4px 11px;border-radius:6px;border:1px solid #e74c3c;background:#fde8e8;color:#c0392b;font-weight:600;white-space:nowrap;';if(msg)console.error('[FB sync]',msg);}else{el.innerHTML='⏳ Connecting...';el.style.cssText='font-size:10px;padding:4px 11px;border-radius:6px;border:1px solid #e8d080;background:#fff0e0;color:#b8860b;font-weight:600;white-space:nowrap;';}}
 function initFirebase(){if(typeof firebase==='undefined'){setTimeout(initFirebase,500);return;}updateFbStatus('connecting');try{_fbApp=(firebase.apps&&firebase.apps.length)?firebase.app():firebase.initializeApp(FB_CONFIG);_fbDb=firebase.database(_fbApp);_fbRef=_fbDb.ref('outreach');_fbRef.once('value').then(function(snap){const data=snap.val();if(data){if(data.status){status=data.status;try{localStorage.setItem(SK,JSON.stringify(status));}catch(e){}}if(data.fuLog){var localLog=fuLog||[];var fbLog=data.fuLog||[];var fbKeys=new Set(fbLog.map(function(e){return e.name+'|'+(e.date_sent||e.date||'');}));var merged=fbLog.slice();localLog.forEach(function(e){var key=e.name+'|'+(e.date_sent||e.date||'');if(!fbKeys.has(key))merged.push(e);});fuLog=merged;try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}}if(data.fuData){var localFu=fuData||{};var fbFu=data.fuData||{};Object.keys(localFu).forEach(function(k){if(!fbFu[k])fbFu[k]=localFu[k];});fuData=fbFu;try{localStorage.setItem(FU_SK,JSON.stringify(fuData));}catch(e){}}}_migrateLogV1();_fbInitialized=true;fbSaveNow();buildQ();render();updateFuBadge();const fuV=document.getElementById('fu-view');const logV=document.getElementById('log-view');if(fuV&&fuV.style.display!=='none'){fuBuildQ();renderFuTab();}else if(logV&&logV.style.display!=='none'){renderLogTab();}}).catch(function(e){_fbInitialized=true;updateFbStatus('error',e&&e.message?e.message:String(e));});}catch(e){_fbInitialized=true;updateFbStatus('error',e&&e.message?e.message:String(e));}}
-function fbSaveNow(){if(!_fbInitialized||!_fbRef)return;const data={status:status||{},fuLog:(typeof fuLog!=='undefined'?fuLog:[])||[],fuData:(typeof fuData!=='undefined'?fuData:{})||{},lastSaved:new Date().toISOString(),version:'v5e'};_fbRef.set(data).then(function(){updateFbStatus('synced');}).catch(function(e){updateFbStatus('error',e&&e.message?e.message:String(e));});}
+function fbSaveNow(_retry){if(!_fbInitialized||!_fbRef)return;var data={status:status||{},fuLog:(typeof fuLog!=='undefined'?fuLog:[])||[],fuData:(typeof fuData!=='undefined'?fuData:{})||{},lastSaved:new Date().toISOString(),version:'v5e'};_fbRef.set(data).then(function(){updateFbStatus('synced');}).catch(function(e){if(!_retry){setTimeout(function(){fbSaveNow(true);},3000);}else{updateFbStatus('error',e&&e.message?e.message:String(e));}});}
 function scheduleFbSave(){if(!_fbInitialized)return;updateFbStatus('saving');clearTimeout(_fbSaveDebounce);_fbSaveDebounce=setTimeout(fbSaveNow,1200);}
 setTimeout(initFirebase,300);
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
@@ -1520,9 +1520,15 @@ _migrateLogV1();
       fuLog.push({date_sent:'2026-03-19',date:'2026-03-19',name:r.name,firm:r.firm,city:r.city,target:r.target,alt1:r.alt1,stage:'initial',action:'sent'});
       added=true;
     }
+    // Also mark as 'sent' in status so they don't reappear in General Outreach queue
+    var genKey='general_'+r.name;
+    if(status[genKey]!=='sent'){status[genKey]='sent';added=true;}
+    var foxKey='fox_'+r.name;
+    if(status[foxKey]!=='sent'&&r.firm==='Fox Rothschild'){status[foxKey]='sent';added=true;}
   });
   if(added){
     try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
+    try{localStorage.setItem(SK,JSON.stringify(status));}catch(e){}
     if(_fbInitialized&&typeof fbSaveNow==='function')fbSaveNow();
   }
 })();
