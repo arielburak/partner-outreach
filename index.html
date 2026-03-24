@@ -1603,9 +1603,19 @@ function applyFirmOverride(msg,p){
   let m=msg;
   // Use placeholders to avoid replacement collisions
   var PH1='__FIRM1__',PH2='__FIRM2__';
+  // Helper: try full name, sfGlobal short, first-word-only, and first-2-words
+  function _findReplace(str,raw,shr,ph){
+    if(raw&&str.includes(raw))return str.split(raw).join(ph);
+    if(shr&&str.includes(shr))return str.split(shr).join(ph);
+    // Try progressively shorter: first 2 words, first word
+    var words=(shr||raw||'').replace(/[,&]/g,' ').split(/\s+/).filter(function(w){return w.length>1;});
+    if(words.length>=2){var w2=words[0]+' '+words[1];if(str.includes(w2))return str.split(w2).join(ph);}
+    if(words.length>=1&&words[0].length>3){if(str.includes(words[0]))return str.split(words[0]).join(ph);}
+    return str;
+  }
   // Step 1: Replace original firm names with placeholders
-  if(rawF1){if(m.includes(rawF1))m=m.split(rawF1).join(PH1);else if(shortF1&&m.includes(shortF1))m=m.split(shortF1).join(PH1);}
-  if(rawF2){if(m.includes(rawF2))m=m.split(rawF2).join(PH2);else if(shortF2&&m.includes(shortF2))m=m.split(shortF2).join(PH2);}
+  m=_findReplace(m,rawF1,shortF1,PH1);
+  m=_findReplace(m,rawF2,shortF2,PH2);
   // Step 2: Replace placeholders with new firm names
   m=m.split(PH1).join(newF1);
   if(newF2){m=m.split(PH2).join(newF2);}
