@@ -1170,7 +1170,8 @@ function next(){
   const actualF2=pitchOverride.firm2!==undefined?pitchOverride.firm2:(p.alt1||'');
   fuData[k]={name:p.name,firm:p.firm,city:p.city||'',target:actualF1,alt1:actualF2,sentDate:today,nextDate:addDays(today,8),stage:1,practice:p.practice||''};
   saveFu();
-  fuLog.push({date_sent:today,date:today,name:p.name,firm:p.firm,city:p.city||'',target:actualF1,alt1:actualF2,stage:'initial',action:'sent',practice:p.practice||''});
+  var _mv=['primary','alt1','alt2'][altIdx]||'primary';
+  fuLog.push({date_sent:today,date:today,name:p.name,firm:p.firm,city:p.city||'',target:actualF1,alt1:actualF2,stage:'initial',action:'sent',practice:p.practice||'',msg_variant:_mv});
   try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
   try{fbSaveNow();}catch(e){scheduleFbSave();}
   pitchOverride={};
