@@ -907,7 +907,7 @@ function render(){
   const bc=document.getElementById('btn-copy');
   bc.innerHTML='📋 Copy';bc.className='btn btn-copy';
   buildFirmTable(p);
-  updateP();document.getElementById('prog-text').textContent=(qi+1)+' / '+queue.length;
+  updateP();var _sent=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='sent'?1:0);},0);var _remaining=queue.length-qi;document.getElementById('prog-text').textContent=(qi+1)+' / '+queue.length+' ('+_remaining+' remaining)';
 }
 function tableSwapFirm(firm,evt){
   const c=cur();if(!c)return;
