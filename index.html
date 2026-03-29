@@ -1360,15 +1360,18 @@ function renderFuTab(){
 function fuSent(){
   const fu=fuCur();if(!fu)return;
   const today=todayStr();
+  if(!fu.stage_dates)fu.stage_dates={};
   fu.stage_dates[fu.stage]=today;
   fuLog.unshift({name:fu.name,first:fu.first,firm:fu.firm,city:fu.city,practice:fu.practice,
     target:fu.target,alt1:fu.alt1,alt2:fu.alt2,date_sent:today,linkedin:fu.linkedin,fp:fu.fp,stage:'followup_'+fu.stage});
+  try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
   // Infinite cycle: 1(8d)->2(30d)->3(14d)->4(30d)->5(14d)-> ...
   // Even stages = pitch (30d gap after), Odd stages>=3 = check-in (14d gap after)
   if(fu.stage===1){fu.stage=2;fu.due_date=addDays(today,30);}
   else if(fu.stage%2===0){fu.stage+=1;fu.due_date=addDays(today,14);}
   else{fu.stage+=1;fu.due_date=addDays(today,30);}
   saveFu();updateFuBadge();
+  try{fbSaveNow();}catch(e){scheduleFbSave();}
   fuBuildQ();
   const newIdx=fuQ.indexOf(fu.key);
   fuQi=newIdx>=0?newIdx:0;
@@ -1383,7 +1386,9 @@ function fuOutcome(outcome){
   const today=todayStr();
   fuLog.unshift({name:fu.name,first:fu.first,firm:fu.firm,city:fu.city,practice:fu.practice,
     target:fu.target,alt1:fu.alt1,alt2:fu.alt2,date_sent:today,linkedin:fu.linkedin,fp:fu.fp,stage:outcome});
+  try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
   saveFu();updateFuBadge();
+  try{fbSaveNow();}catch(e){scheduleFbSave();}
   fuQ.splice(fuQi,1);
   if(fuQi>=fuQ.length&&fuQi>0)fuQi--;
   renderFuTab();
