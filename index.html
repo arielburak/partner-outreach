@@ -1292,7 +1292,8 @@ function updateFuBadge(){
 
 function buildFuMsg(fu,stage){
   const{first,target,alt1,alt2,practice,city}=fu;
-  function sf(n){if(!n)return'';return n.replace(/\b(LLP|LLC|PC|PLLC|PA|LP)\b/g,'').replace(/,\s*$/,'').trim().split(/\s+/).slice(0,2).join(' ');}
+  // Use sfGlobal (slice(0,3) + aliases) so firms like "Holland & Knight" don't get truncated
+  var sf=sfGlobal;
   // Stage 1: check-in on original pitch
   if(stage===1){
     const f1=sf(target),f2=sf(alt1);
