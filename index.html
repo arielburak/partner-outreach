@@ -1404,20 +1404,18 @@ function renderFuTab(){
   const overlay=document.getElementById('fu-done-overlay');
   if(!fu){overlay.style.display='flex';document.getElementById('fu-prog-text').textContent='0 pending';document.getElementById('fu-done-count').textContent='';return;}
   overlay.style.display='none';
-  // Backfill missing fields from DS.general for older fuData entries
+  // Backfill missing fields from DS.general for older fuData entries (in-memory only; persists on next user action)
   if(!fu.first||!fu.linkedin||!fu.fp){
-    var _backfilled=false;
     const d=DS['general'];
     for(var bi=0;bi<d.length;bi++){
       if(d[bi].name===fu.name){
-        if(!fu.first){fu.first=d[bi].first||(d[bi].name||'').split(' ')[0];_backfilled=true;}
-        if(!fu.linkedin&&d[bi].linkedin){fu.linkedin=d[bi].linkedin;_backfilled=true;}
-        if(!fu.fp&&d[bi].fp){fu.fp=d[bi].fp;_backfilled=true;}
+        if(!fu.first)fu.first=d[bi].first||(d[bi].name||'').split(' ')[0];
+        if(!fu.linkedin&&d[bi].linkedin)fu.linkedin=d[bi].linkedin;
+        if(!fu.fp&&d[bi].fp)fu.fp=d[bi].fp;
         break;
       }
     }
-    if(!fu.first){fu.first=(fu.name||'').split(' ')[0];_backfilled=true;}
-    if(_backfilled)saveFu(); // persist once so backfill doesn't repeat
+    if(!fu.first)fu.first=(fu.name||'').split(' ')[0];
   }
   const stage=fu.stage,msg=buildFuMsg(fu,stage);
   document.getElementById('fu-name').textContent=fu.name;
