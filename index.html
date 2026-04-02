@@ -1424,9 +1424,10 @@ function renderFuTab(){
   const btn=document.getElementById('fu-btn-copy');
   btn.innerHTML='&#128203; Copy';btn.className='btn btn-copy';
   const total=fuQ.length,done_c=Object.values(fuData).filter(f=>f.done).length;
+  const allPending=Object.values(fuData).filter(f=>!f.done).length;
   document.getElementById('fu-prog-text').textContent=(fuQi+1)+' / '+total+' pending';
   document.getElementById('fu-done-count').textContent=done_c+' completed';
-  document.getElementById('fu-prog-fill').style.width=(fuQi/Math.max(total,1)*100)+'%';
+  document.getElementById('fu-prog-fill').style.width=(done_c/Math.max(done_c+allPending,1)*100)+'%';
 }
 
 function fuSent(){
@@ -1459,6 +1460,22 @@ function fuOutcome(outcome){
   fuLog.unshift({name:fu.name,first:fu.first,firm:fu.firm,city:fu.city,practice:fu.practice,
     target:fu.target,alt1:fu.alt1,alt2:fu.alt2,date_sent:today,linkedin:fu.linkedin,fp:fu.fp,stage:outcome});
   try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
+  // If "not_interested", snooze them on the general outreach tab for 6 months
+  // so they come back later for a re-approach
+  if(outcome==='not_interested'){
+    // Find them in DS.general by name and snooze
+    const d=DS['general'];
+    for(var gi=0;gi<d.length;gi++){
+      if(d[gi].name===fu.name){
+        var gKey='general_'+d[gi].name;
+        snoozeData[gKey]=addDays(today,180);
+        status[gKey]='snoozed';
+        break;
+      }
+    }
+    saveSnooze();
+    showToast(fu.first+' snoozed for 6 months');
+  }
   saveFu();updateFuBadge();
   try{fbSaveNow();}catch(e){scheduleFbSave();}
   fuQ.splice(fuQi,1);
