@@ -1405,17 +1405,19 @@ function renderFuTab(){
   if(!fu){overlay.style.display='flex';document.getElementById('fu-prog-text').textContent='0 pending';document.getElementById('fu-done-count').textContent='';return;}
   overlay.style.display='none';
   // Backfill missing fields from DS.general for older fuData entries
-  if(!fu.first||!fu.linkedin){
+  if(!fu.first||!fu.linkedin||!fu.fp){
+    var _backfilled=false;
     const d=DS['general'];
     for(var bi=0;bi<d.length;bi++){
       if(d[bi].name===fu.name){
-        if(!fu.first)fu.first=d[bi].first||(d[bi].name||'').split(' ')[0];
-        if(!fu.linkedin)fu.linkedin=d[bi].linkedin||'';
-        if(!fu.fp)fu.fp=d[bi].fp||'';
+        if(!fu.first){fu.first=d[bi].first||(d[bi].name||'').split(' ')[0];_backfilled=true;}
+        if(!fu.linkedin&&d[bi].linkedin){fu.linkedin=d[bi].linkedin;_backfilled=true;}
+        if(!fu.fp&&d[bi].fp){fu.fp=d[bi].fp;_backfilled=true;}
         break;
       }
     }
-    if(!fu.first)fu.first=(fu.name||'').split(' ')[0];
+    if(!fu.first){fu.first=(fu.name||'').split(' ')[0];_backfilled=true;}
+    if(_backfilled)saveFu(); // persist once so backfill doesn't repeat
   }
   const stage=fu.stage,msg=buildFuMsg(fu,stage);
   document.getElementById('fu-name').textContent=fu.name;
@@ -1446,6 +1448,7 @@ function renderFuTab(){
 
 function fuSent(){
   const fu=fuCur();if(!fu)return;
+  const curKey=fuQ[fuQi]; // capture the dictionary key before rebuilding queue
   const today=todayStr();
   if(!fu.stage_dates)fu.stage_dates={};
   fu.stage_dates[fu.stage]=today;
@@ -1457,11 +1460,14 @@ function fuSent(){
   if(fu.stage===1){fu.stage=2;fu.due_date=addDays(today,30);}
   else if(fu.stage%2===0){fu.stage+=1;fu.due_date=addDays(today,14);}
   else{fu.stage+=1;fu.due_date=addDays(today,30);}
+  fu.nextDate=fu.due_date;
   saveFu();updateFuBadge();
   try{fbSaveNow();}catch(e){scheduleFbSave();}
   fuBuildQ();
-  const newIdx=fuQ.indexOf(fu.key);
-  fuQi=newIdx>=0?newIdx:0;
+  // After rebuilding, advance past the just-sent entry (now has future due date)
+  const newIdx=fuQ.indexOf(curKey);
+  if(newIdx>=0&&fuQi<=newIdx)fuQi=newIdx+1;
+  if(fuQi>=fuQ.length)fuQi=0;
   renderFuTab();
 }
 
