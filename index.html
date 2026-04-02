@@ -196,7 +196,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 <body>
 <div class="tab-bar">
   <div class="tab active" id="tab-general" onclick="switchTab('general')">General Outreach <span class="tab-badge" id="general-count">1036</span></div>
-  <div class="tab fox-tab" id="tab-fox" onclick="switchTab('fox')">Fox Rothschild <span class="tab-badge">275</span></div>
+  <div class="tab fox-tab" id="tab-fox" onclick="switchTab('fox')" style="display:none">Fox Rothschild <span class="tab-badge">275</span></div>
   <div class="tab fu-tab" id="tab-followups" onclick="switchTab('followups')">Follow-ups <span class="tab-badge" id="fu-badge">0</span></div>
   <div class="tab log-tab" id="tab-log" onclick="switchTab('log')">Log <span class="tab-badge" id="log-badge">0</span></div>
   <div class="tab stats-tab" id="tab-stats" onclick="switchTab('stats')">Stats</div>
@@ -1667,10 +1667,10 @@ function fuSetFilter(f,btn){
   fuBuildQ();fuQi=0;renderFuTab();
 }
 
-// Patch fuBuildQ to respect filter
+// Patch fuBuildQ to respect filter — uses Object.entries to preserve keys
 const _fuBuildQOrig=fuBuildQ;
 fuBuildQ=function(){
-  const entries=Object.values(fuData).filter(f=>!f.done);
+  const entries=Object.entries(fuData).filter(([k,f])=>!f.done).map(([k,f])=>({_key:k,...f}));
   const today=todayStr();
   const filtered=entries.filter(e=>{
     const dd=e.nextDate||e.due_date||'';
@@ -1681,7 +1681,7 @@ fuBuildQ=function(){
     return true;
   });
   filtered.sort((a,b)=>{var da=a.nextDate||a.due_date||'9999';var db=b.nextDate||b.due_date||'9999';return da<db?-1:da>db?1:0;});
-  fuQ=filtered.map(e=>e.key);fuQi=0;
+  fuQ=filtered.map(e=>e._key);fuQi=0;
   // Update overdue count badge
   const overdueN=entries.filter(e=>{var dd=e.nextDate||e.due_date;return dd&&daysDiff(dd)<=0;}).length;
   const oc=document.getElementById('fu-overdue-count');
