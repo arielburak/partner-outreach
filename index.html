@@ -1327,6 +1327,10 @@ let fuLog=[], fuData={}, fuQ=[], fuQi=0;
 function loadFu(){
   try{fuLog=JSON.parse(localStorage.getItem(LOG_SK)||'[]')}catch(e){fuLog=[];}
   try{fuData=JSON.parse(localStorage.getItem(FU_SK)||'{}')}catch(e){fuData={};}
+  // Sanitize: Firebase rejects undefined values, so default missing fields
+  var _dirty=false;
+  fuLog.forEach(function(e){['name','first','firm','city','practice','target','alt1','alt2','linkedin','fp'].forEach(function(f){if(e[f]===undefined||e[f]===null){e[f]='';_dirty=true;}});});
+  if(_dirty){try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}}
 }
 function saveFu(){
   try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog))}catch(e){}
