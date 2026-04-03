@@ -1489,7 +1489,11 @@ function fuLater(){
 function fuRemove(){
   // Remove from follow-up sequence entirely — no resolution, just gone
   const fu=fuCur();if(!fu)return;
+  const today=todayStr();
   fu.done=true;fu.outcome='removed';
+  fuLog.unshift({name:fu.name||'',first:fu.first||'',firm:fu.firm||'',city:fu.city||'',practice:fu.practice||'',
+    target:fu.target||'',alt1:fu.alt1||'',alt2:fu.alt2||'',date_sent:today,linkedin:fu.linkedin||'',fp:fu.fp||'',stage:'removed'});
+  try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
   saveFu();updateFuBadge();
   try{fbSaveNow();}catch(e){console.error('[FB]',e);updateFbStatus('error',e.message);}
   fuQ.splice(fuQi,1);
