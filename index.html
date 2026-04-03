@@ -774,7 +774,8 @@ let _fbApp=null,_fbDb=null,_fbRef=null,_fbInitialized=false,_fbSaveDebounce=null
 function updateFbStatus(s,msg){const el=document.getElementById('fb-status');if(!el)return;if(s==='synced'){el.innerHTML='✓ Saved to cloud';el.style.cssText='font-size:10px;padding:4px 11px;border-radius:6px;border:1px solid #27ae60;background:#eafaf1;color:#1e8449;font-weight:600;white-space:nowrap;';}else if(s==='saving'){el.innerHTML='↑ Saving...';el.style.cssText='font-size:10px;padding:4px 11px;border-radius:6px;border:1px solid #e8d080;background:#fff0e0;color:#b8860b;font-weight:600;white-space:nowrap;';}else if(s==='error'){el.innerHTML='⚠ Sync error <u style="cursor:pointer;margin-left:4px" onclick="initFirebase()" title="'+(msg||'').replace(/"/g,"'")+'">retry</u>';el.style.cssText='font-size:10px;padding:4px 11px;border-radius:6px;border:1px solid #e74c3c;background:#fde8e8;color:#c0392b;font-weight:600;white-space:nowrap;';if(msg)console.error('[FB sync]',msg);}else{el.innerHTML='⏳ Connecting...';el.style.cssText='font-size:10px;padding:4px 11px;border-radius:6px;border:1px solid #e8d080;background:#fff0e0;color:#b8860b;font-weight:600;white-space:nowrap;';}}
 function initFirebase(){if(typeof firebase==='undefined'){setTimeout(initFirebase,500);return;}updateFbStatus('connecting');try{_fbApp=(firebase.apps&&firebase.apps.length)?firebase.app():firebase.initializeApp(FB_CONFIG);_fbDb=firebase.database(_fbApp);_fbRef=_fbDb.ref('outreach');_fbRef.once('value').then(function(snap){const data=snap.val();if(data){if(data.status){status=data.status;try{localStorage.setItem(SK,JSON.stringify(status));}catch(e){}}if(data.fuLog){fuLog=data.fuLog;try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}}if(data.fuData){fuData=data.fuData;try{localStorage.setItem(FU_SK,JSON.stringify(fuData));}catch(e){}}}_migrateLogV1();_ensureLogEntries();_fbInitialized=true;updateFbStatus('synced');scheduleFbSave();buildQ();render();updateFuBadge();const fuV=document.getElementById('fu-view');const logV=document.getElementById('log-view');if(fuV&&fuV.style.display!=='none'){fuBuildQ();renderFuTab();}else if(logV&&logV.style.display!=='none'){renderLogTab();}}).catch(function(e){_fbInitialized=true;updateFbStatus('error',e&&e.message?e.message:String(e));});}catch(e){_fbInitialized=true;updateFbStatus('error',e&&e.message?e.message:String(e));}}
 function _fbSafe(obj){if(!obj||typeof obj!=='object')return obj;var out={};Object.keys(obj).forEach(function(k){var safe=k.replace(/[.#$/\[\]]/g,'_');out[safe]=obj[k];});return out;}
-function fbSaveNow(_retry){if(!_fbInitialized||!_fbRef)return;var data={status:_fbSafe(status)||{},fuLog:(typeof fuLog!=='undefined'?fuLog:[])||[],fuData:_fbSafe((typeof fuData!=='undefined'?fuData:{})||{}),lastSaved:new Date().toISOString(),version:'v5e'};_fbRef.set(data).then(function(){updateFbStatus('synced');}).catch(function(e){if(!_retry){setTimeout(function(){fbSaveNow(true);},3000);}else{updateFbStatus('error',e&&e.message?e.message:String(e));}});}
+function _fbClean(o){return JSON.parse(JSON.stringify(o,function(k,v){return v===undefined?null:v;}));}
+function fbSaveNow(_retry){if(!_fbInitialized||!_fbRef)return;var data=_fbClean({status:_fbSafe(status)||{},fuLog:(typeof fuLog!=='undefined'?fuLog:[])||[],fuData:_fbSafe((typeof fuData!=='undefined'?fuData:{})||{}),lastSaved:new Date().toISOString(),version:'v5e'});_fbRef.set(data).then(function(){updateFbStatus('synced');}).catch(function(e){if(!_retry){setTimeout(function(){fbSaveNow(true);},3000);}else{updateFbStatus('error',e&&e.message?e.message:String(e));}});}
 function scheduleFbSave(){if(!_fbInitialized)return;updateFbStatus('saving');clearTimeout(_fbSaveDebounce);_fbSaveDebounce=setTimeout(fbSaveNow,1200);}
 setTimeout(initFirebase,300);
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
@@ -1196,7 +1197,7 @@ function next(){
   var _mv=['primary','alt1','alt2'][altIdx]||'primary';
   fuLog.push({date_sent:today,date:today,name:p.name,firm:p.firm,city:p.city||'',target:actualF1,alt1:actualF2,stage:'initial',action:'sent',practice:p.practice||'',msg_variant:_mv});
   try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
-  try{fbSaveNow();}catch(e){scheduleFbSave();}
+  try{fbSaveNow();}catch(e){console.error('[FB]',e);updateFbStatus('error',e.message);}
   pitchOverride={};
   qi++;if(qi>=queue.length)qi=0;
   altIdx=0;
@@ -1450,8 +1451,8 @@ function fuSent(){
   const today=todayStr();
   if(!fu.stage_dates)fu.stage_dates={};
   fu.stage_dates[fu.stage]=today;
-  fuLog.unshift({name:fu.name,first:fu.first,firm:fu.firm,city:fu.city,practice:fu.practice,
-    target:fu.target,alt1:fu.alt1,alt2:fu.alt2,date_sent:today,linkedin:fu.linkedin,fp:fu.fp,stage:'followup_'+fu.stage});
+  fuLog.unshift({name:fu.name||'',first:fu.first||'',firm:fu.firm||'',city:fu.city||'',practice:fu.practice||'',
+    target:fu.target||'',alt1:fu.alt1||'',alt2:fu.alt2||'',date_sent:today,linkedin:fu.linkedin||'',fp:fu.fp||'',stage:'followup_'+fu.stage});
   try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
   // Infinite cycle: 1(8d)->2(30d)->3(14d)->4(30d)->5(14d)-> ...
   // Even stages = pitch (30d gap after), Odd stages>=3 = check-in (14d gap after)
@@ -1460,7 +1461,7 @@ function fuSent(){
   else{fu.stage+=1;fu.due_date=addDays(today,30);}
   fu.nextDate=fu.due_date;
   saveFu();updateFuBadge();
-  try{fbSaveNow();}catch(e){scheduleFbSave();}
+  try{fbSaveNow();}catch(e){console.error('[FB]',e);updateFbStatus('error',e.message);}
   fuBuildQ();
   // After rebuilding, advance past the just-sent entry (now has future due date)
   const newIdx=fuQ.indexOf(curKey);
@@ -1475,8 +1476,8 @@ function fuOutcome(outcome){
   const fu=fuCur();if(!fu)return;
   fu.done=true;fu.outcome=outcome;
   const today=todayStr();
-  fuLog.unshift({name:fu.name,first:fu.first,firm:fu.firm,city:fu.city,practice:fu.practice,
-    target:fu.target,alt1:fu.alt1,alt2:fu.alt2,date_sent:today,linkedin:fu.linkedin,fp:fu.fp,stage:outcome});
+  fuLog.unshift({name:fu.name||'',first:fu.first||'',firm:fu.firm||'',city:fu.city||'',practice:fu.practice||'',
+    target:fu.target||'',alt1:fu.alt1||'',alt2:fu.alt2||'',date_sent:today,linkedin:fu.linkedin||'',fp:fu.fp||'',stage:outcome});
   try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
   // If "not_interested", snooze them on the general outreach tab for 6 months
   // so they come back later for a re-approach
@@ -1495,7 +1496,7 @@ function fuOutcome(outcome){
     showToast(fu.first+' snoozed for 6 months');
   }
   saveFu();updateFuBadge();
-  try{fbSaveNow();}catch(e){scheduleFbSave();}
+  try{fbSaveNow();}catch(e){console.error('[FB]',e);updateFbStatus('error',e.message);}
   fuQ.splice(fuQi,1);
   if(fuQi>=fuQ.length&&fuQi>0)fuQi--;
   renderFuTab();
