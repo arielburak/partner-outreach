@@ -504,16 +504,6 @@ def normalize_city(city):
         'New York, NY': 'New York', 'LA': 'Los Angeles', 'SF': 'San Francisco',
         'Philly': 'Philadelphia', 'Phila': 'Philadelphia',
         'Washington': 'Washington, DC',
-        # Metro area mappings
-        'Roseland': 'New York', 'Florham Park': 'New York', 'White Plains': 'New York', 'Princeton': 'New York',
-        'Fort Lauderdale': 'Miami', 'Coral Gables': 'Miami', 'West Palm Beach': 'Miami', 'Boca Raton': 'Miami',
-        'Bethesda': 'Washington, DC', 'Arlington': 'Washington, DC', 'Tysons': 'Washington, DC', 'McLean': 'Washington, DC',
-        'Palo Alto': 'San Francisco', 'Menlo Park': 'San Francisco', 'San Jose': 'San Francisco',
-        'Santa Monica': 'Los Angeles', 'Beverly Hills': 'Los Angeles', 'Irvine': 'Los Angeles',
-        'Costa Mesa': 'Los Angeles', 'Newport Beach': 'Los Angeles', 'Pasadena': 'Los Angeles', 'Glendale': 'Los Angeles',
-        'Berwyn': 'Philadelphia', 'Wilmington': 'Philadelphia',
-        'Fort Worth': 'Dallas', 'Plano': 'Dallas', 'Frisco': 'Dallas',
-        'Rosemont': 'Chicago', 'Broomfield': 'Denver', 'League City': 'Houston',
     }
     return aliases.get(c, c)
 
@@ -690,8 +680,7 @@ def match_score(partner, firm_name):
     return total
 
 # ── RUN MATCHING ──
-# ONLY match to target firms (COLD_CALL_FIRMS) — supplemental firms are for feeder training only
-all_firm_names = [tf['name'] for tf in target_firms]
+all_firm_names = [tf['name'] for tf in target_firms] + [sf['name'] for sf in supplemental_firms]
 results = []
 
 for i, p in enumerate(new_partners):
