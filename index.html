@@ -791,23 +791,32 @@ function buildQ(){
   let idxs=d.map((_,i)=>i);
   // Filter out snoozed candidates (return date still in the future)
   idxs=idxs.filter(i=>{const key=sk(tab,i);if(status[key]==='snoozed'&&snoozeData[key]&&snoozeData[key]>today)return false;return true;});
-  // Sort: new uploads first (is_new flag), then unseen, then skipped/later, then sent
-  // Within each tier: oldest last_contact first
+  // Sort: sent/skipped/snoozed at the bottom, everything else sorted by last_contact
+  // Oldest last_contact first (people you haven't spoken to recently get priority)
+  // Partners with NO last_contact go after those with dates
   function sortRank(i){
     const s=status[sk(tab,i)]||'';
     if(s==='sent')return 90;
-    if(s==='snoozed')return 80;  // shouldn't appear (filtered above), but safety
+    if(s==='snoozed')return 80;
     if(s==='skipped')return 60;
     if(s==='later')return 50;
-    // Unseen — prioritize new uploads
-    if(d[i].is_new)return 5;
     return 10;
   }
-  idxs.sort((a,b)=>sortRank(a)-sortRank(b)||parseLC(d[a].last_contact)-parseLC(d[b].last_contact));
+  idxs.sort((a,b)=>{
+    const ra=sortRank(a),rb=sortRank(b);
+    if(ra!==rb)return ra-rb;
+    // Within same tier: sort by last_contact ascending (oldest first, most recent last)
+    // Partners with no last_contact go AFTER those with dates
+    const la=parseLC(d[a].last_contact),lb=parseLC(d[b].last_contact);
+    if(la&&lb)return la-lb;       // both have dates: oldest first
+    if(la&&!lb)return -1;         // a has date, b doesn't: a first
+    if(!la&&lb)return 1;          // b has date, a doesn't: b first
+    return 0;                     // neither has date: keep order
+  });
   if(filter==='warm')idxs.sort((a,b)=>{const wa=(d[a].stage||'').toLowerCase().includes('warm'),wb=(d[b].stage||'').toLowerCase().includes('warm');return wa===wb?0:wa?-1:1;});
   if(filter==='pending'){
     idxs=idxs.filter(i=>status[sk(tab,i)]!=='sent');
-    idxs.sort((a,b)=>{const sa=status[sk(tab,a)]||'',sb=status[sk(tab,b)]||'';const ra=(sa==='skipped'?2:sa==='snoozed'?3:sa==='later'?1:0),rb=(sb==='skipped'?2:sb==='snoozed'?3:sb==='later'?1:0);return ra-rb||parseLC(d[a].last_contact)-parseLC(d[b].last_contact);});
+    idxs.sort((a,b)=>{const sa=status[sk(tab,a)]||'',sb=status[sk(tab,b)]||'';const ra=(sa==='skipped'?2:sa==='snoozed'?3:sa==='later'?1:0),rb=(sb==='skipped'?2:sb==='snoozed'?3:sb==='later'?1:0);if(ra!==rb)return ra-rb;const la=parseLC(d[a].last_contact),lb=parseLC(d[b].last_contact);if(la&&lb)return la-lb;if(la&&!lb)return -1;if(!la&&lb)return 1;return 0;});
   }
   if(filter==='leader')idxs=idxs.filter(i=>isLeader(d[i]));
   if(dept&&tab==='fox')idxs=idxs.filter(i=>d[i].dept===dept);
