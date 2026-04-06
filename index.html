@@ -792,6 +792,8 @@ function buildQ(){
   let idxs=d.map((_,i)=>i);
   // Filter out snoozed candidates (return date still in the future)
   idxs=idxs.filter(i=>{const key=sk(tab,i);if(status[key]==='snoozed'&&snoozeData[key]&&snoozeData[key]>today)return false;return true;});
+  // Filter out partners with no message and no target (unmatched cities)
+  if(tab==='general')idxs=idxs.filter(i=>d[i].message||d[i].target);
   // Build effective last-contact: merge static data with fuLog activity
   var _lam={};try{(fuLog||[]).forEach(function(e){var dt=e.date_sent||e.date||'';var nm=e.name||'';if(nm&&dt&&(!_lam[nm]||dt>_lam[nm]))_lam[nm]=dt;});}catch(e){}
   function elc(i){var s=parseLC(d[i].last_contact);var l=_lam[d[i].name]||'';var t=0;try{t=l?new Date(l).getTime():0;}catch(e){}if(isNaN(t))t=0;var nd=NOTE_DATES[d[i].name]||'';var nt=0;try{nt=nd?parseLC(nd):0;}catch(e){}if(isNaN(nt))nt=0;return Math.max(s||0,t||0,nt||0);}
