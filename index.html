@@ -976,11 +976,14 @@ function buildFirmTable(p){
   const myTargets=new Set([p.target,p.alt1,p.alt2,p.alt3].filter(Boolean));
   const myTargetsShort=new Set([...myTargets].map(f=>sfGlobal(f)));
   const pCity=p.city||'';
+  // Legitimate city aliases (same place, different formatting)
+  const CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York'};
+  const pCityNorm=CITY_ALIASES[pCity]||pCity;
   // Build rows from COLD_CALL_FIRMS, filtered by partner's city
   var rows=[];
   const seen=new Set();
   for(const[firm,info] of Object.entries(COLD_CALL_FIRMS)){
-    if(pCity && info.cities && info.cities.length>0 && !info.cities.includes(pCity))continue;
+    if(pCityNorm && info.cities && info.cities.length>0 && !info.cities.includes(pCityNorm))continue;
     const short=sfGlobal(firm);
     if(seen.has(short))continue;
     seen.add(short);
