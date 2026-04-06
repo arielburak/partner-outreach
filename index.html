@@ -890,7 +890,7 @@ function render(){
     if(p.alt2){c2.style.display='';c2.innerHTML=sfGlobal(p.alt2)+chipPPP(p.alt2)+(p.alt2_chambers_label&&p.alt2_chambers_label!=='Not ranked'?'<span class="chip-chambers">'+p.alt2_chambers_label+'</span>':'');}else{c2.style.display='none';}
     if(p.alt3){c3.style.display='';c3.innerHTML=sfGlobal(p.alt3)+chipPPP(p.alt3)+(p.alt3_chambers_label&&p.alt3_chambers_label!=='Not ranked'?'<span class="chip-chambers">'+p.alt3_chambers_label+'</span>':'');}else{c3.style.display='none';}
   }else{acRow.style.display='none';}
-  if(!isFox&&p.last_contact){lcb.style.display='';pcd.textContent='Last contact: '+p.last_contact;pcn.textContent=p.last_note||'';}else lcb.style.display='none';
+  var _ndDate=NOTE_DATES[p.name]||'';var _lcDisp=p.last_contact||_ndDate||'';if(!isFox&&_lcDisp){lcb.style.display='';pcd.textContent='Last note: '+_lcDisp;pcn.textContent=p.last_note||'';}else lcb.style.display='none';
   const pr=document.getElementById('pitch-row'),per=document.getElementById('pitch-edit-row');
   if(!isFox&&(p.target||p.alt1)){
     pr.style.display='flex';per.classList.remove('open');
