@@ -1232,18 +1232,26 @@ function later(){
   pitchOverride={};
   qi++;if(qi>=queue.length)qi=0;altIdx=0;buildQ();render();updateP();
 }
+function _advanceAfterAction(){
+  // After buildQ, find first unseen/pending person (not sent/benched/interested/skipped)
+  for(var j=0;j<queue.length;j++){var s=status[sk(tab,queue[j])]||'';if(!s||s==='later')break;}
+  qi=j<queue.length?j:0;
+}
 function bench(){
   const c=cur();if(!c)return;
   status[sk(tab,c.i)]='benched';saveS();scheduleFbSave();
-  pitchOverride={};
-  altIdx=0;buildQ();if(qi>=queue.length)qi=Math.max(0,queue.length-1);render();updateP();
+  pitchOverride={};altIdx=0;buildQ();_advanceAfterAction();render();updateP();
   showToast('Benched — removed from sequence');
 }
 function interested(){
   const c=cur();if(!c)return;
+  var oldQi=qi;
   status[sk(tab,c.i)]='interested';saveS();scheduleFbSave();
-  pitchOverride={};
-  altIdx=0;buildQ();if(qi>=queue.length)qi=Math.max(0,queue.length-1);render();updateP();
+  pitchOverride={};altIdx=0;buildQ();
+  // Skip past the person we just marked (they moved to top as rank 5)
+  for(qi=0;qi<queue.length;qi++){if(queue[qi]!==c.i)break;}
+  if(qi>=queue.length)qi=0;
+  render();updateP();
   showToast('Marked as interested ⭐');
 }
 function copyOffered(){const t=document.getElementById("offered-text");if(!t||!t.value)return;navigator.clipboard.writeText(t.value);}
