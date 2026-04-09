@@ -1236,14 +1236,14 @@ function bench(){
   const c=cur();if(!c)return;
   status[sk(tab,c.i)]='benched';saveS();scheduleFbSave();
   pitchOverride={};
-  qi++;if(qi>=queue.length)qi=0;altIdx=0;buildQ();render();updateP();
+  altIdx=0;buildQ();if(qi>=queue.length)qi=Math.max(0,queue.length-1);render();updateP();
   showToast('Benched — removed from sequence');
 }
 function interested(){
   const c=cur();if(!c)return;
   status[sk(tab,c.i)]='interested';saveS();scheduleFbSave();
   pitchOverride={};
-  qi++;if(qi>=queue.length)qi=0;altIdx=0;buildQ();render();updateP();
+  altIdx=0;buildQ();if(qi>=queue.length)qi=Math.max(0,queue.length-1);render();updateP();
   showToast('Marked as interested ⭐');
 }
 function copyOffered(){const t=document.getElementById("offered-text");if(!t||!t.value)return;navigator.clipboard.writeText(t.value);}
@@ -1264,6 +1264,8 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='f'||e.key==='F')openFP();
 });
 loadS();
+// One-time fix: Ashley Mahoney was accidentally benched instead of interested
+if(status['general_Ashley Mahoney']==='benched'){status['general_Ashley Mahoney']='interested';saveS();}
 
 // ── SNOOZE DATA ──
 const SNOOZE_SK='ov6_snooze';
