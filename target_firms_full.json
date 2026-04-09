@@ -1,0 +1,1011 @@
+[
+  {
+    "name": "Fox Rothschild",
+    "ppp": 1109000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Philadelphia",
+      "Chicago",
+      "Atlanta",
+      "San Francisco",
+      "Denver",
+      "Miami",
+      "Dallas"
+    ],
+    "notes": "",
+    "book_min": 700000,
+    "chambers": {}
+  },
+  {
+    "name": "UB Greensfelder",
+    "ppp": 482000,
+    "cities": [
+      "New York",
+      "Chicago"
+    ],
+    "notes": "For partners we typically look for a book of business around $750K; rates vary by market and practice group (typically $500-$700/hr).",
+    "book_min": 750000.0,
+    "chambers": {}
+  },
+  {
+    "name": "Pryor Cashman",
+    "ppp": 1576000,
+    "cities": [
+      "New York",
+      "Los Angeles",
+      "Miami"
+    ],
+    "notes": "Typically, our floor is $750k in portable business.",
+    "book_min": 750000.0,
+    "chambers": {}
+  },
+  {
+    "name": "Armstrong Teasdale",
+    "ppp": 646000,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Philadelphia",
+      "Chicago",
+      "Denver",
+      "Miami"
+    ],
+    "notes": "Actually open to less than 1M, rates around 400-700. Open to 700k if they already have an office",
+    "book_min": 700000.0,
+    "chambers": {}
+  },
+  {
+    "name": "Womble Bond Dickinson",
+    "ppp": 736000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Atlanta",
+      "San Francisco",
+      "Denver",
+      "Houston"
+    ],
+    "notes": "650 and above. Sweet spot 700-900. Can be lower book for salaried partners",
+    "book_min": 500000,
+    "chambers": {}
+  },
+  {
+    "name": "Saul Ewing",
+    "ppp": 718000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Philadelphia",
+      "Chicago",
+      "Miami"
+    ],
+    "notes": "",
+    "book_min": 500000,
+    "chambers": {}
+  },
+  {
+    "name": "Winstead",
+    "ppp": 1791000,
+    "cities": [
+      "New York",
+      "Dallas",
+      "Houston",
+      "Austin"
+    ],
+    "notes": "Self-sustaining in New York.",
+    "book_min": 1200000,
+    "chambers": {}
+  },
+  {
+    "name": "Thompson Hine",
+    "ppp": 1064000,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "Atlanta"
+    ],
+    "notes": "We are always looking for potential commercial litigation partners who have a book of business – even a small one",
+    "book_min": 700000,
+    "chambers": {}
+  },
+  {
+    "name": "Stradley Ronon",
+    "ppp": null,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Los Angeles",
+      "Philadelphia",
+      "Chicago"
+    ],
+    "notes": "rates 600-1400",
+    "book_min": 750000,
+    "chambers": {}
+  },
+  {
+    "name": "Miles Stockbridge",
+    "ppp": null,
+    "cities": [
+      "Washington, DC",
+      "New York"
+    ],
+    "notes": "For partners, we typically need a book of $1M but would consider $750K+ for strategic needs (government contracts, health care regulatory, private equity, finance, or a litigator in DC, Richmond, or Tysons).",
+    "book_min": 1000000.0,
+    "chambers": {}
+  },
+  {
+    "name": "Caplin & Drysdale",
+    "ppp": null,
+    "cities": [
+      "Washington, DC",
+      "New York"
+    ],
+    "notes": "",
+    "book_min": 750000,
+    "chambers": {
+      "Bankruptcy": 3
+    }
+  },
+  {
+    "name": "McCarter & English",
+    "ppp": 1055000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Philadelphia",
+      "Miami"
+    ],
+    "notes": "Can be less for corporate. Flexible on rates, lower than 1k",
+    "book_min": 700000,
+    "chambers": {}
+  },
+  {
+    "name": "FBT/Gibbons",
+    "ppp": null,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Los Angeles",
+      "Philadelphia",
+      "San Francisco",
+      "Denver",
+      "Dallas",
+      "Houston"
+    ],
+    "notes": "",
+    "book_min": 750000,
+    "chambers": {}
+  },
+  {
+    "name": "Withers",
+    "ppp": null,
+    "cities": [
+      "New York",
+      "Los Angeles",
+      "San Francisco",
+      "San Diego",
+      "Houston"
+    ],
+    "notes": "Rates 900-1200 with the ability to adjust. Flexible on book sometimes.",
+    "book_min": 750000,
+    "chambers": {}
+  },
+  {
+    "name": "Davis Graham & Stubbs",
+    "ppp": null,
+    "cities": [
+      "Denver"
+    ],
+    "notes": "Corporat +1.5,1M RE,IP, 400k Employment",
+    "book_min": 400000.0,
+    "chambers": {}
+  },
+  {
+    "name": "Buchanan",
+    "ppp": null,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Philadelphia",
+      "Chicago",
+      "Miami",
+      "San Diego"
+    ],
+    "notes": "",
+    "book_min": 750000,
+    "chambers": {}
+  },
+  {
+    "name": "Dorsey & Whitney",
+    "ppp": 1134000,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "San Francisco",
+      "Denver",
+      "Dallas"
+    ],
+    "notes": "",
+    "book_min": 700000,
+    "chambers": {
+      "Corporate": 4,
+      "Intellectual Property": 4
+    }
+  },
+  {
+    "name": "Robinson & Cole",
+    "ppp": 770000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Philadelphia",
+      "Miami"
+    ],
+    "notes": "",
+    "book_min": 500000,
+    "chambers": {}
+  },
+  {
+    "name": "Goulston & Storrs",
+    "ppp": 978000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York"
+    ],
+    "notes": "+950 rate",
+    "book_min": 700000,
+    "chambers": {
+      "Real Estate": 3
+    }
+  },
+  {
+    "name": "Kasowitz",
+    "ppp": 2424000,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Los Angeles",
+      "Atlanta",
+      "San Francisco",
+      "Miami",
+      "Houston"
+    ],
+    "notes": "Rates 700-800",
+    "book_min": 1500000,
+    "chambers": {
+      "Litigation": 3,
+      "Bankruptcy": 3
+    }
+  },
+  {
+    "name": "Nixon Peabody",
+    "ppp": 1732000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "San Francisco"
+    ],
+    "notes": "Rates 1k avg but flexible on lower. Book target 2M but OK reviewing 1.5M",
+    "book_min": 1500000,
+    "chambers": {
+      "Corporate": 4,
+      "Real Estate": 3,
+      "Labor & Employment": 4
+    }
+  },
+  {
+    "name": "Levenfeld Perlstein",
+    "ppp": null,
+    "cities": [
+      "Chicago"
+    ],
+    "notes": "",
+    "book_min": 750000,
+    "chambers": {}
+  },
+  {
+    "name": "Blank Rome",
+    "ppp": 1686000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Philadelphia",
+      "Chicago",
+      "Dallas",
+      "Houston"
+    ],
+    "notes": "",
+    "book_min": 1200000,
+    "chambers": {
+      "Corporate": 5,
+      "Litigation": 4,
+      "Real Estate": 4,
+      "Banking": 4
+    }
+  },
+  {
+    "name": "Akerman",
+    "ppp": 1247000,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "Atlanta",
+      "Denver",
+      "Miami",
+      "Dallas",
+      "Houston",
+      "Austin"
+    ],
+    "notes": "",
+    "book_min": 900000,
+    "chambers": {
+      "Real Estate": 4
+    }
+  },
+  {
+    "name": "Brown Rudnick",
+    "ppp": 1778000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Houston"
+    ],
+    "notes": "Crisis Management (includes restructuring and Special Situations); Global Litigation; Brand and Reputation Management; Life Sciences and Technology",
+    "book_min": 1200000,
+    "chambers": {
+      "Bankruptcy": 3
+    }
+  },
+  {
+    "name": "Foley & Lardner",
+    "ppp": 2298000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "San Francisco",
+      "Denver",
+      "Miami",
+      "San Diego",
+      "Dallas",
+      "Houston",
+      "Austin"
+    ],
+    "notes": "Rates 1k avg",
+    "book_min": 1200000,
+    "chambers": {
+      "Corporate": 3,
+      "Litigation": 4,
+      "Intellectual Property": 3,
+      "Labor & Employment": 3,
+      "Health Care": 3
+    }
+  },
+  {
+    "name": "Dentons",
+    "ppp": 906000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Chicago"
+    ],
+    "notes": "",
+    "book_min": 700000,
+    "chambers": {
+      "Corporate": 4,
+      "Litigation": 4
+    }
+  },
+  {
+    "name": "Cadwalader",
+    "ppp": 3709000,
+    "cities": [
+      "Washington, DC",
+      "New York"
+    ],
+    "notes": "Didn’t explicitly say the book size, but based on some opportunistics I think this is their interest",
+    "book_min": 2000000,
+    "chambers": {
+      "Corporate": 3,
+      "Real Estate": 3,
+      "Banking": 2,
+      "Bankruptcy": 2
+    }
+  },
+  {
+    "name": "Seyfarth",
+    "ppp": 1655000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "Atlanta",
+      "San Francisco",
+      "Dallas",
+      "Houston"
+    ],
+    "notes": "Didn’t explicitly say the book size, but based on some opportunistics I think this is their interest",
+    "book_min": 1200000,
+    "chambers": {
+      "Corporate": 5,
+      "Litigation": 3,
+      "Real Estate": 3,
+      "Labor & Employment": 1
+    }
+  },
+  {
+    "name": "Haynes and Boone",
+    "ppp": 1506000,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Chicago",
+      "San Francisco",
+      "Denver",
+      "Dallas",
+      "Houston",
+      "Austin"
+    ],
+    "notes": "",
+    "book_min": 900000,
+    "chambers": {
+      "Corporate": 3,
+      "Litigation": 3
+    }
+  },
+  {
+    "name": "Mintz",
+    "ppp": 2570000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "San Francisco",
+      "Miami",
+      "San Diego"
+    ],
+    "notes": "Rates +1k",
+    "book_min": 1500000,
+    "chambers": {
+      "Corporate": 3,
+      "Litigation": 4,
+      "Real Estate": 3,
+      "Intellectual Property": 3,
+      "Labor & Employment": 3,
+      "Health Care": 3
+    }
+  },
+  {
+    "name": "Sheppard Mullin",
+    "ppp": null,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "San Francisco",
+      "San Diego",
+      "Dallas",
+      "Houston"
+    ],
+    "notes": "",
+    "book_min": 750000,
+    "chambers": {
+      "Corporate": 3,
+      "Litigation": 3,
+      "Labor & Employment": 3
+    }
+  },
+  {
+    "name": "Allen Matkins",
+    "ppp": 1305000,
+    "cities": [
+      "New York",
+      "Los Angeles",
+      "San Francisco",
+      "San Diego"
+    ],
+    "notes": "Book flexibkle for rising star. West Coast rates high 8s low thous, New york 1k-1.8k",
+    "book_min": 900000,
+    "chambers": {
+      "Real Estate": 2
+    }
+  },
+  {
+    "name": "DLA Piper",
+    "ppp": 3459000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Philadelphia",
+      "Chicago",
+      "Atlanta",
+      "San Francisco",
+      "Miami",
+      "San Diego",
+      "Dallas",
+      "Houston",
+      "Austin"
+    ],
+    "notes": "",
+    "book_min": 2000000,
+    "chambers": {
+      "Corporate": 2,
+      "Litigation": 2,
+      "Real Estate": 2,
+      "Intellectual Property": 3,
+      "Banking": 2,
+      "Labor & Employment": 3
+    }
+  },
+  {
+    "name": "Katten",
+    "ppp": 2667000,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "Dallas"
+    ],
+    "notes": "Private equity and investment management are top priority; seeking partners with large practices/groups in those areas.",
+    "book_min": 1500000,
+    "chambers": {
+      "Corporate": 3,
+      "Litigation": 3,
+      "Real Estate": 3,
+      "Banking": 4
+    }
+  },
+  {
+    "name": "Perkins Coie",
+    "ppp": 1895000,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "San Francisco",
+      "Denver",
+      "San Diego",
+      "Dallas",
+      "Austin"
+    ],
+    "notes": "",
+    "book_min": 1200000,
+    "chambers": {
+      "Corporate": 3,
+      "Litigation": 3,
+      "Intellectual Property": 3
+    }
+  },
+  {
+    "name": "Cooley",
+    "ppp": 3867000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "San Francisco",
+      "Denver",
+      "Miami",
+      "San Diego"
+    ],
+    "notes": "",
+    "book_min": 2000000,
+    "chambers": {
+      "Corporate": 2,
+      "Litigation": 3,
+      "Intellectual Property": 2
+    }
+  },
+  {
+    "name": "ArentFox Schiff",
+    "ppp": 1421000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "San Francisco"
+    ],
+    "notes": "",
+    "book_min": 900000,
+    "chambers": {
+      "Bankruptcy": 4
+    }
+  },
+  {
+    "name": "Fenwick",
+    "ppp": 3773000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "San Francisco"
+    ],
+    "notes": "Some flexibility",
+    "book_min": 2000000,
+    "chambers": {
+      "Corporate": 2,
+      "Intellectual Property": 2
+    }
+  },
+  {
+    "name": "Holland & Knight",
+    "ppp": 2291000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Philadelphia",
+      "Chicago",
+      "Atlanta",
+      "San Francisco",
+      "Denver",
+      "Miami",
+      "Dallas",
+      "Houston",
+      "Austin"
+    ],
+    "notes": "",
+    "book_min": 1500000,
+    "chambers": {
+      "Corporate": 3,
+      "Litigation": 2,
+      "Real Estate": 1,
+      "Labor & Employment": 2,
+      "Health Care": 3
+    }
+  },
+  {
+    "name": "Troutman Pepper",
+    "ppp": 1918000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Philadelphia",
+      "Chicago",
+      "Atlanta",
+      "San Francisco",
+      "Miami",
+      "San Diego",
+      "Dallas",
+      "Houston",
+      "Austin"
+    ],
+    "notes": "",
+    "book_min": 1200000,
+    "chambers": {
+      "Corporate": 4,
+      "Litigation": 4,
+      "Banking": 4
+    }
+  },
+  {
+    "name": "Pillsbury",
+    "ppp": 2415000,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Los Angeles",
+      "San Francisco",
+      "Miami",
+      "San Diego",
+      "Houston",
+      "Austin"
+    ],
+    "notes": "",
+    "book_min": 1500000,
+    "chambers": {
+      "Corporate": 4,
+      "Litigation": 4,
+      "Real Estate": 3,
+      "Labor & Employment": 3
+    }
+  },
+  {
+    "name": "Reed Smith",
+    "ppp": 1819000,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Los Angeles",
+      "Philadelphia",
+      "Chicago",
+      "Atlanta",
+      "San Francisco",
+      "Denver",
+      "Miami",
+      "Dallas",
+      "Houston",
+      "Austin"
+    ],
+    "notes": "",
+    "book_min": 1200000,
+    "chambers": {
+      "Corporate": 4,
+      "Litigation": 3,
+      "Real Estate": 4,
+      "Banking": 3
+    }
+  },
+  {
+    "name": "Hogan Lovells",
+    "ppp": 3072000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Philadelphia",
+      "San Francisco",
+      "Denver",
+      "Miami",
+      "Houston"
+    ],
+    "notes": "",
+    "book_min": 2000000,
+    "chambers": {
+      "Corporate": 2,
+      "Litigation": 2,
+      "Real Estate": 3,
+      "Intellectual Property": 3,
+      "Banking": 2,
+      "Labor & Employment": 3,
+      "Health Care": 2
+    }
+  },
+  {
+    "name": "Dechert",
+    "ppp": 4868000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Philadelphia",
+      "San Francisco",
+      "Austin"
+    ],
+    "notes": "",
+    "book_min": 2000000,
+    "chambers": {
+      "Corporate": 2,
+      "Litigation": 2,
+      "Intellectual Property": 3,
+      "Banking": 3
+    }
+  },
+  {
+    "name": "Goodwin",
+    "ppp": null,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Philadelphia",
+      "San Francisco"
+    ],
+    "notes": "",
+    "book_min": 750000,
+    "chambers": {
+      "Corporate": 2,
+      "Real Estate": 2,
+      "Intellectual Property": 3,
+      "Bankruptcy": 3
+    }
+  },
+  {
+    "name": "Milbank",
+    "ppp": 6812000,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Los Angeles"
+    ],
+    "notes": "",
+    "book_min": 2000000,
+    "chambers": {
+      "Corporate": 2,
+      "Litigation": 2,
+      "Banking": 1,
+      "Bankruptcy": 2
+    }
+  },
+  {
+    "name": "Sidley Austin",
+    "ppp": 5157000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "San Francisco",
+      "Miami",
+      "San Diego",
+      "Dallas",
+      "Houston"
+    ],
+    "notes": "",
+    "book_min": 2000000,
+    "chambers": {
+      "Corporate": 1,
+      "Litigation": 1,
+      "Banking": 2,
+      "Health Care": 2,
+      "Bankruptcy": 2
+    }
+  },
+  {
+    "name": "McDermott",
+    "ppp": 4578000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "San Francisco",
+      "Miami",
+      "San Diego",
+      "Dallas",
+      "Houston",
+      "Austin"
+    ],
+    "notes": "Less for non-equity partners. Min rates Equity 1.8K and 1.6k for non equity",
+    "book_min": 2000000,
+    "chambers": {
+      "Corporate": 2,
+      "Health Care": 1
+    }
+  },
+  {
+    "name": "Latham & Watkins",
+    "ppp": 7135000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "Atlanta",
+      "San Francisco",
+      "Miami",
+      "San Diego",
+      "Dallas",
+      "Houston",
+      "Austin"
+    ],
+    "notes": "",
+    "book_min": 2000000,
+    "chambers": {
+      "Corporate": 1,
+      "Litigation": 1,
+      "Real Estate": 1,
+      "Intellectual Property": 1,
+      "Banking": 1,
+      "Labor & Employment": 2,
+      "Health Care": 2,
+      "Bankruptcy": 2
+    }
+  },
+  {
+    "name": "Winston & Strawn",
+    "ppp": 3521000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "San Francisco",
+      "Austin"
+    ],
+    "notes": "",
+    "book_min": 2000000,
+    "chambers": {
+      "Corporate": 2,
+      "Litigation": 2,
+      "Intellectual Property": 3
+    }
+  },
+  {
+    "name": "Paul Hastings",
+    "ppp": 6715000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Chicago"
+    ],
+    "notes": "",
+    "book_min": 2000000,
+    "chambers": {
+      "Corporate": 1,
+      "Litigation": 2,
+      "Banking": 2,
+      "Labor & Employment": 1
+    }
+  },
+  {
+    "name": "Gibson Dunn",
+    "ppp": null,
+    "cities": [
+      "Washington, DC",
+      "New York",
+      "Los Angeles",
+      "San Francisco",
+      "Denver",
+      "Dallas",
+      "Houston"
+    ],
+    "notes": "Focus on M&A/PE/Finance/Funds",
+    "book_min": 750000,
+    "chambers": {
+      "Corporate": 2,
+      "Litigation": 1,
+      "Intellectual Property": 3,
+      "Labor & Employment": 1
+    }
+  },
+  {
+    "name": "Simpson Thacher & Bartlett",
+    "ppp": 7664000,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Austin"
+    ],
+    "notes": "",
+    "book_min": 2000000,
+    "chambers": {
+      "Corporate": 1,
+      "Litigation": 2,
+      "Banking": 1
+    }
+  }
+]
