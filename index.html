@@ -1269,6 +1269,8 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='f'||e.key==='F')openFP();
 });
 loadS();
+// One-time status corrections (safe to remove after confirmed)
+(function(){var fixes={'general_Ashley Mahoney':'interested'};var changed=false;for(var k in fixes){if(status[k]&&status[k]!==fixes[k]){status[k]=fixes[k];changed=true;}}if(changed)saveS();}());
 
 // ── SNOOZE DATA ──
 const SNOOZE_SK='ov6_snooze';
