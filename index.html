@@ -794,7 +794,7 @@ function buildQ(){
   const today=todayStr();
   let idxs=d.map((_,i)=>i);
   // Filter out snoozed candidates (return date still in the future) and benched
-  idxs=idxs.filter(i=>{const key=sk(tab,i);if(status[key]==='benched')return false;if(status[key]==='snoozed'&&snoozeData[key]&&snoozeData[key]>today)return false;return true;});
+  idxs=idxs.filter(i=>{const key=sk(tab,i);if(status[key]==='benched'||status[key]==='interested')return false;if(status[key]==='snoozed'&&snoozeData[key]&&snoozeData[key]>today)return false;return true;});
   // Filter out partners with no message and no target (unmatched cities)
   if(tab==='general')idxs=idxs.filter(i=>d[i].message||d[i].target);
   // Build effective last-contact: merge static data with fuLog activity
@@ -805,11 +805,11 @@ function buildQ(){
   function sortRank(i){
     const s=status[sk(tab,i)]||'';
     if(s==='benched')return 95;
+    if(s==='interested')return 95;
     if(s==='sent')return 90;
     if(s==='snoozed')return 80;
     if(s==='skipped')return 60;
     if(s==='later')return 50;
-    if(s==='interested')return 5;
     return 10;
   }
   idxs.sort(function(a,b){var ra=sortRank(a),rb=sortRank(b);if(ra!==rb)return ra-rb;var la=elc(a),lb=elc(b);if(la&&lb)return la-lb;if(la&&!lb)return -1;if(!la&&lb)return 1;return 0;});
@@ -949,7 +949,7 @@ function render(){
   var skipBdg=document.getElementById('skip-badge');
   if(!skipBdg){skipBdg=document.createElement('span');skipBdg.id='skip-badge';skipBdg.className='badge-skipped';skipBdg.textContent='SKIPPED';var nameEl=document.getElementById('p-name');if(nameEl)nameEl.parentNode.insertBefore(skipBdg,nameEl.nextSibling);}
   skipBdg.style.display=status[sk(tab,c.i)]==='skipped'?'inline-block':'none';
-  updateP();var _sent=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='sent'?1:0);},0);var _benched=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='benched'?1:0);},0);var _interested=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='interested'?1:0);},0);var _snoozed=DS[tab].reduce(function(n,_,i){var k=sk(tab,i);return n+(status[k]==='snoozed'&&snoozeData[k]&&snoozeData[k]>todayStr()?1:0);},0);var _active=DS[tab].length-_benched-_snoozed;var _pending=_active-_sent;document.getElementById('prog-text').textContent=_sent+' / '+_active+' sent ('+_pending+' remaining)'+(_benched?' \u00b7 '+_benched+' benched':'')+(_interested?' \u00b7 '+_interested+' interested':'');
+  updateP();var _sent=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='sent'?1:0);},0);var _benched=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='benched'?1:0);},0);var _interested=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='interested'?1:0);},0);var _snoozed=DS[tab].reduce(function(n,_,i){var k=sk(tab,i);return n+(status[k]==='snoozed'&&snoozeData[k]&&snoozeData[k]>todayStr()?1:0);},0);var _active=DS[tab].length-_benched-_interested-_snoozed;var _pending=_active-_sent;document.getElementById('prog-text').textContent=_sent+' / '+_active+' sent ('+_pending+' remaining)'+(_benched?' \u00b7 '+_benched+' benched':'')+(_interested?' \u00b7 '+_interested+' interested':'');
 }
 function tableSwapFirm(firm,evt){
   const c=cur();if(!c)return;
@@ -1242,13 +1242,9 @@ function bench(){
 }
 function interested(){
   const c=cur();if(!c)return;
-  var markedIdx=c.i;
   status[sk(tab,c.i)]='interested';saveS();scheduleFbSave();
   pitchOverride={};altIdx=0;
-  qi++;buildQ();if(qi>=queue.length)qi=0;
-  // If we landed back on the same person, skip them
-  if(queue[qi]===markedIdx){qi++;if(qi>=queue.length)qi=0;}
-  render();updateP();
+  buildQ();if(qi>=queue.length)qi=0;render();updateP();
   showToast('Marked as interested ⭐');
 }
 function copyOffered(){const t=document.getElementById("offered-text");if(!t||!t.value)return;navigator.clipboard.writeText(t.value);}
