@@ -1,0 +1,313 @@
+[
+  {
+    "name": "Kirkland & Ellis LLP",
+    "cities": [
+      "New York",
+      "Chicago",
+      "Los Angeles",
+      "Washington, DC",
+      "San Francisco",
+      "Houston",
+      "Boston",
+      "Dallas"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Davis Polk & Wardwell",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "San Francisco",
+      "Menlo Park"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Paul, Weiss, Rifkind, Wharton & Garrison LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "Wilmington"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Cravath, Swaine & Moore LLP",
+    "cities": [
+      "New York"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Sullivan & Cromwell LLP",
+    "cities": [
+      "New York",
+      "Los Angeles",
+      "Palo Alto",
+      "Washington, DC"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Skadden, Arps, Slate, Meagher & Flom LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "Los Angeles",
+      "Chicago",
+      "Houston",
+      "Boston",
+      "Palo Alto",
+      "Wilmington"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Weil, Gotshal & Manges LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "Dallas",
+      "Houston",
+      "Boston",
+      "Miami"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Debevoise & Plimpton LLP",
+    "cities": [
+      "New York",
+      "Washington, DC"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Cleary Gottlieb Steen & Hamilton",
+    "cities": [
+      "New York",
+      "Washington, DC"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "King & Spalding LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "Atlanta",
+      "Houston",
+      "San Francisco",
+      "Chicago",
+      "Los Angeles",
+      "Austin"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Fried, Frank, Harris, Shriver & Jacobson LLP",
+    "cities": [
+      "New York",
+      "Washington, DC"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Willkie Farr & Gallagher LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "Chicago",
+      "San Francisco"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Proskauer Rose LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "Boston",
+      "Chicago",
+      "Los Angeles"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Cahill Gordon & Reindel LLP",
+    "cities": [
+      "New York",
+      "Washington, DC"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Ropes & Gray LLP",
+    "cities": [
+      "New York",
+      "Boston",
+      "Washington, DC",
+      "San Francisco",
+      "Chicago"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "White & Case LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "Los Angeles",
+      "Miami",
+      "Houston"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Akin, Gump, Strauss, Hauer & Feld, LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "Houston",
+      "Los Angeles",
+      "Dallas",
+      "Philadelphia",
+      "Boston",
+      "Chicago"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "WilmerHale",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "Boston",
+      "Los Angeles",
+      "Denver",
+      "San Francisco",
+      "Palo Alto"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Vinson & Elkins LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "Houston",
+      "Dallas",
+      "Austin"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Alston & Bird LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "Atlanta",
+      "Charlotte",
+      "Los Angeles",
+      "Dallas",
+      "Austin",
+      "Chicago"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Boies, Schiller & Flexner LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "San Francisco",
+      "Miami",
+      "Denver"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Morrison & Foerster LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "San Francisco",
+      "Los Angeles",
+      "San Diego",
+      "Denver"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Orrick, Herrington & Sutcliffe LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "San Francisco",
+      "Los Angeles",
+      "Portland",
+      "Seattle"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Wilson Sonsini Goodrich & Rosati",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "San Francisco",
+      "Palo Alto",
+      "San Diego",
+      "Austin",
+      "Seattle"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Munger, Tolles & Olson LLP",
+    "cities": [
+      "Los Angeles",
+      "San Francisco",
+      "Washington, DC"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "O'Melveny & Myers LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "Los Angeles",
+      "San Francisco",
+      "Century City",
+      "Newport Beach"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Williams & Connolly LLP",
+    "cities": [
+      "Washington, DC"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Choate Hall & Stewart LLP",
+    "cities": [
+      "Boston"
+    ],
+    "signed_client": false
+  },
+  {
+    "name": "Susman Godfrey L.L.P.",
+    "cities": [
+      "New York",
+      "Houston",
+      "Los Angeles",
+      "Dallas",
+      "Seattle"
+    ],
+    "signed_client": false
+  }
+]
