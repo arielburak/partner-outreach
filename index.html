@@ -1305,7 +1305,7 @@ document.addEventListener('keydown',e=>{
 });
 loadS();
 // One-time status corrections (safe to remove after confirmed)
-(function(){var fixes={'general_Ashley Mahoney':'interested','general_Sean Kim':'sent'};var resets=['general_Christopher Cormier'];var changed=false;for(var k in fixes){if(status[k]&&status[k]!==fixes[k]){status[k]=fixes[k];changed=true;}}resets.forEach(function(k){if(status[k]==='sent'){delete status[k];changed=true;}});if(changed)saveS();}());
+(function(){var fixes={'general_Ashley Mahoney':'interested','general_Sean Kim':'sent','general_Edmond Lay':'sent'};var resets=['general_Christopher Cormier'];var changed=false;for(var k in fixes){if(status[k]&&status[k]!==fixes[k]){status[k]=fixes[k];changed=true;}}resets.forEach(function(k){if(status[k]==='sent'){delete status[k];changed=true;}});if(changed)saveS();}());
 
 // ── SNOOZE DATA ──
 const SNOOZE_SK='ov6_snooze';
