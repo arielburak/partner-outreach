@@ -1305,7 +1305,7 @@ document.addEventListener('keydown',e=>{
 });
 loadS();
 // One-time status corrections (safe to remove after confirmed)
-(function(){var fixes={'general_Ashley Mahoney':'interested','general_Sean Kim':'sent','general_Edmond Lay':'sent'};var resets=['general_Christopher Cormier'];var changed=false;for(var k in fixes){if(status[k]&&status[k]!==fixes[k]){status[k]=fixes[k];changed=true;}}resets.forEach(function(k){if(status[k]==='sent'){delete status[k];changed=true;}});if(changed)saveS();}());
+(function(){var fixes={'general_Ashley Mahoney':'interested'};var resets=['general_Christopher Cormier'];var changed=false;for(var k in fixes){if(status[k]&&status[k]!==fixes[k]){status[k]=fixes[k];changed=true;}}resets.forEach(function(k){if(status[k]==='sent'){delete status[k];changed=true;}});if(changed)saveS();}());
 
 // ── SNOOZE DATA ──
 const SNOOZE_SK='ov6_snooze';
@@ -1360,17 +1360,32 @@ function unsnoozeExpired(){
   try{
     const raw=localStorage.getItem(SK);
     const old=raw?JSON.parse(raw):{};
-    // Check if we have any name-based keys already (means migration already ran)
     const hasNameKeys=Object.keys(old).some(k=>/^(general|fox)_[A-Z]/.test(k));
     const hasIndexKeys=Object.keys(old).some(k=>/^(general|fox)_\d+$/.test(k));
-    if(!hasIndexKeys&&hasNameKeys)return; // Already migrated, nothing to do
-    // Build fresh status from log (sent entries) and follow-up data
+    if(!hasIndexKeys&&hasNameKeys){
+      // Already migrated — but STILL reconcile fuLog for any NEW partners without status
+      status=old;
+      const logRaw=localStorage.getItem('ov6_log');
+      if(logRaw){
+        const log=JSON.parse(logRaw);
+        const sentNames=new Set(log.map(e=>e.name));
+        let changed=false;
+        ['general','fox'].forEach(t=>{
+          if(!DS[t])return;
+          DS[t].forEach((p,i)=>{
+            const key=t+'_'+p.name;
+            if(!status[key]&&sentNames.has(p.name)){status[key]='sent';changed=true;}
+          });
+        });
+        if(changed)saveS();
+      }
+      return;
+    }
+    // Full migration from index-based to name-based keys
     const fresh={};
-    // Preserve any existing name-based keys
     for(const[k,v] of Object.entries(old)){
       if(!/^(general|fox)_\d+$/.test(k))fresh[k]=v;
     }
-    // Reconstruct 'sent' from fuLog (the log has partner names)
     const logRaw=localStorage.getItem('ov6_log');
     if(logRaw){
       const log=JSON.parse(logRaw);
