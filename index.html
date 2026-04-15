@@ -803,7 +803,7 @@ function buildQ(){
   const today=todayStr();
   let idxs=d.map((_,i)=>i);
   // Filter out snoozed candidates (return date still in the future) and benched
-  idxs=idxs.filter(i=>{const key=sk(tab,i);if(status[key]==='sent'||status[key]==='benched'||status[key]==='interested')return false;if(status[key]==='snoozed')return false;if(tab==='general'){var fk=d[i].name+'|'+d[i].firm;if(fuData[fk]&&!fuData[fk].done)return false;}return true;});
+  var _fuD;try{_fuD=fuData}catch(e){_fuD={}}idxs=idxs.filter(i=>{const key=sk(tab,i);if(status[key]==='sent'||status[key]==='benched'||status[key]==='interested')return false;if(status[key]==='snoozed')return false;if(tab==='general'){var fk=d[i].name+'|'+d[i].firm;if(_fuD[fk]&&!_fuD[fk].done)return false;}return true;});
   // Filter out partners with no message and no target (unmatched cities)
   if(tab==='general')idxs=idxs.filter(i=>d[i].message||d[i].target);
   // Build effective last-contact from NOTE_DATES (Excel note dates) — this is the authoritative sort key
@@ -957,7 +957,7 @@ function render(){
   var skipBdg=document.getElementById('skip-badge');
   if(!skipBdg){skipBdg=document.createElement('span');skipBdg.id='skip-badge';skipBdg.className='badge-skipped';skipBdg.textContent='SKIPPED';var nameEl=document.getElementById('p-name');if(nameEl)nameEl.parentNode.insertBefore(skipBdg,nameEl.nextSibling);}
   skipBdg.style.display=status[sk(tab,c.i)]==='skipped'?'inline-block':'none';
-  updateP();var _sent=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='sent'?1:0);},0);var _benched=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='benched'?1:0);},0);var _interested=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='interested'?1:0);},0);var _snoozed=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='snoozed'?1:0);},0);var _inFu=0;if(tab==='general'){DS[tab].forEach(function(_,i){var k=sk(tab,i);if(status[k]!=='sent'&&status[k]!=='benched'&&status[k]!=='interested'&&status[k]!=='snoozed'){var fk=DS[tab][i].name+'|'+DS[tab][i].firm;if(fuData[fk]&&!fuData[fk].done)_inFu++;}});}var _active=DS[tab].length-_benched-_interested-_snoozed;var _pending=_active-_sent-_inFu;document.getElementById('prog-text').textContent=_sent+' / '+_active+' sent ('+_pending+' remaining)'+(_benched?' \u00b7 '+_benched+' benched':'')+(_interested?' \u00b7 '+_interested+' interested':'');
+  updateP();var _sent=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='sent'?1:0);},0);var _benched=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='benched'?1:0);},0);var _interested=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='interested'?1:0);},0);var _snoozed=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='snoozed'?1:0);},0);var _inFu=0;try{if(tab==='general'){DS[tab].forEach(function(_,i){var k=sk(tab,i);if(status[k]!=='sent'&&status[k]!=='benched'&&status[k]!=='interested'&&status[k]!=='snoozed'){var fk=DS[tab][i].name+'|'+DS[tab][i].firm;if(fuData[fk]&&!fuData[fk].done)_inFu++;}});}}catch(e){}var _active=DS[tab].length-_benched-_interested-_snoozed;var _pending=_active-_sent-_inFu;document.getElementById('prog-text').textContent=_sent+' / '+_active+' sent ('+_pending+' remaining)'+(_benched?' \u00b7 '+_benched+' benched':'')+(_interested?' \u00b7 '+_interested+' interested':'');
 }
 function tableSwapFirm(firm,evt){
   const c=cur();if(!c)return;
