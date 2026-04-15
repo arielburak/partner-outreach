@@ -996,7 +996,7 @@ function buildFirmTable(p){
   const myTargetsShort=new Set([...myTargets].map(f=>sfGlobal(f)));
   const pCity=p.city||'';
   // Legitimate city aliases (same place, different formatting)
-  const CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York'};
+  const CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York','Palo Alto':'San Francisco','Silicon Valley':'San Francisco','Menlo Park':'San Francisco','Mountain View':'San Francisco','San Jose':'San Francisco','Sunnyvale':'San Francisco','Redwood City':'San Francisco'};
   const pCityNorm=CITY_ALIASES[pCity]||pCity;
   // Build rows from COLD_CALL_FIRMS, filtered by partner's city
   var rows=[];
