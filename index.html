@@ -159,6 +159,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .tab.log-tab.active{border-bottom-color:#27ae60;}
 .tab.log-tab.active .tab-badge{background:#e5f5ed;color:#27ae60;}
 .tab.stats-tab.active{border-bottom-color:#f0a500;}
+.tab.live-tab.active{border-bottom-color:#9b59b6;}
+.live-view{display:none;flex:1;flex-direction:column;overflow:hidden;}
+.live-input{font-size:13px;padding:8px 12px;border-radius:8px;border:1px solid #d8dce3;background:#fff;color:#333;outline:none;font-family:inherit;}
+.live-input:focus{border-color:#9b59b6;}
+.live-table{width:100%;border-collapse:collapse;font-size:13px;}
+.live-table th{text-align:left;padding:8px 10px;border-bottom:2px solid #e8eaef;color:#6a6a7e;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.5px;background:#f8f9fb;position:sticky;top:0;z-index:1;}
+.live-table td{padding:10px;border-bottom:1px solid #f0f2f5;color:#3a3a4e;vertical-align:top;}
+.live-table tr:hover td{background:#fafbfd;}
+.live-city-pill{display:inline-block;background:#eef0f5;color:#5a5a6e;padding:2px 8px;border-radius:10px;font-size:11px;margin:1px 2px 1px 0;}
+.live-city-pill.match{background:#e8f4fd;color:#1a5490;font-weight:600;}
 .fu-view{display:none;flex:1;flex-direction:column;overflow:hidden;}
 .log-view{display:none;flex:1;flex-direction:column;overflow:hidden;}
 .fu-stage-badge{font-size:11px;padding:3px 9px;border-radius:10px;font-weight:600;margin-left:4px;}
@@ -200,6 +210,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
   <div class="tab fu-tab" id="tab-followups" onclick="switchTab('followups')">Follow-ups <span class="tab-badge" id="fu-badge">0</span></div>
   <div class="tab log-tab" id="tab-log" onclick="switchTab('log')">Log <span class="tab-badge" id="log-badge">0</span></div>
   <div class="tab stats-tab" id="tab-stats" onclick="switchTab('stats')">Stats</div>
+  <div class="tab live-tab" id="tab-live" onclick="switchTab('live')">Live Call</div>
   <div style="margin-left:auto;display:flex;gap:6px;align-items:center;padding-right:8px;">
     <span id="fb-status" style="font-size:10px;padding:4px 11px;border-radius:6px;border:1px solid #e8d080;background:#fff0e0;color:#b8860b;font-weight:600;white-space:nowrap;">⏳ Connecting...</span>
     <button onclick="exportData()" style="font-size:10px;padding:4px 10px;border-radius:6px;border:1px solid #d8dce3;background:#ffffff;color:#6a6a7e;cursor:pointer;font-weight:600;">Backup</button>
@@ -733,6 +744,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
   </div>
 </div>
 
+<div class="live-view" id="live-view" style="display:none;flex-direction:column;height:100%;overflow:hidden;">
+  <div style="padding:24px 28px 14px;flex-shrink:0;border-bottom:1px solid #e8eaef;background:#fff;">
+    <h2 style="margin:0 0 12px;font-size:18px;font-weight:700;color:#1a3060;">Live Call &middot; Firm Lookup</h2>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <div style="position:relative;">
+        <input id="live-candidate" class="live-input" type="text" placeholder="Search candidate..." style="width:240px;" oninput="liveCandidateInput()" autocomplete="off" />
+        <div id="live-candidate-results" style="display:none;position:absolute;top:100%;left:0;right:0;margin-top:4px;background:#fff;border:1px solid #d8dce3;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);max-height:260px;overflow-y:auto;z-index:10;"></div>
+      </div>
+      <select id="live-city" class="live-input" style="min-width:180px;cursor:pointer;" onchange="renderLiveTab()"></select>
+      <input id="live-practice" class="live-input" type="text" placeholder="Filter by practice / note..." style="width:240px;" oninput="renderLiveTab()" />
+      <button onclick="liveClear()" style="font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid #d8dce3;background:#fff;color:#6a6a7e;cursor:pointer;font-weight:600;">Clear</button>
+      <span id="live-result-count" style="margin-left:auto;color:#888;font-size:12px;font-weight:600;"></span>
+    </div>
+    <div id="live-candidate-info" style="margin-top:10px;font-size:12px;color:#6a6a7e;display:none;"></div>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding:0 28px 24px;">
+    <table class="live-table">
+      <thead><tr><th style="width:200px;">Firm</th><th style="text-align:right;width:90px;">PPP</th><th style="text-align:right;width:90px;">Min Book</th><th>Cities</th><th>Practices / Notes</th></tr></thead>
+      <tbody id="live-firms-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 <script>
 const NON_SIGNED=new Set(["Akin, Gump, Strauss, Hauer & Feld, LLP", "Alston & Bird LLP", "Cravath, Swaine & Moore LLP", "Fried, Frank, Harris, Shriver & Jacobson LLP", "King & Spalding LLP", "Kirkland & Ellis LLP", "Morrison & Foerster LLP", "O'Melveny & Myers LLP", "Orrick, Herrington & Sutcliffe LLP", "Paul, Weiss, Rifkind, Wharton & Garrison LLP", "Ropes & Gray LLP", "Skadden, Arps, Slate, Meagher & Flom LLP", "White & Case LLP", "Willkie Farr & Gallagher LLP", "Wilson Sonsini Goodrich & Rosati"]);
@@ -1229,7 +1263,7 @@ function jumpSuggest(val){
 document.addEventListener('click',function(e){if(!e.target.closest('#jump-input')&&!e.target.closest('#jump-suggest'))document.getElementById('jump-suggest').style.display='none';});
 function resetTab(){const d=DS[tab];d.forEach((_,i)=>delete status[sk(tab,i)]);saveS();qi=0;buildQ();render();}
 function switchTab(t){
-  const isSpecial = t==='followups'||t==='log'||t==='stats';
+  const isSpecial = t==='followups'||t==='log'||t==='stats'||t==='live';
   const gm=document.getElementById('general-main');if(gm)gm.style.display=isSpecial?'none':'';
   const offRow=document.getElementById('offered-row');if(offRow&&isSpecial)offRow.style.display='none';
   document.querySelector('.topbar').style.display = isSpecial?'none':'';
@@ -1237,16 +1271,19 @@ function switchTab(t){
   document.getElementById('fu-view').style.display = t==='followups'?'flex':'none';
   document.getElementById('log-view').style.display = t==='log'?'flex':'none';
   document.getElementById('stats-view').style.display = t==='stats'?'flex':'none';
+  var liveV=document.getElementById('live-view');if(liveV)liveV.style.display = t==='live'?'flex':'none';
   // Update tab classes
   document.getElementById('tab-general').className='tab'+(t==='general'?' active':'');
   document.getElementById('tab-fox').className='tab fox-tab'+(t==='fox'?' active':'');
   document.getElementById('tab-followups').className='tab fu-tab'+(t==='followups'?' active':'');
   document.getElementById('tab-log').className='tab log-tab'+(t==='log'?' active':'');
   document.getElementById('tab-stats').className='tab stats-tab'+(t==='stats'?' active':'');
+  var tlive=document.getElementById('tab-live');if(tlive)tlive.className='tab live-tab'+(t==='live'?' active':'');
   if(isSpecial){
     if(t==='followups'){fuBuildQ();renderFuTab();}
     else if(t==='log'){renderLogTab();}
     else if(t==='stats'){renderStatsTab();}
+    else if(t==='live'){renderLiveTab();}
     return;
   }
   tab=t;
@@ -1891,6 +1928,138 @@ function togglePitchEditWithPrefill(){
   togglePitchEdit();
 }
 
+
+// Live Call tab: filter firms by candidate's geography for use during live calls
+var _liveCityListBuilt=false;
+var LIVE_CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York','Palo Alto':'San Francisco','Silicon Valley':'San Francisco','Menlo Park':'San Francisco','Mountain View':'San Francisco','San Jose':'San Francisco','Sunnyvale':'San Francisco','Redwood City':'San Francisco'};
+function liveBuildCityDropdown(){
+  if(_liveCityListBuilt)return;
+  var sel=document.getElementById('live-city');
+  if(!sel)return;
+  var cities=new Set();
+  for(var k in COLD_CALL_FIRMS){
+    var info=COLD_CALL_FIRMS[k];
+    if(info && info.cities){info.cities.forEach(function(c){if(c)cities.add(c);});}
+  }
+  var sorted=Array.from(cities).sort();
+  var html='<option value="">All cities</option>';
+  sorted.forEach(function(c){html+='<option value="'+c.replace(/"/g,'&quot;')+'">'+c+'</option>';});
+  sel.innerHTML=html;
+  _liveCityListBuilt=true;
+}
+function liveLookupPpp(firm){
+  if(FIRM_PPP[firm])return FIRM_PPP[firm];
+  var short=sfGlobal(firm);
+  for(var k in FIRM_PPP){if(sfGlobal(k)===short)return FIRM_PPP[k];}
+  return 0;
+}
+function liveLookupSearches(firm){
+  if(FIRM_SEARCHES[firm])return FIRM_SEARCHES[firm];
+  var short=sfGlobal(firm);
+  for(var k in FIRM_SEARCHES){if(sfGlobal(k)===short)return FIRM_SEARCHES[k];}
+  return null;
+}
+function liveCandidateInput(){
+  var inp=document.getElementById('live-candidate');
+  var box=document.getElementById('live-candidate-results');
+  if(!inp||!box)return;
+  var val=(inp.value||'').toLowerCase().trim();
+  if(val.length<2){box.style.display='none';box.innerHTML='';return;}
+  var d=DS['general']||[];
+  var matches=[];
+  for(var i=0;i<d.length&&matches.length<12;i++){
+    var p=d[i];if(!p||!p.name)continue;
+    if(p.name.toLowerCase().indexOf(val)>=0||(p.firm||'').toLowerCase().indexOf(val)>=0){
+      matches.push(p);
+    }
+  }
+  if(!matches.length){box.style.display='none';return;}
+  box.innerHTML=matches.map(function(p){
+    var safeName=(p.name||'').replace(/'/g,"\\'");
+    return '<div onclick="liveSelectCandidate(\''+safeName+'\')" style="padding:8px 12px;cursor:pointer;border-bottom:1px solid #f0f2f5;font-size:13px;" onmouseover="this.style.background=\'#f7f8fa\'" onmouseout="this.style.background=\'\'"><div style="font-weight:600;color:#3a3a4e;">'+p.name+'</div><div style="font-size:11px;color:#888;">'+(p.firm||'')+' &middot; '+(p.city||'')+'</div></div>';
+  }).join('');
+  box.style.display='block';
+}
+function liveSelectCandidate(name){
+  var d=DS['general']||[];
+  var p=null;
+  for(var i=0;i<d.length;i++){if(d[i].name===name){p=d[i];break;}}
+  var inp=document.getElementById('live-candidate');
+  var box=document.getElementById('live-candidate-results');
+  var info=document.getElementById('live-candidate-info');
+  if(!p){if(box)box.style.display='none';return;}
+  if(inp)inp.value=p.name;
+  if(box){box.style.display='none';box.innerHTML='';}
+  // Set city dropdown to candidate's city (normalized)
+  var pCity=p.city||'';
+  var pCityNorm=LIVE_CITY_ALIASES[pCity]||pCity;
+  var sel=document.getElementById('live-city');
+  if(sel){
+    var found=false;
+    for(var oi=0;oi<sel.options.length;oi++){if(sel.options[oi].value===pCityNorm){sel.selectedIndex=oi;found=true;break;}}
+    if(!found)sel.selectedIndex=0;
+  }
+  if(info){
+    info.style.display='block';
+    var firms=[p.target,p.alt1,p.alt2,p.alt3].filter(Boolean).join(', ');
+    info.innerHTML='<b style="color:#1a3060;">'+p.name+'</b> &middot; '+(p.firm||'')+' &middot; '+(p.city||'')+(p.practice?' &middot; '+p.practice:'')+(firms?'<div style="margin-top:4px;color:#888;">Pitched: '+firms+'</div>':'');
+  }
+  renderLiveTab();
+}
+function liveClear(){
+  var inp=document.getElementById('live-candidate');if(inp)inp.value='';
+  var box=document.getElementById('live-candidate-results');if(box){box.style.display='none';box.innerHTML='';}
+  var sel=document.getElementById('live-city');if(sel)sel.selectedIndex=0;
+  var pr=document.getElementById('live-practice');if(pr)pr.value='';
+  var info=document.getElementById('live-candidate-info');if(info){info.style.display='none';info.innerHTML='';}
+  renderLiveTab();
+}
+function renderLiveTab(){
+  liveBuildCityDropdown();
+  var citySel=document.getElementById('live-city');
+  var prSel=document.getElementById('live-practice');
+  var city=citySel?citySel.value:'';
+  var practiceQ=(prSel&&prSel.value?prSel.value:'').toLowerCase().trim();
+  var rows=[];
+  for(var firm in COLD_CALL_FIRMS){
+    var info=COLD_CALL_FIRMS[firm];if(!info)continue;
+    var cities=info.cities||[];
+    if(city && cities.length>0 && cities.indexOf(city)<0)continue;
+    var ppp=liveLookupPpp(firm);
+    var searches=liveLookupSearches(firm);
+    var practicesText='';
+    if(searches && searches.searches)practicesText=searches.searches.join(', ');
+    var noteText=info.notes||'';
+    var combinedSearchable=(practicesText+' '+noteText+' '+(searches&&searches.notes?searches.notes:'')).toLowerCase();
+    if(practiceQ && combinedSearchable.indexOf(practiceQ)<0)continue;
+    rows.push({firm:firm,ppp:ppp,book:info.book||0,cities:cities,practices:practicesText,notes:noteText,extraNotes:searches&&searches.notes?searches.notes:''});
+  }
+  // Sort: lower book first (more accessible), then higher PPP
+  rows.sort(function(a,b){return (a.book-b.book)||(b.ppp-a.ppp);});
+  var tbody=document.getElementById('live-firms-tbody');
+  var rc=document.getElementById('live-result-count');
+  if(rc)rc.textContent=rows.length+' firm'+(rows.length===1?'':'s');
+  if(!tbody)return;
+  if(!rows.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:30px;color:#888;">No firms match these filters</td></tr>';return;}
+  tbody.innerHTML=rows.map(function(r){
+    var pppStr=r.ppp>=1e6?'$'+(r.ppp/1e6).toFixed(1)+'M':r.ppp>=1e3?'$'+Math.round(r.ppp/1e3)+'K':'&mdash;';
+    var bookStr=r.book?'$'+r.book+'M':'&mdash;';
+    var citiesHtml=r.cities.map(function(c){var cls='live-city-pill'+(city&&c===city?' match':'');return '<span class="'+cls+'">'+c+'</span>';}).join('');
+    var noteHtml='';
+    if(r.practices)noteHtml+='<div style="color:#1a5490;font-weight:600;margin-bottom:3px;">'+r.practices+'</div>';
+    if(r.notes)noteHtml+='<div style="color:#5a5a6e;">'+r.notes+'</div>';
+    if(r.extraNotes && r.extraNotes!==r.notes)noteHtml+='<div style="color:#888;font-size:11px;margin-top:3px;">'+r.extraNotes+'</div>';
+    if(!noteHtml)noteHtml='<span style="color:#bbb;">&mdash;</span>';
+    return '<tr><td style="font-weight:600;color:#1a3060;">'+r.firm+'</td><td style="text-align:right;color:#4f8ef7;font-weight:600;">'+pppStr+'</td><td style="text-align:right;color:#e67e22;font-weight:600;">'+bookStr+'</td><td>'+citiesHtml+'</td><td>'+noteHtml+'</td></tr>';
+  }).join('');
+}
+// Hide candidate suggestion list on outside click
+document.addEventListener('click',function(e){
+  var box=document.getElementById('live-candidate-results');
+  if(!box)return;
+  if(e.target.closest('#live-candidate')||e.target.closest('#live-candidate-results'))return;
+  box.style.display='none';
+});
 
 function renderStatsTab(){
   const today=todayStr();
