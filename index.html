@@ -686,6 +686,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
         <div style="font-size:11px;opacity:0.5;margin-top:4px;">messages sent</div>
       </div>
     </div>
+    <div style="margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <div style="width:4px;height:18px;background:#9b59b6;border-radius:2px;"></div>
+        <h3 style="margin:0;font-size:14px;font-weight:700;color:#1a3060;">Response Rates</h3>
+        <span style="font-size:11px;color:#888;font-weight:400;">partners on the platform</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+        <div style="background:#f8f9fb;border:1px solid #e8eaef;border-radius:10px;padding:16px 20px;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:#888;margin-bottom:6px;">Interested</div>
+          <div style="font-size:28px;font-weight:800;color:#27ae60;line-height:1;" id="stats-interested">0</div>
+          <div style="font-size:11px;color:#aaa;margin-top:4px;">partners</div>
+        </div>
+        <div style="background:#f8f9fb;border:1px solid #e8eaef;border-radius:10px;padding:16px 20px;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:#888;margin-bottom:6px;">Replied</div>
+          <div style="font-size:28px;font-weight:800;color:#4f8ef7;line-height:1;" id="stats-replied">0</div>
+          <div style="font-size:11px;color:#aaa;margin-top:4px;">interested + not interested</div>
+        </div>
+        <div style="background:#f8f9fb;border:1px solid #e8eaef;border-radius:10px;padding:16px 20px;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:#888;margin-bottom:6px;">Response Rate</div>
+          <div style="font-size:28px;font-weight:800;color:#9b59b6;line-height:1;" id="stats-response-rate">0%</div>
+          <div style="font-size:11px;color:#aaa;margin-top:4px;" id="stats-contacted-total">of 0 contacted</div>
+        </div>
+      </div>
+    </div>
   </div>
   <div style="padding:0 28px 20px;flex:1;overflow:hidden;display:flex;flex-direction:column;">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
@@ -1888,6 +1912,38 @@ function renderStatsTab(){
   document.getElementById('stats-today').textContent=cToday;
   document.getElementById('stats-week').textContent=cWeek;
   document.getElementById('stats-month').textContent=cMonth;
+  // Response rates among platform partners
+  var platformNames=new Set();
+  var d=DS['general']||[];
+  for(var pi=0;pi<d.length;pi++){if(d[pi].status==='active')platformNames.add(d[pi].name);}
+  var interestedNames=new Set();
+  var notInterestedNames=new Set();
+  // Check fuLog for interested/not_interested outcomes
+  fuLog.forEach(function(e){
+    if(!platformNames.has(e.name))return;
+    if(e.stage==='interested')interestedNames.add(e.name);
+    if(e.stage==='not_interested')notInterestedNames.add(e.name);
+  });
+  // Also check status object for partners marked interested from main tab
+  for(var si=0;si<d.length;si++){
+    if(d[si].status!=='active')continue;
+    var sKey='general_'+d[si].name;
+    if(status[sKey]==='interested')interestedNames.add(d[si].name);
+  }
+  var intCount=interestedNames.size;
+  var repliedNames=new Set();
+  interestedNames.forEach(function(n){repliedNames.add(n);});
+  notInterestedNames.forEach(function(n){repliedNames.add(n);});
+  var repliedCount=repliedNames.size;
+  // Unique contacted partners on platform
+  var contactedNames=new Set();
+  fuLog.forEach(function(e){if(platformNames.has(e.name))contactedNames.add(e.name);});
+  var contactedCount=contactedNames.size;
+  var rateStr=contactedCount>0?Math.round(repliedCount/contactedCount*100)+'%':'0%';
+  document.getElementById('stats-interested').textContent=intCount;
+  document.getElementById('stats-replied').textContent=repliedCount;
+  document.getElementById('stats-response-rate').textContent=rateStr;
+  document.getElementById('stats-contacted-total').textContent='of '+contactedCount+' contacted';
   // Render scheduled follow-ups
   const entries=Object.values(fuData).filter(function(f){return !f.done&&(f.nextDate||f.due_date);});
   entries.sort(function(a,b){var da=a.nextDate||a.due_date||'9999';var db=b.nextDate||b.due_date||'9999';return da<db?-1:da>db?1:0;});
