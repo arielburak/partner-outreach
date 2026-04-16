@@ -880,7 +880,7 @@ function render(){
   document.body.className=isFox?'view-fox':'';
   const c=cur();
   document.getElementById('done-overlay').style.display=c?'none':'flex';
-  if(!c){updateP();return;}
+  if(!c){updateP();try{var _sentD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='sent'?1:0);},0);var _benchedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='benched'?1:0);},0);var _interestedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='interested'?1:0);},0);var _snoozedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='snoozed'?1:0);},0);var _inFuD=0;if(tab==='general'){DS[tab].forEach(function(_,i){var k=sk(tab,i);if(status[k]!=='sent'&&status[k]!=='benched'&&status[k]!=='interested'&&status[k]!=='snoozed'){var fk=DS[tab][i].name+'|'+DS[tab][i].firm;if(fuData[fk]&&!fuData[fk].done)_inFuD++;}});}var _activeD=DS[tab].length-_benchedD-_interestedD-_snoozedD;var _pendingD=_activeD-_sentD-_inFuD;document.getElementById('prog-text').textContent=_sentD+' / '+_activeD+' sent ('+_pendingD+' remaining)'+(_benchedD?' \u00b7 '+_benchedD+' benched':'')+(_interestedD?' \u00b7 '+_interestedD+' interested':'');}catch(e){}return;}
   const{p,i}=c;
   altIdx=0;
   document.getElementById('p-name').textContent=p.name||'';
