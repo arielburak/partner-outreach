@@ -696,7 +696,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
         <div style="background:#f8f9fb;border:1px solid #e8eaef;border-radius:10px;padding:16px 20px;">
           <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:#888;margin-bottom:6px;">Interested</div>
           <div style="font-size:28px;font-weight:800;color:#27ae60;line-height:1;" id="stats-interested">0</div>
-          <div style="font-size:11px;color:#aaa;margin-top:4px;">partners</div>
+          <div style="font-size:11px;color:#aaa;margin-top:4px;" id="stats-interested-rate">0% of contacted</div>
         </div>
         <div style="background:#f8f9fb;border:1px solid #e8eaef;border-radius:10px;padding:16px 20px;">
           <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:#888;margin-bottom:6px;">Replied</div>
@@ -1940,7 +1940,9 @@ function renderStatsTab(){
   fuLog.forEach(function(e){if(platformNames.has(e.name))contactedNames.add(e.name);});
   var contactedCount=contactedNames.size;
   var rateStr=contactedCount>0?Math.round(repliedCount/contactedCount*100)+'%':'0%';
+  var intRateStr=contactedCount>0?Math.round(intCount/contactedCount*100)+'% of contacted':'0% of contacted';
   document.getElementById('stats-interested').textContent=intCount;
+  document.getElementById('stats-interested-rate').textContent=intRateStr;
   document.getElementById('stats-replied').textContent=repliedCount;
   document.getElementById('stats-response-rate').textContent=rateStr;
   document.getElementById('stats-contacted-total').textContent='of '+contactedCount+' contacted';
