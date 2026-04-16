@@ -160,15 +160,40 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .tab.log-tab.active .tab-badge{background:#e5f5ed;color:#27ae60;}
 .tab.stats-tab.active{border-bottom-color:#f0a500;}
 .tab.live-tab.active{border-bottom-color:#9b59b6;}
-.live-view{display:none;flex:1;flex-direction:column;overflow:hidden;}
-.live-input{font-size:13px;padding:8px 12px;border-radius:8px;border:1px solid #d8dce3;background:#fff;color:#333;outline:none;font-family:inherit;}
-.live-input:focus{border-color:#9b59b6;}
-.live-table{width:100%;border-collapse:collapse;font-size:13px;}
-.live-table th{text-align:left;padding:8px 10px;border-bottom:2px solid #e8eaef;color:#6a6a7e;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.5px;background:#f8f9fb;position:sticky;top:0;z-index:1;}
-.live-table td{padding:10px;border-bottom:1px solid #f0f2f5;color:#3a3a4e;vertical-align:top;}
-.live-table tr:hover td{background:#fafbfd;}
-.live-city-pill{display:inline-block;background:#eef0f5;color:#5a5a6e;padding:2px 8px;border-radius:10px;font-size:11px;margin:1px 2px 1px 0;}
-.live-city-pill.match{background:#e8f4fd;color:#1a5490;font-weight:600;}
+.live-view{display:none;flex:1;flex-direction:column;overflow:hidden;background:#f5f6fa;}
+.live-header{padding:20px 32px 18px;flex-shrink:0;background:#fff;border-bottom:1px solid #e8eaef;}
+.live-title{margin:0 0 4px;font-size:20px;font-weight:800;color:#1a3060;letter-spacing:-0.3px;}
+.live-subtitle{margin:0 0 16px;font-size:12px;color:#8a8a9e;font-weight:500;}
+.live-filters{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
+.live-field{display:flex;flex-direction:column;gap:4px;}
+.live-field label{font-size:10px;text-transform:uppercase;letter-spacing:0.6px;color:#8a8a9e;font-weight:700;padding-left:2px;}
+.live-input{font-size:13px;padding:9px 12px;border-radius:9px;border:1px solid #d8dce3;background:#fff;color:#333;outline:none;font-family:inherit;transition:all .15s;}
+.live-input:focus{border-color:#9b59b6;box-shadow:0 0 0 3px rgba(155,89,182,0.12);}
+.live-btn-clear{font-size:12px;padding:9px 16px;border-radius:9px;border:1px solid #d8dce3;background:#fff;color:#6a6a7e;cursor:pointer;font-weight:600;transition:all .15s;height:36px;}
+.live-btn-clear:hover{background:#f7f8fa;border-color:#b8bcc5;}
+.live-candidate-banner{margin-top:14px;padding:12px 16px;background:linear-gradient(135deg,#f3eafa,#ebe4fa);border:1px solid #d5c5ea;border-radius:10px;font-size:13px;color:#3a2548;display:none;}
+.live-candidate-banner.show{display:block;}
+.live-candidate-banner b{color:#5b2d83;}
+.live-body{flex:1;overflow-y:auto;padding:20px 32px 28px;}
+.live-result-count{color:#6a6a7e;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px;}
+.live-firm-card{background:#fff;border:1px solid #e8eaef;border-radius:12px;padding:16px 20px;margin-bottom:10px;display:grid;grid-template-columns:1fr 110px 110px;gap:16px;align-items:start;transition:all .15s;}
+.live-firm-card:hover{border-color:#c9b8e0;box-shadow:0 2px 12px rgba(91,45,131,0.08);transform:translateY(-1px);}
+.live-firm-main{min-width:0;}
+.live-firm-name{font-size:15px;font-weight:700;color:#1a3060;margin-bottom:6px;letter-spacing:-0.2px;}
+.live-firm-cities{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
+.live-city-pill{display:inline-block;background:#f0f2f7;color:#6a6a7e;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:500;}
+.live-city-pill.match{background:linear-gradient(135deg,#9b59b6,#7c3aed);color:#fff;font-weight:600;box-shadow:0 1px 3px rgba(124,58,237,0.25);}
+.live-practice-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.live-practice-tag{display:inline-block;background:#e8f4fd;color:#1a5490;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:600;}
+.live-firm-note{font-size:12px;color:#6a6a7e;line-height:1.5;margin-top:6px;}
+.live-firm-note.secondary{color:#9a9aae;font-size:11px;font-style:italic;margin-top:3px;}
+.live-metric{text-align:right;display:flex;flex-direction:column;gap:2px;padding-top:2px;}
+.live-metric-label{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#8a8a9e;font-weight:700;}
+.live-metric-value{font-size:17px;font-weight:800;letter-spacing:-0.3px;}
+.live-metric-value.ppp{color:#4f8ef7;}
+.live-metric-value.book{color:#e67e22;}
+.live-metric-value.empty{color:#c8c8d4;font-size:14px;font-weight:600;}
+.live-empty{text-align:center;padding:60px 20px;color:#8a8a9e;font-size:14px;background:#fff;border:1px dashed #d8dce3;border-radius:12px;}
 .fu-view{display:none;flex:1;flex-direction:column;overflow:hidden;}
 .log-view{display:none;flex:1;flex-direction:column;overflow:hidden;}
 .fu-stage-badge{font-size:11px;padding:3px 9px;border-radius:10px;font-weight:600;margin-left:4px;}
@@ -744,26 +769,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
   </div>
 </div>
 
-<div class="live-view" id="live-view" style="display:none;flex-direction:column;height:100%;overflow:hidden;">
-  <div style="padding:24px 28px 14px;flex-shrink:0;border-bottom:1px solid #e8eaef;background:#fff;">
-    <h2 style="margin:0 0 12px;font-size:18px;font-weight:700;color:#1a3060;">Live Call &middot; Firm Lookup</h2>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-      <div style="position:relative;">
-        <input id="live-candidate" class="live-input" type="text" placeholder="Search candidate..." style="width:240px;" oninput="liveCandidateInput()" autocomplete="off" />
-        <div id="live-candidate-results" style="display:none;position:absolute;top:100%;left:0;right:0;margin-top:4px;background:#fff;border:1px solid #d8dce3;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);max-height:260px;overflow-y:auto;z-index:10;"></div>
+<div class="live-view" id="live-view">
+  <div class="live-header">
+    <h2 class="live-title">Live Call &middot; Firm Lookup</h2>
+    <p class="live-subtitle">Filter firms by geography and practice area for your candidate conversation.</p>
+    <div class="live-filters">
+      <div class="live-field" style="position:relative;">
+        <label>Candidate</label>
+        <input id="live-candidate" class="live-input" type="text" placeholder="Search by name or firm..." style="width:260px;" oninput="liveCandidateInput()" autocomplete="off" />
+        <div id="live-candidate-results" style="display:none;position:absolute;top:100%;left:0;right:0;margin-top:4px;background:#fff;border:1px solid #d8dce3;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.1);max-height:280px;overflow-y:auto;z-index:10;"></div>
       </div>
-      <select id="live-city" class="live-input" style="min-width:180px;cursor:pointer;" onchange="renderLiveTab()"></select>
-      <input id="live-practice" class="live-input" type="text" placeholder="Filter by practice / note..." style="width:240px;" oninput="renderLiveTab()" />
-      <button onclick="liveClear()" style="font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid #d8dce3;background:#fff;color:#6a6a7e;cursor:pointer;font-weight:600;">Clear</button>
-      <span id="live-result-count" style="margin-left:auto;color:#888;font-size:12px;font-weight:600;"></span>
+      <div class="live-field">
+        <label>City</label>
+        <select id="live-city" class="live-input" style="min-width:190px;cursor:pointer;" onchange="renderLiveTab()"></select>
+      </div>
+      <div class="live-field">
+        <label>Practice / Notes</label>
+        <input id="live-practice" class="live-input" type="text" placeholder="e.g. real estate, m&amp;a..." style="width:240px;" oninput="renderLiveTab()" />
+      </div>
+      <button class="live-btn-clear" onclick="liveClear()">Clear</button>
     </div>
-    <div id="live-candidate-info" style="margin-top:10px;font-size:12px;color:#6a6a7e;display:none;"></div>
+    <div class="live-candidate-banner" id="live-candidate-info"></div>
   </div>
-  <div style="flex:1;overflow-y:auto;padding:0 28px 24px;">
-    <table class="live-table">
-      <thead><tr><th style="width:200px;">Firm</th><th style="text-align:right;width:90px;">PPP</th><th style="text-align:right;width:90px;">Min Book</th><th>Cities</th><th>Practices / Notes</th></tr></thead>
-      <tbody id="live-firms-tbody"></tbody>
-    </table>
+  <div class="live-body">
+    <div class="live-result-count" id="live-result-count"></div>
+    <div id="live-firms-list"></div>
   </div>
 </div>
 
@@ -1990,7 +2020,6 @@ function liveSelectCandidate(name){
   if(!p){if(box)box.style.display='none';return;}
   if(inp)inp.value=p.name;
   if(box){box.style.display='none';box.innerHTML='';}
-  // Set city dropdown to candidate's city (normalized)
   var pCity=p.city||'';
   var pCityNorm=LIVE_CITY_ALIASES[pCity]||pCity;
   var sel=document.getElementById('live-city');
@@ -2000,9 +2029,14 @@ function liveSelectCandidate(name){
     if(!found)sel.selectedIndex=0;
   }
   if(info){
-    info.style.display='block';
+    info.classList.add('show');
     var firms=[p.target,p.alt1,p.alt2,p.alt3].filter(Boolean).join(', ');
-    info.innerHTML='<b style="color:#1a3060;">'+p.name+'</b> &middot; '+(p.firm||'')+' &middot; '+(p.city||'')+(p.practice?' &middot; '+p.practice:'')+(firms?'<div style="margin-top:4px;color:#888;">Pitched: '+firms+'</div>':'');
+    var parts=[];
+    parts.push('<b>'+p.name+'</b>');
+    if(p.firm)parts.push(p.firm);
+    if(p.city)parts.push(p.city);
+    if(p.practice)parts.push(p.practice);
+    info.innerHTML='<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">'+parts.join('<span style="color:#b8a5d0;">&middot;</span>')+'</div>'+(firms?'<div style="margin-top:6px;font-size:11px;color:#7b5b99;">Previously pitched: '+firms+'</div>':'');
   }
   renderLiveTab();
 }
@@ -2011,7 +2045,7 @@ function liveClear(){
   var box=document.getElementById('live-candidate-results');if(box){box.style.display='none';box.innerHTML='';}
   var sel=document.getElementById('live-city');if(sel)sel.selectedIndex=0;
   var pr=document.getElementById('live-practice');if(pr)pr.value='';
-  var info=document.getElementById('live-candidate-info');if(info){info.style.display='none';info.innerHTML='';}
+  var info=document.getElementById('live-candidate-info');if(info){info.classList.remove('show');info.innerHTML='';}
   renderLiveTab();
 }
 function renderLiveTab(){
@@ -2027,30 +2061,44 @@ function renderLiveTab(){
     if(city && cities.length>0 && cities.indexOf(city)<0)continue;
     var ppp=liveLookupPpp(firm);
     var searches=liveLookupSearches(firm);
-    var practicesText='';
-    if(searches && searches.searches)practicesText=searches.searches.join(', ');
+    var practicesArr=(searches&&searches.searches)?searches.searches:[];
     var noteText=info.notes||'';
-    var combinedSearchable=(practicesText+' '+noteText+' '+(searches&&searches.notes?searches.notes:'')).toLowerCase();
+    var extraNotes=(searches&&searches.notes)?searches.notes:'';
+    var combinedSearchable=(practicesArr.join(' ')+' '+noteText+' '+extraNotes).toLowerCase();
     if(practiceQ && combinedSearchable.indexOf(practiceQ)<0)continue;
-    rows.push({firm:firm,ppp:ppp,book:info.book||0,cities:cities,practices:practicesText,notes:noteText,extraNotes:searches&&searches.notes?searches.notes:''});
+    rows.push({firm:firm,ppp:ppp,book:info.book||0,cities:cities,practices:practicesArr,notes:noteText,extraNotes:extraNotes});
   }
-  // Sort: lower book first (more accessible), then higher PPP
   rows.sort(function(a,b){return (a.book-b.book)||(b.ppp-a.ppp);});
-  var tbody=document.getElementById('live-firms-tbody');
+  var list=document.getElementById('live-firms-list');
   var rc=document.getElementById('live-result-count');
-  if(rc)rc.textContent=rows.length+' firm'+(rows.length===1?'':'s');
-  if(!tbody)return;
-  if(!rows.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:30px;color:#888;">No firms match these filters</td></tr>';return;}
-  tbody.innerHTML=rows.map(function(r){
-    var pppStr=r.ppp>=1e6?'$'+(r.ppp/1e6).toFixed(1)+'M':r.ppp>=1e3?'$'+Math.round(r.ppp/1e3)+'K':'&mdash;';
-    var bookStr=r.book?'$'+r.book+'M':'&mdash;';
+  if(rc){
+    var parts=[rows.length+' firm'+(rows.length===1?'':'s')];
+    if(city)parts.push('in '+city);
+    if(practiceQ)parts.push('matching "'+practiceQ+'"');
+    rc.textContent=parts.join(' ');
+  }
+  if(!list)return;
+  if(!rows.length){list.innerHTML='<div class="live-empty">No firms match these filters.<br><span style="font-size:12px;color:#b8bcc5;">Try clearing one of the filters or selecting a different city.</span></div>';return;}
+  list.innerHTML=rows.map(function(r){
+    var pppStr=r.ppp>=1e6?'$'+(r.ppp/1e6).toFixed(1)+'M':r.ppp>=1e3?'$'+Math.round(r.ppp/1e3)+'K':'';
+    var bookStr=r.book?'$'+r.book+'M':'';
+    var pppHtml=pppStr?'<div class="live-metric-value ppp">'+pppStr+'</div>':'<div class="live-metric-value empty">&mdash;</div>';
+    var bookHtml=bookStr?'<div class="live-metric-value book">'+bookStr+'</div>':'<div class="live-metric-value empty">&mdash;</div>';
     var citiesHtml=r.cities.map(function(c){var cls='live-city-pill'+(city&&c===city?' match':'');return '<span class="'+cls+'">'+c+'</span>';}).join('');
-    var noteHtml='';
-    if(r.practices)noteHtml+='<div style="color:#1a5490;font-weight:600;margin-bottom:3px;">'+r.practices+'</div>';
-    if(r.notes)noteHtml+='<div style="color:#5a5a6e;">'+r.notes+'</div>';
-    if(r.extraNotes && r.extraNotes!==r.notes)noteHtml+='<div style="color:#888;font-size:11px;margin-top:3px;">'+r.extraNotes+'</div>';
-    if(!noteHtml)noteHtml='<span style="color:#bbb;">&mdash;</span>';
-    return '<tr><td style="font-weight:600;color:#1a3060;">'+r.firm+'</td><td style="text-align:right;color:#4f8ef7;font-weight:600;">'+pppStr+'</td><td style="text-align:right;color:#e67e22;font-weight:600;">'+bookStr+'</td><td>'+citiesHtml+'</td><td>'+noteHtml+'</td></tr>';
+    var practicesHtml=r.practices.length?'<div class="live-practice-tags">'+r.practices.map(function(p){return '<span class="live-practice-tag">'+p+'</span>';}).join('')+'</div>':'';
+    var notesHtml='';
+    if(r.notes)notesHtml+='<div class="live-firm-note">'+r.notes+'</div>';
+    if(r.extraNotes && r.extraNotes!==r.notes)notesHtml+='<div class="live-firm-note secondary">'+r.extraNotes+'</div>';
+    return '<div class="live-firm-card">'+
+      '<div class="live-firm-main">'+
+        '<div class="live-firm-name">'+r.firm+'</div>'+
+        (citiesHtml?'<div class="live-firm-cities">'+citiesHtml+'</div>':'')+
+        practicesHtml+
+        notesHtml+
+      '</div>'+
+      '<div class="live-metric"><div class="live-metric-label">PPP</div>'+pppHtml+'</div>'+
+      '<div class="live-metric"><div class="live-metric-label">Min Book</div>'+bookHtml+'</div>'+
+    '</div>';
   }).join('');
 }
 // Hide candidate suggestion list on outside click
