@@ -686,7 +686,7 @@ function buildQ(){
   const today=todayStr();
   let idxs=d.map((_,i)=>i);
   // Filter out snoozed candidates (return date still in the future) and benched
-  var _fuD;try{_fuD=fuData}catch(e){_fuD={}}idxs=idxs.filter(i=>{const key=sk(tab,i);if(status[key]==='sent'||status[key]==='benched'||status[key]==='interested')return false;if(status[key]==='snoozed')return false;if(tab==='general'){var fk=d[i].name+'|'+d[i].firm;if(_fuD[fk]&&!_fuD[fk].done)return false;}return true;});
+  var _fuD;try{_fuD=fuData}catch(e){_fuD={}}idxs=idxs.filter(i=>{const key=sk(tab,i);if(status[key]==='sent'||status[key]==='inmail_sent'||status[key]==='benched'||status[key]==='interested')return false;if(status[key]==='snoozed')return false;if(tab==='general'){var fk=d[i].name+'|'+d[i].firm;if(_fuD[fk]&&!_fuD[fk].done)return false;}return true;});
   // Filter out partners with no message and no target (unmatched cities)
   if(tab==='general')idxs=idxs.filter(i=>d[i].message||d[i].target);
   // Build effective last-contact from NOTE_DATES (Excel note dates) — this is the authoritative sort key
@@ -706,7 +706,7 @@ function buildQ(){
   idxs.sort(function(a,b){var ra=sortRank(a),rb=sortRank(b);if(ra!==rb)return ra-rb;var la=elc(a),lb=elc(b);if(!la&&lb)return -1;if(la&&!lb)return 1;if(la&&lb)return la-lb;return 0;});
   if(filter==='warm')idxs.sort((a,b)=>{const wa=(d[a].stage||'').toLowerCase().includes('warm'),wb=(d[b].stage||'').toLowerCase().includes('warm');return wa===wb?0:wa?-1:1;});
   if(filter==='pending'){
-    idxs=idxs.filter(i=>status[sk(tab,i)]!=='sent');
+    idxs=idxs.filter(i=>status[sk(tab,i)]!=='sent'&&status[sk(tab,i)]!=='inmail_sent');
     idxs.sort(function(a,b){var la=elc(a),lb=elc(b);if(!la&&lb)return -1;if(la&&!lb)return 1;if(la&&lb)return la-lb;return 0;});
   }
   if(filter==='leader')idxs=idxs.filter(i=>isLeader(d[i]));
@@ -739,7 +739,7 @@ function render(){
   document.body.className=isFox?'view-fox':'';
   const c=cur();
   document.getElementById('done-overlay').style.display=c?'none':'flex';
-  if(!c){updateP();try{var _sentD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='sent'?1:0);},0);var _benchedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='benched'?1:0);},0);var _interestedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='interested'?1:0);},0);var _snoozedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='snoozed'?1:0);},0);var _inFuD=0;if(tab==='general'){DS[tab].forEach(function(_,i){var k=sk(tab,i);if(status[k]!=='sent'&&status[k]!=='benched'&&status[k]!=='interested'&&status[k]!=='snoozed'){var fk=DS[tab][i].name+'|'+DS[tab][i].firm;if(fuData[fk]&&!fuData[fk].done)_inFuD++;}});}var _activeD=DS[tab].length-_benchedD-_interestedD-_snoozedD;var _pendingD=_activeD-_sentD-_inFuD;document.getElementById('prog-text').textContent=_sentD+' / '+_activeD+' sent ('+_pendingD+' remaining)'+(_benchedD?' \u00b7 '+_benchedD+' benched':'')+(_interestedD?' \u00b7 '+_interestedD+' interested':'');}catch(e){}return;}
+  if(!c){updateP();try{var _sentD=DS[tab].reduce(function(n,_,i){return n+((status[sk(tab,i)]==='sent'||status[sk(tab,i)]==='inmail_sent')?1:0);},0);var _benchedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='benched'?1:0);},0);var _interestedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='interested'?1:0);},0);var _snoozedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='snoozed'?1:0);},0);var _inFuD=0;if(tab==='general'){DS[tab].forEach(function(_,i){var k=sk(tab,i);if(status[k]!=='sent'&&status[k]!=='benched'&&status[k]!=='interested'&&status[k]!=='snoozed'){var fk=DS[tab][i].name+'|'+DS[tab][i].firm;if(fuData[fk]&&!fuData[fk].done)_inFuD++;}});}var _activeD=DS[tab].length-_benchedD-_interestedD-_snoozedD;var _pendingD=_activeD-_sentD-_inFuD;document.getElementById('prog-text').textContent=_sentD+' / '+_activeD+' sent ('+_pendingD+' remaining)'+(_benchedD?' \u00b7 '+_benchedD+' benched':'')+(_interestedD?' \u00b7 '+_interestedD+' interested':'');}catch(e){}return;}
   const{p,i}=c;
   altIdx=0;
   document.getElementById('p-name').textContent=p.name||'';
@@ -752,6 +752,7 @@ function render(){
   else at.style.display='none';
   const bg=document.getElementById('p-badge'),sk2=sk(tab,i);
   if(status[sk2]==='sent'){bg.textContent='Sent';bg.className='badge sent-badge';}
+  else if(status[sk2]==='inmail_sent'){bg.textContent='InMail sent';bg.className='badge sent-badge';}
   else if(status[sk2]==='benched'){bg.textContent='Benched';bg.className='badge';bg.style.cssText='background:#888;color:#fff;font-weight:600';}
   else if(status[sk2]==='interested'){bg.textContent='⭐ Interested';bg.className='badge';bg.style.cssText='background:#2ecc40;color:#fff;font-weight:600';}
   else if(status[sk2]==='later'){bg.textContent='Come Back';bg.className='badge';bg.style.cssText='background:#d4a017;color:#000;font-weight:600';}
@@ -840,7 +841,7 @@ function render(){
   var skipBdg=document.getElementById('skip-badge');
   if(!skipBdg){skipBdg=document.createElement('span');skipBdg.id='skip-badge';skipBdg.className='badge-skipped';skipBdg.textContent='SKIPPED';var nameEl=document.getElementById('p-name');if(nameEl)nameEl.parentNode.insertBefore(skipBdg,nameEl.nextSibling);}
   skipBdg.style.display=status[sk(tab,c.i)]==='skipped'?'inline-block':'none';
-  updateP();var _sent=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='sent'?1:0);},0);var _benched=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='benched'?1:0);},0);var _interested=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='interested'?1:0);},0);var _snoozed=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='snoozed'?1:0);},0);var _inFu=0;try{if(tab==='general'){DS[tab].forEach(function(_,i){var k=sk(tab,i);if(status[k]!=='sent'&&status[k]!=='benched'&&status[k]!=='interested'&&status[k]!=='snoozed'){var fk=DS[tab][i].name+'|'+DS[tab][i].firm;if(fuData[fk]&&!fuData[fk].done)_inFu++;}});}}catch(e){}var _active=DS[tab].length-_benched-_interested-_snoozed;var _pending=_active-_sent-_inFu;document.getElementById('prog-text').textContent=_sent+' / '+_active+' sent ('+_pending+' remaining)'+(_benched?' \u00b7 '+_benched+' benched':'')+(_interested?' \u00b7 '+_interested+' interested':'');
+  updateP();var _sent=DS[tab].reduce(function(n,_,i){return n+((status[sk(tab,i)]==='sent'||status[sk(tab,i)]==='inmail_sent')?1:0);},0);var _benched=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='benched'?1:0);},0);var _interested=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='interested'?1:0);},0);var _snoozed=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='snoozed'?1:0);},0);var _inFu=0;try{if(tab==='general'){DS[tab].forEach(function(_,i){var k=sk(tab,i);if(status[k]!=='sent'&&status[k]!=='benched'&&status[k]!=='interested'&&status[k]!=='snoozed'){var fk=DS[tab][i].name+'|'+DS[tab][i].firm;if(fuData[fk]&&!fuData[fk].done)_inFu++;}});}}catch(e){}var _active=DS[tab].length-_benched-_interested-_snoozed;var _pending=_active-_sent-_inFu;document.getElementById('prog-text').textContent=_sent+' / '+_active+' sent ('+_pending+' remaining)'+(_benched?' \u00b7 '+_benched+' benched':'')+(_interested?' \u00b7 '+_interested+' interested':'');
 }
 function tableSwapFirm(firm,evt){
   const c=cur();if(!c)return;
@@ -926,7 +927,7 @@ function quickPitch(which, evt){
 }
 
 function updateP(){
-  const d=DS[tab],sent=d.reduce((n,_,i)=>n+(status[sk(tab,i)]==='sent'?1:0),0);
+  const d=DS[tab],sent=d.reduce((n,_,i)=>n+((status[sk(tab,i)]==='sent'||status[sk(tab,i)]==='inmail_sent')?1:0),0);
   document.getElementById('done-count').textContent=sent+' sent';
   document.getElementById('prog-fill').style.width=(sent/d.length*100)+'%';
 }
@@ -1128,7 +1129,7 @@ function switchTab(t){
 }
 function next(){
   const c=cur();if(!c)return;
-  status[sk(tab,c.i)]='sent';saveS();
+  status[sk(tab,c.i)]=(tab==='prospects'?'inmail_sent':'sent');saveS();
   const p=c.p;const k=fuKey(p);
   const today=todayStr();
   const actualF1=pitchOverride.firm1||p.target||'';
@@ -1138,7 +1139,7 @@ function next(){
     saveFu();
   }
   var _mv=['primary','alt1','alt2'][altIdx]||'primary';
-  fuLog.push({date_sent:today,date:today,name:p.name,firm:p.firm,city:p.city||'',target:actualF1,alt1:actualF2,stage:'initial',action:'sent',practice:p.practice||'',msg_variant:_mv});
+  fuLog.push({date_sent:today,date:today,name:p.name,firm:p.firm,city:p.city||'',target:actualF1,alt1:actualF2,stage:'initial',action:'sent',practice:p.practice||'',msg_variant:_mv,channel:(tab==='prospects'?'inmail':'linkedin'),tab:tab});
   try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
   try{fbSaveNow();}catch(e){console.error('[FB]',e);updateFbStatus('error',e.message);}
   pitchOverride={};
@@ -1531,7 +1532,11 @@ function renderLogTab(){
   const rows=fuLog.map(e=>{
     const sg=getSm(e.stage);
     const firms=[e.target,e.alt1].filter(Boolean).join(' + ');
-    return '<tr><td class="log-date">'+fmtD(e.date_sent)+'</td><td class="log-name">'+e.name+'</td><td>'+e.firm+'</td><td>'+e.city+'</td><td class="log-firms">'+firms+'</td><td><span class="log-stage-pill" style="'+sg.s+'">'+sg.l+'</span></td></tr>';
+    // InMail channel gets a distinct teal pill
+    const isInmail=e.channel==='inmail';
+    const pillLabel=(e.stage==='initial'&&isInmail)?'InMail sent':sg.l;
+    const pillStyle=(e.stage==='initial'&&isInmail)?'background:#0a2a2a;color:#14b8a6':sg.s;
+    return '<tr><td class="log-date">'+fmtD(e.date_sent)+'</td><td class="log-name">'+e.name+'</td><td>'+e.firm+'</td><td>'+e.city+'</td><td class="log-firms">'+firms+'</td><td><span class="log-stage-pill" style="'+pillStyle+'">'+pillLabel+'</span></td></tr>';
   }).join('');
   const tb=document.getElementById('log-tbody');
   if(tb)tb.innerHTML=rows||'<tr><td colspan="6" style="color:#444;text-align:center;padding:20px">No messages sent yet</td></tr>';
