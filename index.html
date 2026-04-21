@@ -1532,10 +1532,18 @@ function renderLogTab(){
   const rows=fuLog.map(e=>{
     const sg=getSm(e.stage);
     const firms=[e.target,e.alt1].filter(Boolean).join(' + ');
-    // InMail channel gets a distinct teal pill
-    const isInmail=e.channel==='inmail';
-    const pillLabel=(e.stage==='initial'&&isInmail)?'InMail sent':sg.l;
-    const pillStyle=(e.stage==='initial'&&isInmail)?'background:#0a2a2a;color:#14b8a6':sg.s;
+    // Distinct pills by channel for the 'initial' stage (first message)
+    let pillLabel=sg.l;
+    let pillStyle=sg.s;
+    if(e.stage==='initial'){
+      if(e.channel==='inmail'){
+        pillLabel='InMail sent';
+        pillStyle='background:#0a2a2a;color:#14b8a6';
+      } else {
+        pillLabel='Message sent';
+        pillStyle=sg.s;
+      }
+    }
     return '<tr><td class="log-date">'+fmtD(e.date_sent)+'</td><td class="log-name">'+e.name+'</td><td>'+e.firm+'</td><td>'+e.city+'</td><td class="log-firms">'+firms+'</td><td><span class="log-stage-pill" style="'+pillStyle+'">'+pillLabel+'</span></td></tr>';
   }).join('');
   const tb=document.getElementById('log-tbody');
