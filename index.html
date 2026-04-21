@@ -756,7 +756,7 @@ function render(){
   else if(status[sk2]==='benched'){bg.textContent='Benched';bg.className='badge';bg.style.cssText='background:#888;color:#fff;font-weight:600';}
   else if(status[sk2]==='interested'){bg.textContent='⭐ Interested';bg.className='badge';bg.style.cssText='background:#2ecc40;color:#fff;font-weight:600';}
   else if(status[sk2]==='later'){bg.textContent='Come Back';bg.className='badge';bg.style.cssText='background:#d4a017;color:#000;font-weight:600';}
-  else{bg.style.cssText='';const st=(p.stage||'').toLowerCase();bg.textContent=st.includes('warm')?'Warm':'Cold';bg.className='badge '+(st.includes('warm')?'warm':'cold');}
+  else if(tab==='prospects'){bg.style.cssText='background:#1a3030;color:#14b8a6;font-weight:600';bg.textContent='Connection sent · not accepted';bg.className='badge';}else{bg.style.cssText='';const st=(p.stage||'').toLowerCase();bg.textContent=st.includes('warm')?'Warm':'Cold';bg.className='badge '+(st.includes('warm')?'warm':'cold');}
   const de=document.getElementById('p-dept');
   if(isFox&&p.dept){de.textContent=p.dept;de.style.display='';}else de.style.display='none';
   const ti=document.getElementById('p-title');
@@ -1532,17 +1532,12 @@ function renderLogTab(){
   const rows=fuLog.map(e=>{
     const sg=getSm(e.stage);
     const firms=[e.target,e.alt1].filter(Boolean).join(' + ');
-    // Distinct pills by channel for the 'initial' stage (first message)
+    // Only override 'initial' pill for Prospects (InMail channel)
     let pillLabel=sg.l;
     let pillStyle=sg.s;
-    if(e.stage==='initial'){
-      if(e.channel==='inmail'){
-        pillLabel='InMail sent';
-        pillStyle='background:#0a2a2a;color:#14b8a6';
-      } else {
-        pillLabel='Message sent';
-        pillStyle=sg.s;
-      }
+    if(e.stage==='initial'&&e.channel==='inmail'){
+      pillLabel='InMail sent';
+      pillStyle='background:#0a2a2a;color:#14b8a6';
     }
     return '<tr><td class="log-date">'+fmtD(e.date_sent)+'</td><td class="log-name">'+e.name+'</td><td>'+e.firm+'</td><td>'+e.city+'</td><td class="log-firms">'+firms+'</td><td><span class="log-stage-pill" style="'+pillStyle+'">'+pillLabel+'</span></td></tr>';
   }).join('');
