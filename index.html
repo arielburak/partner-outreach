@@ -1347,11 +1347,12 @@ function buildFuMsg(fu,stage){
     const f1=sf(target),f2=sf(alt1);
     return 'Hi '+first+',\n\nJust wanted to follow up on my note about '+f1+(f2?' and '+f2:'')+'. Have you had a chance to think about it?\n\nHappy to jump on a quick call whenever works.';
   }
-  // Even stages (2,4,6..): pitch - rotate firm pairings
+  // Even stages (2,4,6..): pitch NEW firms not yet offered
   if(stage%2===0){
+    var newFirms=pickNewFirms(fu);
+    var f1=newFirms.length>0?newFirms[0].short:sf(target);
+    var f2=newFirms.length>1?newFirms[1].short:sf(alt1||target);
     const cycle=Math.floor((stage-2)/2);
-    const pairs=[[sf(alt1||target),sf(alt2||target)],[sf(target),sf(alt2||alt1||target)],[sf(alt1||target),sf(target)]];
-    const[f1,f2]=pairs[cycle%pairs.length];
     const prac=(practice||'').split(',')[0].trim().toLowerCase(),diff=f1!==f2;
     const intros=['Circling back, ','Coming back to you on this, ','Checking in one more time, '];
     const intro=intros[cycle%intros.length];
@@ -1369,26 +1370,44 @@ function buildFuMsg(fu,stage){
 
 // Returns array of message variants. For even stages: 3 variants (with-practice, no-practice, alt-angle).
 // For other stages: single-element array with the standard message.
+function pickNewFirms(fu){
+  var offered=getOfferedFirms(fu.name);
+  var pCity=fu.city||'';
+  var CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York','Palo Alto':'San Francisco','Silicon Valley':'San Francisco','Menlo Park':'San Francisco','Mountain View':'San Francisco','San Jose':'San Francisco','Sunnyvale':'San Francisco','Redwood City':'San Francisco'};
+  var pCityNorm=CITY_ALIASES[pCity]||pCity;
+  var candidates=[];
+  var seen=new Set();
+  for(var firm in COLD_CALL_FIRMS){
+    var info=COLD_CALL_FIRMS[firm];if(!info)continue;
+    if(pCityNorm && info.cities && info.cities.length>0 && info.cities.indexOf(pCityNorm)<0)continue;
+    var short=sfGlobal(firm);
+    if(seen.has(short))continue;
+    seen.add(short);
+    if(offered.has(short))continue;
+    var ppp=0;for(var k in FIRM_PPP){if(sfGlobal(k)===short){ppp=FIRM_PPP[k];break;}}
+    candidates.push({firm:firm,short:short,book:info.book||0,ppp:ppp});
+  }
+  candidates.sort(function(a,b){return a.book-b.book||b.ppp-a.ppp;});
+  return candidates.slice(0,2);
+}
 function buildFuMsgs(fu,stage,firmOverride){
   if(stage!==2 && stage%2!==0||stage<2){return [buildFuMsg(fu,stage)];}
-  // Even stage path
-  const{first,target,alt1,alt2,practice,city}=fu;
   var sf=sfGlobal;
-  const cycle=Math.floor((stage-2)/2);
-  const pairs=[[sf(alt1||target),sf(alt2||target)],[sf(target),sf(alt2||alt1||target)],[sf(alt1||target),sf(target)]];
-  var [f1,f2]=pairs[cycle%pairs.length];
+  var first=fu.first,city=fu.city,practice=fu.practice;
+  var cycle=Math.floor((stage-2)/2);
+  // Pick new firms not yet offered to this candidate
+  var newFirms=pickNewFirms(fu);
+  var f1=newFirms.length>0?newFirms[0].short:sf(fu.target);
+  var f2=newFirms.length>1?newFirms[1].short:(newFirms.length>0?newFirms[0].short:sf(fu.alt1||fu.target));
   if(firmOverride && firmOverride.firm1)f1=sf(firmOverride.firm1);
   if(firmOverride && firmOverride.firm2)f2=sf(firmOverride.firm2);
-  const prac=(practice||'').split(',')[0].trim().toLowerCase();
-  const diff=f1!==f2;
-  const intros=['Circling back, ','Coming back to you on this, ','Checking in one more time, '];
-  const intro=intros[cycle%intros.length];
-  // V1 \u2014 references practice (current behavior)
-  const v1='Hi '+first+',\n\n'+intro+f1+' is looking to bring on '+prac+' partners in '+city+(diff?', and '+f2+' is another firm worth considering':'')+'.\n\nI believe '+(diff?'both':'it')+' could be a great platform for you. Do you have a couple of minutes to chat this week?';
-  // V2 \u2014 no practice mention, broader angle
-  const v2='Hi '+first+',\n\n'+intro+(diff?f1+' and '+f2+' are both actively expanding in '+city:f1+' is actively expanding in '+city)+' and could be a strong platform for you.\n\nWould you have a few minutes to chat this week?';
-  // V3 \u2014 no practice, different framing
-  const v3='Hi '+first+',\n\nWanted to share '+(diff?'two firms':'a firm')+' that ha'+(diff?'ve':'s')+' been actively recruiting in '+city+': '+f1+(diff?' and '+f2:'')+'. Happy to walk you through '+(diff?'them':'it')+' whenever works for you.';
+  var prac=(practice||'').split(',')[0].trim().toLowerCase();
+  var diff=f1!==f2;
+  var intros=['Circling back, ','Coming back to you on this, ','Checking in one more time, '];
+  var intro=intros[cycle%intros.length];
+  var v1='Hi '+first+',\n\n'+intro+f1+' is looking to bring on '+prac+' partners in '+city+(diff?', and '+f2+' is another firm worth considering':'')+'.\n\nI believe '+(diff?'both':'it')+' could be a great platform for you. Do you have a couple of minutes to chat this week?';
+  var v2='Hi '+first+',\n\n'+intro+(diff?f1+' and '+f2+' are both actively expanding in '+city:f1+' is actively expanding in '+city)+' and could be a strong platform for you.\n\nWould you have a few minutes to chat this week?';
+  var v3='Hi '+first+',\n\nWanted to share '+(diff?'two firms':'a firm')+' that ha'+(diff?'ve':'s')+' been actively recruiting in '+city+': '+f1+(diff?' and '+f2:'')+'. Happy to walk you through '+(diff?'them':'it')+' whenever works for you.';
   return [v1,v2,v3];
 }
 
