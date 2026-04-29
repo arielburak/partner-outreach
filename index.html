@@ -445,7 +445,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     <button class="filter-btn" data-fu-filter="upcoming" onclick="fuSetFilter('upcoming',this)">Upcoming</button>
     <span id="fu-overdue-count" style="font-size:11px;color:#e74c3c;margin-left:4px;font-weight:600"></span>
   </div>
-<div class="main" id="general-main" style="gap:16px;flex-wrap:nowrap;justify-content:center;align-items:flex-start;">
+<div class="main" id="fu-main" style="gap:16px;flex-wrap:nowrap;justify-content:center;align-items:flex-start;">
     <div class="card" id="fu-card">
       <div class="card-header">
         <div class="partner-name" id="fu-name"></div>
@@ -458,6 +458,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
         </div>
       </div>
             <div class="fu-firms-sent" id="fu-firms-sent"></div>
+      <div id="fu-already-offered" style="display:none;padding:0 28px 6px;font-size:11px;">
+        <span style="color:#8a8a9e;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Already offered:</span>
+        <span id="fu-already-offered-list" style="color:#e67e22;font-weight:500;margin-left:6px;"></span>
+      </div>
+      <div class="alt-tabs" id="fu-alt-tabs" style="display:none">
+        <button class="alt-tab active" onclick="fuSetAlt(0,this)">Primary</button>
+        <button class="alt-tab" onclick="fuSetAlt(1,this)">Alt 1</button>
+        <button class="alt-tab" onclick="fuSetAlt(2,this)">Alt 2</button>
+      </div>
       <div class="msg-area" id="fu-msg"></div>
       <div class="actions">
         <button class="btn btn-copy" id="fu-btn-copy" onclick="fuCopy()">&#128203; Copy</button>
@@ -484,6 +493,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
       <div id="fu-done-overlay" style="display:none" class="done-overlay">
         No follow-ups pending!<p>They'll appear here after you send messages.</p>
       </div>
+    </div>
+    <div class="firm-table-panel" id="fu-firm-table-panel" style="display:none">
+      <h3>Available Firms</h3>
+      <table class="firm-table" id="fu-firm-table">
+        <thead><tr><th>Firm</th><th style="text-align:right">PPP</th><th style="text-align:right">Book</th><th></th></tr></thead>
+        <tbody id="fu-firm-table-body"></tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -1278,7 +1294,7 @@ render();
 // FOLLOW-UP & LOG SYSTEM
 // ═══════════════════════════════════════════════════
 const LOG_SK='ov6_log', FU_SK='ov6_fu';
-let fuLog=[], fuData={}, fuQ=[], fuQi=0;
+let fuLog=[], fuData={}, fuQ=[], fuQi=0, fuAltIdx=0, fuAltMsgs=[], fuPitchOverride={};
 
 function loadFu(){
   try{fuLog=JSON.parse(localStorage.getItem(LOG_SK)||'[]')}catch(e){fuLog=[];}
@@ -1337,7 +1353,7 @@ function buildFuMsg(fu,stage){
     const pairs=[[sf(alt1||target),sf(alt2||target)],[sf(target),sf(alt2||alt1||target)],[sf(alt1||target),sf(target)]];
     const[f1,f2]=pairs[cycle%pairs.length];
     const prac=(practice||'').split(',')[0].trim().toLowerCase(),diff=f1!==f2;
-    const intros=['Circling back.','Coming back to you on this.','Checking in one more time.'];
+    const intros=['Circling back. ','Coming back to you on this. ','Checking in one more time. '];
     const intro=intros[cycle%intros.length];
     return 'Hi '+first+',\n\n'+intro+f1+' is looking to bring on '+prac+' partners in '+city+(diff?', and '+f2+' is another firm worth considering':'')+'.\n\nI believe '+(diff?'both':'it')+' could be a great platform for you. Do you have a couple of minutes to chat this week?';
   }
@@ -1349,6 +1365,97 @@ function buildFuMsg(fu,stage){
   ];
   const ci=checkIns[Math.floor((stage-3)/2)%checkIns.length];
   return 'Hi '+first+',\n\n'+ci;
+}
+
+// Returns array of message variants. For even stages: 3 variants (with-practice, no-practice, alt-angle).
+// For other stages: single-element array with the standard message.
+function buildFuMsgs(fu,stage,firmOverride){
+  if(stage!==2 && stage%2!==0||stage<2){return [buildFuMsg(fu,stage)];}
+  // Even stage path
+  const{first,target,alt1,alt2,practice,city}=fu;
+  var sf=sfGlobal;
+  const cycle=Math.floor((stage-2)/2);
+  const pairs=[[sf(alt1||target),sf(alt2||target)],[sf(target),sf(alt2||alt1||target)],[sf(alt1||target),sf(target)]];
+  var [f1,f2]=pairs[cycle%pairs.length];
+  if(firmOverride && firmOverride.firm1)f1=sf(firmOverride.firm1);
+  if(firmOverride && firmOverride.firm2)f2=sf(firmOverride.firm2);
+  const prac=(practice||'').split(',')[0].trim().toLowerCase();
+  const diff=f1!==f2;
+  const intros=['Circling back. ','Coming back to you on this. ','Checking in one more time. '];
+  const intro=intros[cycle%intros.length];
+  // V1 \u2014 references practice (current behavior)
+  const v1='Hi '+first+',\n\n'+intro+f1+' is looking to bring on '+prac+' partners in '+city+(diff?', and '+f2+' is another firm worth considering':'')+'.\n\nI believe '+(diff?'both':'it')+' could be a great platform for you. Do you have a couple of minutes to chat this week?';
+  // V2 \u2014 no practice mention, broader angle
+  const v2='Hi '+first+',\n\n'+intro+(diff?f1+' and '+f2+' are both actively expanding in '+city:f1+' is actively expanding in '+city)+' and could be a strong platform for you.\n\nWould you have a few minutes to chat this week?';
+  // V3 \u2014 no practice, different framing
+  const v3='Hi '+first+',\n\nWanted to share '+(diff?'two firms':'a firm')+' that ha'+(diff?'ve':'s')+' been actively recruiting in '+city+': '+f1+(diff?' and '+f2:'')+'. Happy to walk you through '+(diff?'them':'it')+' whenever works for you.';
+  return [v1,v2,v3];
+}
+
+function getOfferedFirms(name){
+  var s=new Set();
+  if(typeof fuLog==='undefined'||!fuLog)return s;
+  fuLog.forEach(function(e){
+    if(e.name!==name)return;
+    if(e.target)s.add(sfGlobal(e.target));
+    if(e.alt1)s.add(sfGlobal(e.alt1));
+    if(e.alt2)s.add(sfGlobal(e.alt2));
+  });
+  return s;
+}
+
+function fuSetAlt(idx,btn){
+  fuAltIdx=idx;
+  document.querySelectorAll('#fu-alt-tabs .alt-tab').forEach(function(b){b.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  if(fuAltMsgs[idx])document.getElementById('fu-msg').textContent=fuAltMsgs[idx];
+}
+
+function buildFuFirmTable(fu){
+  const panel=document.getElementById('fu-firm-table-panel');
+  const tbody=document.getElementById('fu-firm-table-body');
+  if(!panel||!tbody)return;
+  if(!fu||fu.stage<2||fu.stage%2!==0){panel.style.display='none';return;}
+  panel.style.display='';
+  const offeredSet=getOfferedFirms(fu.name);
+  const pCity=fu.city||'';
+  const CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York','Palo Alto':'San Francisco','Silicon Valley':'San Francisco','Menlo Park':'San Francisco','Mountain View':'San Francisco','San Jose':'San Francisco','Sunnyvale':'San Francisco','Redwood City':'San Francisco'};
+  const pCityNorm=CITY_ALIASES[pCity]||pCity;
+  var rows=[];
+  const seen=new Set();
+  for(const[firm,info] of Object.entries(COLD_CALL_FIRMS)){
+    if(pCityNorm && info.cities && info.cities.length>0 && !info.cities.includes(pCityNorm))continue;
+    const short=sfGlobal(firm);
+    if(seen.has(short))continue;
+    seen.add(short);
+    let ppp=FIRM_PPP[firm]||0;
+    if(!ppp){for(const[k,v] of Object.entries(FIRM_PPP)){if(sfGlobal(k)===short){ppp=v;break;}}}
+    const isOffered=offeredSet.has(short);
+    const book=info.book||0;
+    rows.push({firm,short,ppp,book,isOffered});
+  }
+  rows.sort(function(a,b){return a.book-b.book||b.ppp-a.ppp;});
+  tbody.innerHTML=rows.map(function(r){
+    const pppStr=r.ppp>=1e6?'$'+(r.ppp/1e6).toFixed(1)+'M':r.ppp>=1e3?'$'+Math.round(r.ppp/1e3)+'K':'';
+    const bookStr=r.book?'$'+r.book+'M':'';
+    const dot=r.isOffered?'<span class="ft-dot target" title="Already offered"></span>':'';
+    const rowStyle=r.isOffered?'opacity:0.5':'';
+    const tip=r.isOffered?'Already offered to this candidate':'Click to use as primary firm · Shift+click for secondary';
+    return '<tr style="'+rowStyle+'">'
+      +'<td class="ft-name" style="cursor:pointer" title="'+tip+'" onclick="fuTableSwapFirm(\''+r.firm.replace(/'/g,"\\'")+'\',event)">'+r.short+'</td>'
+      +'<td class="ft-ppp">'+pppStr+'</td>'
+      +'<td class="ft-book">'+bookStr+'</td>'
+      +'<td class="ft-match">'+dot+'</td></tr>';
+  }).join('');
+}
+
+function fuTableSwapFirm(firm,evt){
+  const fu=fuCur();if(!fu)return;
+  if(evt && evt.shiftKey){fuPitchOverride.firm2=firm;}
+  else{fuPitchOverride.firm1=firm;}
+  fuAltMsgs=buildFuMsgs(fu,fu.stage,fuPitchOverride);
+  if(!fuAltMsgs[fuAltIdx])fuAltIdx=0;
+  document.getElementById('fu-msg').textContent=fuAltMsgs[fuAltIdx];
 }
 
 function fuBuildQ(){
@@ -1381,7 +1488,12 @@ function renderFuTab(){
     }
     if(!fu.first)fu.first=(fu.name||'').split(' ')[0];
   }
-  const stage=fu.stage,msg=buildFuMsg(fu,stage);
+  const stage=fu.stage;
+  const isEvenStage=stage>=2&&stage%2===0;
+  fuPitchOverride={};
+  fuAltIdx=0;
+  fuAltMsgs=buildFuMsgs(fu,stage);
+  const msg=fuAltMsgs[0];
   document.getElementById('fu-name').textContent=fu.name;
   document.getElementById('fu-firm').textContent=fu.firm;
   document.getElementById('fu-city').textContent=fu.city;
@@ -1397,6 +1509,30 @@ function renderFuTab(){
   if(stage===1)fe.textContent='Originally pitched: '+fu.target+(fu.alt1?' + '+fu.alt1:'');
   else{const prevS=stage-1,prevDate=fu.stage_dates[prevS]||fu.initial_date;fe.textContent='Stage '+(stage-1)+' sent '+fmtD(prevDate)+' · Touch #'+stage;}
   document.getElementById('fu-msg').textContent=msg;
+  // Already-offered firms (even stages only)
+  const aoEl=document.getElementById('fu-already-offered');
+  if(aoEl){
+    if(isEvenStage){
+      const offered=getOfferedFirms(fu.name);
+      if(offered.size>0){
+        document.getElementById('fu-already-offered-list').textContent=Array.from(offered).join(', ');
+        aoEl.style.display='';
+      }else{aoEl.style.display='none';}
+    }else{aoEl.style.display='none';}
+  }
+  // Alt tabs for 3 message variants (even stages only)
+  const fuAt=document.getElementById('fu-alt-tabs');
+  if(fuAt){
+    if(isEvenStage&&fuAltMsgs.length>1){
+      fuAt.style.display='';
+      fuAt.querySelectorAll('.alt-tab').forEach(function(b,j){
+        b.className='alt-tab'+(j===0?' active':'');
+        b.style.display=j<fuAltMsgs.length?'':'none';
+      });
+    }else{fuAt.style.display='none';}
+  }
+  // Available firms table (even stages only)
+  buildFuFirmTable(fu);
   document.getElementById('fu-btn-li').disabled=!fu.linkedin;
   document.getElementById('fu-btn-fp').disabled=!fu.fp;
   const btn=document.getElementById('fu-btn-copy');
@@ -1414,8 +1550,18 @@ function fuSent(){
   const today=todayStr();
   if(!fu.stage_dates)fu.stage_dates={};
   fu.stage_dates[fu.stage]=today;
+  // For even stages, the actual firms pitched may differ from fu.target/alt1 due to swaps in the firm table
+  var logTarget=fu.target||'',logAlt1=fu.alt1||'';
+  if(fu.stage>=2&&fu.stage%2===0){
+    var sf=sfGlobal;
+    var cycle=Math.floor((fu.stage-2)/2);
+    var pairs=[[sf(fu.alt1||fu.target),sf(fu.alt2||fu.target)],[sf(fu.target),sf(fu.alt2||fu.alt1||fu.target)],[sf(fu.alt1||fu.target),sf(fu.target)]];
+    var pp=pairs[cycle%pairs.length];
+    logTarget=(fuPitchOverride&&fuPitchOverride.firm1)||pp[0];
+    logAlt1=(fuPitchOverride&&fuPitchOverride.firm2)||pp[1];
+  }
   fuLog.unshift({name:fu.name||'',first:fu.first||'',firm:fu.firm||'',city:fu.city||'',practice:fu.practice||'',
-    target:fu.target||'',alt1:fu.alt1||'',alt2:fu.alt2||'',date_sent:today,linkedin:fu.linkedin||'',fp:fu.fp||'',stage:'followup_'+fu.stage});
+    target:logTarget,alt1:logAlt1,alt2:fu.alt2||'',date_sent:today,linkedin:fu.linkedin||'',fp:fu.fp||'',stage:'followup_'+fu.stage,msg_variant:['primary','alt1','alt2'][fuAltIdx]||'primary'});
   try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
   // Infinite cycle: 1(8d)->2(30d)->3(14d)->4(30d)->5(14d)-> ...
   // Even stages = pitch (30d gap after), Odd stages>=3 = check-in (14d gap after)
@@ -1503,7 +1649,9 @@ function fuOutcome(outcome){
 
 function fuCopy(){
   const fu=fuCur();if(!fu)return;
-  navigator.clipboard.writeText(buildFuMsg(fu,fu.stage)).then(()=>{
+  const msgEl=document.getElementById('fu-msg');
+  const msg=(msgEl&&msgEl.textContent)||fuAltMsgs[fuAltIdx]||buildFuMsg(fu,fu.stage);
+  navigator.clipboard.writeText(msg).then(()=>{
     const b=document.getElementById('fu-btn-copy');
     b.innerHTML='&#10003; Copied!';b.className='btn btn-copy copied';
     setTimeout(()=>{b.innerHTML='&#128203; Copy';b.className='btn btn-copy';},1500);
