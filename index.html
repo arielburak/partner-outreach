@@ -1353,7 +1353,7 @@ function buildFuMsg(fu,stage){
     const pairs=[[sf(alt1||target),sf(alt2||target)],[sf(target),sf(alt2||alt1||target)],[sf(alt1||target),sf(target)]];
     const[f1,f2]=pairs[cycle%pairs.length];
     const prac=(practice||'').split(',')[0].trim().toLowerCase(),diff=f1!==f2;
-    const intros=['Circling back — ','Coming back to you on this — ','Checking in one more time — '];
+    const intros=['Circling back, ','Coming back to you on this, ','Checking in one more time, '];
     const intro=intros[cycle%intros.length];
     return 'Hi '+first+',\n\n'+intro+f1+' is looking to bring on '+prac+' partners in '+city+(diff?', and '+f2+' is another firm worth considering':'')+'.\n\nI believe '+(diff?'both':'it')+' could be a great platform for you. Do you have a couple of minutes to chat this week?';
   }
@@ -1381,7 +1381,7 @@ function buildFuMsgs(fu,stage,firmOverride){
   if(firmOverride && firmOverride.firm2)f2=sf(firmOverride.firm2);
   const prac=(practice||'').split(',')[0].trim().toLowerCase();
   const diff=f1!==f2;
-  const intros=['Circling back — ','Coming back to you on this — ','Checking in one more time — '];
+  const intros=['Circling back, ','Coming back to you on this, ','Checking in one more time, '];
   const intro=intros[cycle%intros.length];
   // V1 \u2014 references practice (current behavior)
   const v1='Hi '+first+',\n\n'+intro+f1+' is looking to bring on '+prac+' partners in '+city+(diff?', and '+f2+' is another firm worth considering':'')+'.\n\nI believe '+(diff?'both':'it')+' could be a great platform for you. Do you have a couple of minutes to chat this week?';
