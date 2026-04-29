@@ -1370,11 +1370,55 @@ function buildFuMsg(fu,stage){
 
 // Returns array of message variants. For even stages: 3 variants (with-practice, no-practice, alt-angle).
 // For other stages: single-element array with the standard message.
+var PRACTICE_MAP_BROAD={'litigation':['Litigation','Litigation Trial Lawyers'],'corporate':['Corporate','Corporate/M&A'],'real estate':['Real Estate'],'intellectual property':['Intellectual Property'],'ip':['Intellectual Property'],'banking':['Banking','Banking & Finance'],'finance':['Banking','Banking & Finance'],'labor & employment':['Labor & Employment'],'labor and employment':['Labor & Employment'],'employment':['Labor & Employment'],'health care':['Health Care','Healthcare'],'healthcare':['Health Care','Healthcare'],'bankruptcy':['Bankruptcy','Bankruptcy/Restructuring'],'restructuring':['Bankruptcy','Bankruptcy/Restructuring'],'tax':['Tax'],'energy':['Energy & Natural Resources'],'environment':['Environment'],'antitrust':['Antitrust'],'privacy':['Privacy & Data Security'],'securities':['Securities Litigation','Securities Regulation'],'insurance':['Insurance'],'government contracts':['Government Contracts'],'immigration':['Immigration'],'life sciences':['Life Sciences'],'private equity':['Private Equity'],'capital markets':['Capital Markets'],'construction':['Construction'],'appellate':['Appellate Law'],'international trade':['International Trade'],'international arbitration':['International Arbitration'],'product liability':['Product Liability'],'hedge funds':['Hedge Funds'],'investment funds':['Investment Funds'],'transportation':['Transportation']};
+function fuMatchScore(fu,firmName){
+  var practice=(fu.practice||'').toLowerCase().trim();
+  var bookEst=fu.book_est||0;
+  var short=sfGlobal(firmName);
+  // Chambers practice score (0-30 pts)
+  var chambersPts=0;
+  var fc=FIRM_CHAMBERS[short]||FIRM_CHAMBERS[firmName];
+  if(!fc){for(var ck in FIRM_CHAMBERS){if(sfGlobal(ck)===short){fc=FIRM_CHAMBERS[ck];break;}}}
+  if(fc){
+    var nat=fc.national||[];
+    var allBands={};
+    nat.forEach(function(r){allBands[r.practice]=r.band;});
+    // State-level too
+    var stateKey=fuCityToState(fu.city);
+    if(stateKey&&fc.state&&fc.state[stateKey]){fc.state[stateKey].forEach(function(r){allBands[r.practice]=Math.min(allBands[r.practice]||99,r.band);});}
+    var areas=practice.split(',').map(function(s){return s.trim().toLowerCase();});
+    var breadthDamp=nat.length>30?0.6:nat.length>20?0.75:1.0;
+    for(var ai=0;ai<areas.length;ai++){
+      var keys=PRACTICE_MAP_BROAD[areas[ai]]||[];
+      var ranked=false;
+      for(var ki=0;ki<keys.length;ki++){if(allBands[keys[ki]]!==undefined){ranked=true;break;}}
+      if(!ranked){for(var bk in allBands){if(bk.toLowerCase().indexOf(areas[ai])>=0||areas[ai].indexOf(bk.toLowerCase())>=0){ranked=true;break;}}}
+      if(ranked){chambersPts=Math.max(chambersPts,Math.round(20*breadthDamp));break;}
+    }
+  }
+  // Book realism penalty (-15 to 0)
+  var info=COLD_CALL_FIRMS[firmName];
+  var bookFloor=(info&&info.book)?info.book*1e6:0;
+  var bookPenalty=0;
+  if(bookFloor>0&&bookEst>0){
+    var ratio=bookEst/bookFloor;
+    if(ratio<0.5)return -999;
+    else if(ratio<0.75)bookPenalty=-15;
+    else if(ratio<1.0)bookPenalty=-5;
+  }
+  return chambersPts+bookPenalty;
+}
+function fuCityToState(city){
+  var m={'New York':'New York','Los Angeles':'California','San Francisco':'California','San Diego':'California','Chicago':'Illinois','Houston':'Texas','Dallas':'Texas','Austin':'Texas','San Antonio':'Texas','Fort Worth':'Texas','Miami':'Florida','Tampa':'Florida','Atlanta':'Georgia','Boston':'Massachusetts','Philadelphia':'Pennsylvania','Pittsburgh':'Pennsylvania','Washington, DC':'DC','Denver':'Colorado','Seattle':'Washington','Portland':'Oregon','Minneapolis':'Minnesota','Charlotte':'North Carolina','Raleigh':'North Carolina','Nashville':'Tennessee','Baltimore':'Maryland','Hartford':'Connecticut','Detroit':'Michigan','Kansas City':'Missouri','Richmond':'Virginia'};
+  return m[city]||'';
+}
 function pickNewFirms(fu){
   var offered=getOfferedFirms(fu.name);
   var pCity=fu.city||'';
   var CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York','Palo Alto':'San Francisco','Silicon Valley':'San Francisco','Menlo Park':'San Francisco','Mountain View':'San Francisco','San Jose':'San Francisco','Sunnyvale':'San Francisco','Redwood City':'San Francisco'};
   var pCityNorm=CITY_ALIASES[pCity]||pCity;
+  // Backfill book_est from DS if missing on fu
+  if(!fu.book_est){var d=DS['general']||[];for(var bi=0;bi<d.length;bi++){if(d[bi].name===fu.name){fu.book_est=d[bi].book_est||0;break;}}}
   var candidates=[];
   var seen=new Set();
   for(var firm in COLD_CALL_FIRMS){
@@ -1384,10 +1428,12 @@ function pickNewFirms(fu){
     if(seen.has(short))continue;
     seen.add(short);
     if(offered.has(short))continue;
+    var score=fuMatchScore(fu,firm);
+    if(score<=-999)continue;
     var ppp=0;for(var k in FIRM_PPP){if(sfGlobal(k)===short){ppp=FIRM_PPP[k];break;}}
-    candidates.push({firm:firm,short:short,book:info.book||0,ppp:ppp});
+    candidates.push({firm:firm,short:short,book:info.book||0,ppp:ppp,score:score});
   }
-  candidates.sort(function(a,b){return a.book-b.book||b.ppp-a.ppp;});
+  candidates.sort(function(a,b){return b.score-a.score||a.book-b.book||b.ppp-a.ppp;});
   return candidates.slice(0,2);
 }
 function buildFuMsgs(fu,stage,firmOverride){
