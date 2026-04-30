@@ -1338,8 +1338,22 @@ function updateFuBadge(){
   const lel=document.getElementById('log-badge');if(lel)lel.textContent=fuLog.length;
 }
 
+function fuLookupDS(name){
+  // Pull latest V7 alt2/alt3 (and other fields) from DS by partner name
+  if(typeof DS==='undefined'||!name) return null;
+  var keys=Object.keys(DS);
+  for(var ti=0;ti<keys.length;ti++){
+    var arr=DS[keys[ti]]||[];
+    for(var pi=0;pi<arr.length;pi++){if(arr[pi].name===name) return arr[pi];}
+  }
+  return null;
+}
 function buildFuMsg(fu,stage){
-  const{first,target,alt1,alt2,practice,city}=fu;
+  const{first,target,alt1,practice,city}=fu;
+  // Override fu.alt2/alt3 with latest V7 from DS — queue object may have stale values
+  var dsRec=fuLookupDS(fu.name)||{};
+  var alt2=dsRec.alt2||fu.alt2||'';
+  var alt3_ds=dsRec.alt3||fu.alt3||'';
   // Use sfGlobal (slice(0,3) + aliases) so firms like "Holland & Knight" don't get truncated
   var sf=sfGlobal;
   // Stage 1: simple check-in on original pitch (~8d after initial — quick nudge)
@@ -1352,7 +1366,7 @@ function buildFuMsg(fu,stage){
     // Priority: V7-computed alt2/alt3 from DS (NOT in offered set since initial only offered target+alt1)
     // → fallback to pickNewFirms (cold-call list) → final fallback to alt2+target
     var offered=getOfferedFirms(fu.name);
-    var alt3_v=fu.alt3||'';
+    var alt3_v=alt3_ds;
     var firms=[];
     if(alt2 && !offered.has(sf(alt2))) firms.push(alt2);
     if(alt3_v && !offered.has(sf(alt3_v)) && (firms.length===0 || sf(alt3_v)!==sf(firms[0]))) firms.push(alt3_v);
@@ -1455,11 +1469,14 @@ function buildFuMsgs(fu,stage,firmOverride){
   var sf=sfGlobal;
   var first=fu.first,practice=fu.practice;
   var cycle=Math.floor((stage-2)/2);
+  // Pull latest V7 alt2/alt3 from DS (queue object may have stale values)
+  var dsRec=fuLookupDS(fu.name)||{};
+  var alt2_v=dsRec.alt2||fu.alt2||'';
+  var alt3_v=dsRec.alt3||fu.alt3||'';
   // Priority: V7-computed alt2/alt3 from DS → pickNewFirms → final fallback to alt2/target
   var offered=getOfferedFirms(fu.name);
-  var alt3_v=fu.alt3||'';
   var firms=[];
-  if(fu.alt2 && !offered.has(sf(fu.alt2))) firms.push(fu.alt2);
+  if(alt2_v && !offered.has(sf(alt2_v))) firms.push(alt2_v);
   if(alt3_v && !offered.has(sf(alt3_v)) && (firms.length===0 || sf(alt3_v)!==sf(firms[0]))) firms.push(alt3_v);
   if(firms.length<2){
     var newFirms=pickNewFirms(fu);
@@ -1468,7 +1485,7 @@ function buildFuMsgs(fu,stage,firmOverride){
       if(!firms.find(function(x){return sf(x)===nfShort;})) firms.push(newFirms[ni].firm);
     }
   }
-  if(firms.length===0) firms.push(fu.alt2||fu.alt1||fu.target);
+  if(firms.length===0) firms.push(alt2_v||fu.alt1||fu.target);
   if(firms.length<2) firms.push(alt3_v||fu.target||fu.alt1);
   var f1Raw=firms[0],f2Raw=firms[1];
   if(firmOverride && firmOverride.firm1)f1Raw=firmOverride.firm1;
