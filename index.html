@@ -1342,21 +1342,35 @@ function buildFuMsg(fu,stage){
   const{first,target,alt1,alt2,practice,city}=fu;
   // Use sfGlobal (slice(0,3) + aliases) so firms like "Holland & Knight" don't get truncated
   var sf=sfGlobal;
-  // Stage 1: check-in on original pitch
+  // Stage 1: simple check-in on original pitch (~8d after initial — quick nudge)
   if(stage===1){
     const f1=sf(target),f2=sf(alt1);
     return 'Hi '+first+',\n\nJust wanted to follow up on my note about '+f1+(f2?' and '+f2:'')+'. Have you had a chance to think about it?\n\nHappy to jump on a quick call whenever works.';
   }
   // Even stages (2,4,6..): pitch NEW firms not yet offered
   if(stage%2===0){
-    var newFirms=pickNewFirms(fu);
-    var f1=newFirms.length>0?newFirms[0].short:sf(target);
-    var f2=newFirms.length>1?newFirms[1].short:sf(alt1||target);
+    // Priority: V7-computed alt2/alt3 from DS (NOT in offered set since initial only offered target+alt1)
+    // → fallback to pickNewFirms (cold-call list) → final fallback to alt2+target
+    var offered=getOfferedFirms(fu.name);
+    var alt3_v=fu.alt3||'';
+    var firms=[];
+    if(alt2 && !offered.has(sf(alt2))) firms.push(alt2);
+    if(alt3_v && !offered.has(sf(alt3_v)) && (firms.length===0 || sf(alt3_v)!==sf(firms[0]))) firms.push(alt3_v);
+    if(firms.length<2){
+      var newFirms=pickNewFirms(fu);
+      for(var ni=0;ni<newFirms.length && firms.length<2;ni++){
+        var nfShort=newFirms[ni].short;
+        if(!firms.find(function(x){return sf(x)===nfShort;})) firms.push(newFirms[ni].firm);
+      }
+    }
+    if(firms.length===0) firms.push(alt2||alt1||target);
+    if(firms.length<2) firms.push(alt3_v||target||alt1);
+    var f1=sf(firms[0]),f2=sf(firms[1]);
     const cycle=Math.floor((stage-2)/2);
     const prac=(practice||'').split(',')[0].trim().toLowerCase(),diff=f1!==f2;
     const intros=['Circling back, ','Coming back to you on this, ','Checking in one more time, '];
     const intro=intros[cycle%intros.length];
-    return 'Hi '+first+',\n\n'+intro+f1+' is looking to bring on '+prac+' partners in '+city+(diff?', and '+f2+' is another firm worth considering':'')+'.\n\nI believe '+(diff?'both':'it')+' could be a great platform for you. Do you have a couple of minutes to chat this week?';
+    return 'Hi '+first+',\n\n'+intro+(diff?f1+' and '+f2+' are also looking to grow their '+prac+' groups':f1+' is also looking to grow its '+prac+' group')+'.\n\nWould you be open to a chat and going over options together?';
   }
   // Odd stages 3,5,7..: check-in, vary the language
   const checkIns=[
@@ -1439,21 +1453,34 @@ function pickNewFirms(fu){
 function buildFuMsgs(fu,stage,firmOverride){
   if(stage!==2 && stage%2!==0||stage<2){return [buildFuMsg(fu,stage)];}
   var sf=sfGlobal;
-  var first=fu.first,city=fu.city,practice=fu.practice;
+  var first=fu.first,practice=fu.practice;
   var cycle=Math.floor((stage-2)/2);
-  // Pick new firms not yet offered to this candidate
-  var newFirms=pickNewFirms(fu);
-  var f1=newFirms.length>0?newFirms[0].short:sf(fu.target);
-  var f2=newFirms.length>1?newFirms[1].short:(newFirms.length>0?newFirms[0].short:sf(fu.alt1||fu.target));
-  if(firmOverride && firmOverride.firm1)f1=sf(firmOverride.firm1);
-  if(firmOverride && firmOverride.firm2)f2=sf(firmOverride.firm2);
-  var prac=(practice||'').split(',')[0].trim().toLowerCase();
+  // Priority: V7-computed alt2/alt3 from DS → pickNewFirms → final fallback to alt2/target
+  var offered=getOfferedFirms(fu.name);
+  var alt3_v=fu.alt3||'';
+  var firms=[];
+  if(fu.alt2 && !offered.has(sf(fu.alt2))) firms.push(fu.alt2);
+  if(alt3_v && !offered.has(sf(alt3_v)) && (firms.length===0 || sf(alt3_v)!==sf(firms[0]))) firms.push(alt3_v);
+  if(firms.length<2){
+    var newFirms=pickNewFirms(fu);
+    for(var ni=0;ni<newFirms.length && firms.length<2;ni++){
+      var nfShort=newFirms[ni].short;
+      if(!firms.find(function(x){return sf(x)===nfShort;})) firms.push(newFirms[ni].firm);
+    }
+  }
+  if(firms.length===0) firms.push(fu.alt2||fu.alt1||fu.target);
+  if(firms.length<2) firms.push(alt3_v||fu.target||fu.alt1);
+  var f1Raw=firms[0],f2Raw=firms[1];
+  if(firmOverride && firmOverride.firm1)f1Raw=firmOverride.firm1;
+  if(firmOverride && firmOverride.firm2)f2Raw=firmOverride.firm2;
+  var f1=sf(f1Raw),f2=sf(f2Raw);
+  var prac=(practice||'').split(',')[0].trim().toLowerCase()||'partner';
   var diff=f1!==f2;
-  var intros=['Circling back, ','Coming back to you on this, ','Checking in one more time, '];
-  var intro=intros[cycle%intros.length];
-  var v1='Hi '+first+',\n\n'+intro+f1+' is looking to bring on '+prac+' partners in '+city+(diff?', and '+f2+' is another firm worth considering':'')+'.\n\nI believe '+(diff?'both':'it')+' could be a great platform for you. Do you have a couple of minutes to chat this week?';
-  var v2='Hi '+first+',\n\n'+intro+(diff?f1+' and '+f2+' are both actively expanding in '+city:f1+' is actively expanding in '+city)+' and could be a strong platform for you.\n\nWould you have a few minutes to chat this week?';
-  var v3='Hi '+first+',\n\nWanted to share '+(diff?'two firms':'a firm')+' that ha'+(diff?'ve':'s')+' been actively recruiting in '+city+': '+f1+(diff?' and '+f2:'')+'. Happy to walk you through '+(diff?'them':'it')+' whenever works for you.';
+  var body=(diff?f1+' and '+f2+' are also looking to grow their '+prac+' groups':f1+' is also looking to grow its '+prac+' group');
+  // 3 variants: same body, different closers (matches general outreach style)
+  var v1='Hi '+first+',\n\n'+body+'.\n\nWould you be open to a chat and going over options together?';
+  var v2='Hi '+first+',\n\n'+body+'.\n\nAre these firms you\'d consider speaking with?';
+  var v3='Hi '+first+',\n\n'+body+'.\n\nAre you currently open to conversations?';
   return [v1,v2,v3];
 }
 
@@ -2259,4 +2286,47 @@ document.addEventListener('click',function(e){
 });
 </script>
 </body>
+</html>;text-align:center;padding:20px">No scheduled follow-ups</td></tr>';
+}
+
+// Close snooze menu on outside click
+document.addEventListener('click',function(e){
+  var m=document.getElementById('snooze-menu');
+  if(m&&m.style.display==='block'){
+    var w=document.getElementById('skip-wrap');
+    if(w&&!w.contains(e.target))m.style.display='none';
+  }
+});
+</script>
+</body>
+</html>y||'')+'</td><td>'+firms+'</td><td><span class="log-stage-badge" style="'+sg.s+'">'+sg.l+'</span></td></tr>';
+  }).join('');
+  const tb=document.getElementById('fu-sched-tbody');
+  if(tb)tb.innerHTML=rows||'<tr><td colspan="6" style="color:#444;text-align:center;padding:20px">No scheduled follow-ups</td></tr>';
+}
+
+// Close snooze menu on outside click
+document.addEventListener('click',function(e){
+  var m=document.getElementById('snooze-menu');
+  if(m&&m.style.display==='block'){
+    var w=document.getElementById('skip-wrap');
+    if(w&&!w.contains(e.target))m.style.display='none';
+  }
+});
+</script>
+</body>
+</html>;text-align:center;padding:20px">No scheduled follow-ups</td></tr>';
+}
+
+// Close snooze menu on outside click
+document.addEventListener('click',function(e){
+  var m=document.getElementById('snooze-menu');
+  if(m&&m.style.display==='block'){
+    var w=document.getElementById('skip-wrap');
+    if(w&&!w.contains(e.target))m.style.display='none';
+  }
+});
+</script>
+</body>
+</html>/body>
 </html>
