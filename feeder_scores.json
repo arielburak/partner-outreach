@@ -991,7 +991,7 @@
     "fox_tier_moves": 1,
     "total_moves": 2,
     "fox_tier_pct": 0.5,
-    "ppp": null
+    "ppp": 638000
   },
   "Office of Inspector General": {
     "direct_fox": 0,
@@ -5773,5 +5773,33 @@
     "total_moves": 1,
     "fox_tier_pct": 1.0,
     "ppp": null
+  },
+  "FBT Gibbons LLP": {
+    "direct_fox": 0,
+    "fox_tier_moves": 0,
+    "total_moves": 0,
+    "fox_tier_pct": 0.0,
+    "ppp": 638000
+  },
+  "FBT Gibbons": {
+    "direct_fox": 0,
+    "fox_tier_moves": 0,
+    "total_moves": 0,
+    "fox_tier_pct": 0.0,
+    "ppp": 638000
+  },
+  "FBT/Gibbons": {
+    "direct_fox": 0,
+    "fox_tier_moves": 0,
+    "total_moves": 0,
+    "fox_tier_pct": 0.0,
+    "ppp": 638000
+  },
+  "Frost Brown Todd": {
+    "direct_fox": 0,
+    "fox_tier_moves": 0,
+    "total_moves": 0,
+    "fox_tier_pct": 0.0,
+    "ppp": 638000
   }
 }

@@ -902,6 +902,14 @@ def match_score(partner, firm_name):
         _est_book = estimate_book(_src_ppp, partner.get('book_est'))
         if _est_book > 0 and _est_book < _book_floor * 0.50:
             return -999
+        # UNKNOWN-TIER GUARD (added April 2026 after FBT Gibbons / Brian Dibenedetto case):
+        # If we have NO source PPP and NO book_est, we have zero anchor for tier.
+        # Block any firm with book floor >= $3M to prevent unknown candidates from
+        # getting pitched at elite firms (Clifford Chance, Fried Frank, etc.) just
+        # because Chambers points fired. Firms below $3M floor stay open since the
+        # downside of a wrong mid-market pitch is small.
+        if _est_book == 0 and not _src_ppp and not partner.get('book_est') and _book_floor >= 3_000_000:
+            return -999
 
     # ── 1. GEOGRAPHY (hard filter) ──
     cities = firm_cities.get(firm_name, [])
