@@ -755,7 +755,7 @@ function render(){
   document.body.className=isFox?'view-fox':'';
   const c=cur();
   document.getElementById('done-overlay').style.display=c?'none':'flex';
-  if(!c){updateP();try{var _sentD=DS[tab].reduce(function(n,_,i){return n+((status[sk(tab,i)]==='sent'||status[sk(tab,i)]==='inmail_sent')?1:0);},0);var _benchedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='benched'?1:0);},0);var _interestedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='interested'?1:0);},0);var _snoozedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='snoozed'?1:0);},0);var _inFuD=0;if(tab==='general'){DS[tab].forEach(function(_,i){var k=sk(tab,i);if(status[k]!=='sent'&&status[k]!=='benched'&&status[k]!=='interested'&&status[k]!=='snoozed'){var fk=DS[tab][i].name+'|'+DS[tab][i].firm;if(fuData[fk]&&!fuData[fk].done)_inFuD++;}});}var _activeD=DS[tab].length-_benchedD-_interestedD-_snoozedD;var _pendingD=_activeD-_sentD-_inFuD;document.getElementById('prog-text').textContent=_sentD+' / '+_activeD+' sent ('+_pendingD+' remaining)'+(_benchedD?' \u00b7 '+_benchedD+' benched':'')+(_interestedD?' \u00b7 '+_interestedD+' interested':'');}catch(e){}return;}
+  if(!c){updateP();try{var _sentD=DS[tab].reduce(function(n,_,i){return n+((status[sk(tab,i)]==='sent'||status[sk(tab,i)]==='inmail_sent')?1:0);},0);var _benchedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='benched'?1:0);},0);var _interestedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='interested'?1:0);},0);var _snoozedD=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='snoozed'?1:0);},0);var _inFuD=0,_unmD=0;if(tab==='general'){DS[tab].forEach(function(_,i){var k=sk(tab,i);if(status[k]==='sent'||status[k]==='inmail_sent'||status[k]==='benched'||status[k]==='interested'||status[k]==='snoozed')return;var fk=DS[tab][i].name+'|'+DS[tab][i].firm;if(fuData[fk]&&!fuData[fk].done){_inFuD++;return;}if(!DS[tab][i].message&&!DS[tab][i].target)_unmD++;});}var _activeD=DS[tab].length-_benchedD-_interestedD-_snoozedD-_unmD;var _pendingD=_activeD-_sentD-_inFuD;document.getElementById('prog-text').textContent=_sentD+' / '+_activeD+' sent ('+_pendingD+' remaining)'+(_benchedD?' \u00b7 '+_benchedD+' benched':'')+(_interestedD?' \u00b7 '+_interestedD+' interested':'')+(_unmD?' \u00b7 '+_unmD+' unmatched':'');}catch(e){}return;}
   const{p,i}=c;
   altIdx=0;
   document.getElementById('p-name').textContent=p.name||'';
@@ -857,7 +857,7 @@ function render(){
   var skipBdg=document.getElementById('skip-badge');
   if(!skipBdg){skipBdg=document.createElement('span');skipBdg.id='skip-badge';skipBdg.className='badge-skipped';skipBdg.textContent='SKIPPED';var nameEl=document.getElementById('p-name');if(nameEl)nameEl.parentNode.insertBefore(skipBdg,nameEl.nextSibling);}
   skipBdg.style.display=status[sk(tab,c.i)]==='skipped'?'inline-block':'none';
-  updateP();var _sent=DS[tab].reduce(function(n,_,i){return n+((status[sk(tab,i)]==='sent'||status[sk(tab,i)]==='inmail_sent')?1:0);},0);var _benched=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='benched'?1:0);},0);var _interested=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='interested'?1:0);},0);var _snoozed=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='snoozed'?1:0);},0);var _inFu=0;try{if(tab==='general'){DS[tab].forEach(function(_,i){var k=sk(tab,i);if(status[k]!=='sent'&&status[k]!=='benched'&&status[k]!=='interested'&&status[k]!=='snoozed'){var fk=DS[tab][i].name+'|'+DS[tab][i].firm;if(fuData[fk]&&!fuData[fk].done)_inFu++;}});}}catch(e){}var _active=DS[tab].length-_benched-_interested-_snoozed;var _pending=_active-_sent-_inFu;document.getElementById('prog-text').textContent=_sent+' / '+_active+' sent ('+_pending+' remaining)'+(_benched?' \u00b7 '+_benched+' benched':'')+(_interested?' \u00b7 '+_interested+' interested':'');
+  updateP();var _sent=DS[tab].reduce(function(n,_,i){return n+((status[sk(tab,i)]==='sent'||status[sk(tab,i)]==='inmail_sent')?1:0);},0);var _benched=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='benched'?1:0);},0);var _interested=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='interested'?1:0);},0);var _snoozed=DS[tab].reduce(function(n,_,i){return n+(status[sk(tab,i)]==='snoozed'?1:0);},0);var _inFu=0,_unm=0;try{if(tab==='general'){DS[tab].forEach(function(_,i){var k=sk(tab,i);if(status[k]==='sent'||status[k]==='inmail_sent'||status[k]==='benched'||status[k]==='interested'||status[k]==='snoozed')return;var fk=DS[tab][i].name+'|'+DS[tab][i].firm;if(fuData[fk]&&!fuData[fk].done){_inFu++;return;}if(!DS[tab][i].message&&!DS[tab][i].target)_unm++;});}}catch(e){}var _active=DS[tab].length-_benched-_interested-_snoozed-_unm;var _pending=_active-_sent-_inFu;document.getElementById('prog-text').textContent=_sent+' / '+_active+' sent ('+_pending+' remaining)'+(_benched?' \u00b7 '+_benched+' benched':'')+(_interested?' \u00b7 '+_interested+' interested':'')+(_unm?' \u00b7 '+_unm+' unmatched':'');
 }
 function tableSwapFirm(firm,evt){
   const c=cur();if(!c)return;
@@ -1572,7 +1572,20 @@ function fuBuildQ(){
   Object.values(fuData).forEach(function(f){if(f.snoozedUntil&&f.snoozedUntil<=today){delete f.snoozedUntil;}});
   // Build queue from fuData entries — use Object.entries to preserve the key
   const entries=Object.entries(fuData).filter(([k,f])=>!f.done&&!f.snoozedUntil).map(([k,f])=>({key:k,...f}));
-  entries.sort((a,b)=>{var da=a.nextDate||a.due_date||'9999';var db=b.nextDate||b.due_date||'9999';return da<db?-1:da>db?1:0;});
+  // Sort priority:
+  //   1) Past-due stage 1 (simple "just following up" — quick wins, time-sensitive)
+  //   2) Past-due stage 2+ (new firms pitched — less urgent)
+  //   3) Upcoming (not yet past due), regardless of stage
+  // Within each tier, oldest due-date first.
+  entries.sort((a,b)=>{
+    var da=a.nextDate||a.due_date||'9999';
+    var db=b.nextDate||b.due_date||'9999';
+    var aOver=da<today, bOver=db<today;
+    var rankA = aOver ? ((a.stage||1)===1 ? 1 : 2) : 3;
+    var rankB = bOver ? ((b.stage||1)===1 ? 1 : 2) : 3;
+    if(rankA!==rankB) return rankA-rankB;
+    return da<db?-1:da>db?1:0;
+  });
   fuQ=entries.map(e=>e.key);fuQi=0;
 }
 
