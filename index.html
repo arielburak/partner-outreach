@@ -1619,7 +1619,11 @@ function renderFuTab(){
   document.getElementById('fu-firm').textContent=fu.firm;
   document.getElementById('fu-city').textContent=fu.city;
   const sb=document.getElementById('fu-stage-badge');
-  const sLabel=stage===1?'Follow-up 1':stage%2===0?'Follow-up '+(stage/2):('Check-in '+(Math.floor(stage/2)));const sCl=stage===1?'fu-stage-badge fu-s1':stage%2===0?'fu-stage-badge fu-s2':'fu-stage-badge fu-s3';sb.textContent=sLabel;sb.className=sCl;
+  // Label clarification (April 2026): stage 1 is the simple "just following up"
+  // nudge (no new firms). Stage 2 is the FIRST time we pitch new firms — call
+  // it "Follow-up 1" so the badge matches what it actually does. Stage 4 is
+  // "Follow-up 2", etc. Odd stages 3, 5, ... are check-ins between firm pitches.
+  const sLabel=stage===1?'Nudge':stage%2===0?'Follow-up '+(stage/2):('Check-in '+(Math.floor(stage/2)));const sCl=stage===1?'fu-stage-badge fu-s1':stage%2===0?'fu-stage-badge fu-s2':'fu-stage-badge fu-s3';sb.textContent=sLabel;sb.className=sCl;
   const fuDD=fu.nextDate||fu.due_date||'';
   const de=document.getElementById('fu-due'),diff=fuDD?daysDiff(fuDD):999;
   if(diff<0)de.innerHTML='<span class="fu-overdue">'+Math.abs(diff)+'d overdue</span>';
@@ -1797,7 +1801,7 @@ function renderLogTab(){
   const sm={'initial':{l:'Initial',s:'background:#1a3060;color:#4f8ef7'},
     'interested':{l:'Interested ✓',s:'background:#0d2d1f;color:#27ae60'},
     'not_interested':{l:'Not Interested',s:'background:#2a0a0a;color:#e74c3c'}};
-  function getSm(stg){if(sm[stg])return sm[stg];const n=parseInt((stg||'').replace('followup_',''));if(!n)return{l:stg||'',s:''};return n===1?{l:'Follow-up 1',s:'background:#2a1500;color:#f0a500'}:n%2===0?{l:'Follow-up '+(n/2),s:'background:#2a1500;color:#f0a500'}:{l:'Check-in',s:'background:#1a0a2a;color:#c084fc'};}
+  function getSm(stg){if(sm[stg])return sm[stg];const n=parseInt((stg||'').replace('followup_',''));if(!n)return{l:stg||'',s:''};return n===1?{l:'Nudge',s:'background:#2a1500;color:#f0a500'}:n%2===0?{l:'Follow-up '+(n/2),s:'background:#2a1500;color:#f0a500'}:{l:'Check-in',s:'background:#1a0a2a;color:#c084fc'};}
   const rows=fuLog.map(e=>{
     const sg=getSm(e.stage);
     const firms=[e.target,e.alt1].filter(Boolean).join(' + ');
@@ -1996,9 +2000,9 @@ fuBuildQ=function(){
   const oc=document.getElementById('fu-overdue-count');
   if(oc){
     if(overdueN===0) oc.textContent='';
-    else if(overdueS1>0 && overdueS2plus>0) oc.textContent=overdueN+' overdue ('+overdueS1+' first FU, '+overdueS2plus+' second FU+)';
-    else if(overdueS1>0) oc.textContent=overdueN+' overdue (all first FU)';
-    else oc.textContent=overdueN+' overdue (all second FU+)';
+    else if(overdueS1>0 && overdueS2plus>0) oc.textContent=overdueN+' overdue ('+overdueS1+' nudge, '+overdueS2plus+' firm pitch)';
+    else if(overdueS1>0) oc.textContent=overdueN+' overdue (all nudges)';
+    else oc.textContent=overdueN+' overdue (all firm pitches)';
   }
 };
 
@@ -2309,8 +2313,8 @@ function renderStatsTab(){
   const sm={'initial':{l:'Initial',s:'background:#1a3060;color:#4f8ef7'}};
   function getSm(stg){
     if(typeof stg==='number'){
-      return stg===1?{l:'Follow-up 1',s:'background:#2a1500;color:#f0a500'}:
-        stg%2===0?{l:'Follow-up '+stg,s:'background:#1a3060;color:#4f8ef7'}:
+      return stg===1?{l:'Nudge',s:'background:#2a1500;color:#f0a500'}:
+        stg%2===0?{l:'Follow-up '+(stg/2),s:'background:#1a3060;color:#4f8ef7'}:
         {l:'Check-in '+Math.floor(stg/2),s:'background:#0d2d1f;color:#27ae60'};
     }
     return {l:String(stg||''),s:''};
