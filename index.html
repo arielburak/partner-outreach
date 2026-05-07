@@ -1973,7 +1973,20 @@ fuBuildQ=function(){
     if(fuFilter==='upcoming') return d>0;
     return true;
   });
-  filtered.sort((a,b)=>{var da=a.nextDate||a.due_date||'9999';var db=b.nextDate||b.due_date||'9999';return da<db?-1:da>db?1:0;});
+  // Sort priority (matches inner fuBuildQ):
+  //   1) Past-due stage 1 (simple "just following up" — quick wins, time-sensitive)
+  //   2) Past-due stage 2+ (new firms pitched — less urgent)
+  //   3) Upcoming (not yet past due)
+  // Within each tier, oldest due-date first.
+  filtered.sort((a,b)=>{
+    var da=a.nextDate||a.due_date||'9999';
+    var db=b.nextDate||b.due_date||'9999';
+    var aOver=da<today, bOver=db<today;
+    var rankA = aOver ? ((a.stage||1)===1 ? 1 : 2) : 3;
+    var rankB = bOver ? ((b.stage||1)===1 ? 1 : 2) : 3;
+    if(rankA!==rankB) return rankA-rankB;
+    return da<db?-1:da>db?1:0;
+  });
   fuQ=filtered.map(e=>e._key);fuQi=0;
   // Update overdue count badge
   const overdueN=entries.filter(e=>{var dd=e.nextDate||e.due_date;return dd&&daysDiff(dd)<=0;}).length;
