@@ -1988,10 +1988,18 @@ fuBuildQ=function(){
     return da<db?-1:da>db?1:0;
   });
   fuQ=filtered.map(e=>e._key);fuQi=0;
-  // Update overdue count badge
-  const overdueN=entries.filter(e=>{var dd=e.nextDate||e.due_date;return dd&&daysDiff(dd)<=0;}).length;
+  // Update overdue count badge with stage 1 vs stage 2+ split
+  const overdueEntries=entries.filter(e=>{var dd=e.nextDate||e.due_date;return dd&&daysDiff(dd)<=0;});
+  const overdueN=overdueEntries.length;
+  const overdueS1=overdueEntries.filter(e=>(e.stage||1)===1).length;
+  const overdueS2plus=overdueN-overdueS1;
   const oc=document.getElementById('fu-overdue-count');
-  if(oc)oc.textContent=overdueN>0?overdueN+' overdue':'';
+  if(oc){
+    if(overdueN===0) oc.textContent='';
+    else if(overdueS1>0 && overdueS2plus>0) oc.textContent=overdueN+' overdue ('+overdueS1+' first FU, '+overdueS2plus+' second FU+)';
+    else if(overdueS1>0) oc.textContent=overdueN+' overdue (all first FU)';
+    else oc.textContent=overdueN+' overdue (all second FU+)';
+  }
 };
 
 function applyFirmOverride(msg,p){
