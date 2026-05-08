@@ -1967,8 +1967,11 @@ function fuSetFilter(f,btn){
 // Patch fuBuildQ to respect filter — uses Object.entries to preserve keys
 const _fuBuildQOrig=fuBuildQ;
 fuBuildQ=function(){
-  const entries=Object.entries(fuData).filter(([k,f])=>!f.done).map(([k,f])=>({_key:k,...f}));
   const today=todayStr();
+  // Auto-unsnooze entries whose snooze date has passed (matches inner fuBuildQ)
+  Object.values(fuData).forEach(function(f){if(f.snoozedUntil&&f.snoozedUntil<=today){delete f.snoozedUntil;}});
+  // Exclude done AND currently-snoozed entries (matches inner fuBuildQ)
+  const entries=Object.entries(fuData).filter(([k,f])=>!f.done&&!f.snoozedUntil).map(([k,f])=>({_key:k,...f}));
   const filtered=entries.filter(e=>{
     const dd=e.nextDate||e.due_date||'';
     if(!dd)return fuFilter==='all';
