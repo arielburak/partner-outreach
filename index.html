@@ -1580,7 +1580,7 @@ function fuBuildQ(){
   entries.sort((a,b)=>{
     var da=a.nextDate||a.due_date||'9999';
     var db=b.nextDate||b.due_date||'9999';
-    var aOver=da<today, bOver=db<today;
+    var aOver=da<=today, bOver=db<=today;
     var rankA = aOver ? ((a.stage||1)===1 ? 1 : 2) : 3;
     var rankB = bOver ? ((b.stage||1)===1 ? 1 : 2) : 3;
     if(rankA!==rankB) return rankA-rankB;
@@ -1985,7 +1985,10 @@ fuBuildQ=function(){
   filtered.sort((a,b)=>{
     var da=a.nextDate||a.due_date||'9999';
     var db=b.nextDate||b.due_date||'9999';
-    var aOver=da<today, bOver=db<today;
+    // "Overdue" includes due-today (matches the filter at the top of fuBuildQ
+    // which uses daysDiff<=0). Using strict da<today missed today-due entries
+    // and pushed them behind older overdue entries from other tiers.
+    var aOver=da<=today, bOver=db<=today;
     var rankA = aOver ? ((a.stage||1)===1 ? 1 : 2) : 3;
     var rankB = bOver ? ((b.stage||1)===1 ? 1 : 2) : 3;
     if(rankA!==rankB) return rankA-rankB;
