@@ -112,7 +112,7 @@
       "New York"
     ],
     "book_size": "1",
-    "misc": "We are always looking for potential commercial litigation partners who have a book of business \u2013 even a small one"
+    "misc": "We are always looking for potential commercial litigation partners who have a book of business – even a small one"
   },
   {
     "firm": "Stradley Ronon",
@@ -381,7 +381,7 @@
       "Charlotte"
     ],
     "book_size": "2",
-    "misc": "Didn\u2019t explicitly say the book size, but based on some opportunistics I think this is their interest"
+    "misc": "Didn’t explicitly say the book size, but based on some opportunistics I think this is their interest"
   },
   {
     "firm": "Seyfarth",
@@ -399,7 +399,7 @@
       "Seattle"
     ],
     "book_size": "2",
-    "misc": "Didn\u2019t explicitly say the book size, but based on some opportunistics I think this is their interest"
+    "misc": "Didn’t explicitly say the book size, but based on some opportunistics I think this is their interest"
   },
   {
     "firm": "Haynes and Boone",
@@ -797,5 +797,20 @@
     ],
     "book_size": "10",
     "misc": ""
+  },
+  {
+    "firm": "Akin, Gump, Strauss, Hauer & Feld, LLP",
+    "cities": [
+      "New York",
+      "Washington, DC",
+      "Houston",
+      "Los Angeles",
+      "Dallas",
+      "Philadelphia",
+      "Boston",
+      "Chicago"
+    ],
+    "book_size": "1.5",
+    "misc": "Signed May 2026"
   }
 ]

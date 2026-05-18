@@ -176,7 +176,7 @@
       "Boston",
       "Chicago"
     ],
-    "signed_client": false
+    "signed_client": true
   },
   {
     "name": "WilmerHale",
