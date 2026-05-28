@@ -717,7 +717,7 @@
     "notes": "Looking for $7M+ portable."
   },
   "Akin, Gump, Strauss, Hauer & Feld, LLP": {
-    "book": 1.5,
+    "book": 5.0,
     "cities": [
       "New York",
       "Washington, DC",
@@ -728,6 +728,6 @@
       "Boston",
       "Chicago"
     ],
-    "notes": "Signed client (May 2026). $1.5M+ book threshold for AmLaw 50 / $3.8M PPP tier."
+    "notes": "Signed client (May 2026). $5M+ book threshold for AmLaw 50 / $3.8M PPP tier."
   }
 }
