@@ -837,30 +837,38 @@ function render(){
   }else{acRow.style.display='none';}
   var _ndDate=NOTE_DATES[p.name]||'';var _lcDisp=p.last_contact||_ndDate||'';if(!isFox&&_lcDisp){lcb.style.display='';pcd.textContent='Last note: '+_lcDisp;pcn.textContent=p.last_note||'';}else lcb.style.display='none';
   const pr=document.getElementById('pitch-row'),per=document.getElementById('pitch-edit-row');
-  if(!isFox&&(p.target||p.alt1)){
+  if(!isFox){
     pr.style.display='flex';per.classList.remove('open');
     const dispF1=pitchOverride.firm1||p.target||'';
     const dispF2=pitchOverride.firm2!==undefined?pitchOverride.firm2:(p.alt1||'');
-    const f1Signed=pitchOverride.firm1?!NON_SIGNED.has(pitchOverride.firm1):(p.target_signed!==false);
-    const f2Signed=pitchOverride.firm2?!NON_SIGNED.has(pitchOverride.firm2):(p.alt1_signed!==false);
     function pitchPPP(firm){let pp=0;for(const[k,v] of Object.entries(FIRM_PPP)){if(sfGlobal(k)===sfGlobal(firm)||k===firm){pp=v;break;}}return pp?' <span style="font-size:11px;color:#e67e22;font-weight:700">$'+(pp/1e6).toFixed(1)+'M</span>':'';}
-    const f1Label=(!f1Signed?'⚠️ ':'')+sfGlobal(dispF1)+pitchPPP(dispF1);
-    const f2Label=dispF2?(' + '+(!f2Signed?'⚠️ ':'')+sfGlobal(dispF2)+pitchPPP(dispF2)):'';
-    document.getElementById('pitch-display').innerHTML=f1Label+f2Label;
-    // Update "Offered" copy field
     const offRow=document.getElementById('offered-row');
     const offTxt=document.getElementById('offered-text');
-    if(offRow&&offTxt&&!isFox&&dispF1){
-      const offStr='Offered '+sfGlobal(dispF1)+(dispF2?' + '+sfGlobal(dispF2):'');
-      offTxt.value=offStr;
-      offRow.style.display='block';
-    }else if(offRow){offRow.style.display='none';}
     const poInd=document.getElementById('pitch-override-ind');
-    if(poInd){if(pitchOverride.firm1||pitchOverride.firm2){poInd.textContent='(edited)';poInd.style.display='';}else{poInd.style.display='none';}}
-    const tBadge=chambersBadge(p.target_chambers_label);
-    const a1Badge=p.alt1?chambersBadge(p.alt1_chambers_label):'';
-    const cBadge=p.candidate_chambers_label&&p.candidate_chambers_label!=='Not ranked'?'<span class="cb-cand">(you: '+p.candidate_chambers_label+')</span>':'';
-    document.getElementById('chambers-badges').innerHTML=tBadge+(a1Badge?' '+a1Badge:'')+cBadge;
+    if(dispF1){
+      const f1Signed=pitchOverride.firm1?!NON_SIGNED.has(pitchOverride.firm1):(p.target_signed!==false);
+      const f2Signed=pitchOverride.firm2?!NON_SIGNED.has(pitchOverride.firm2):(p.alt1_signed!==false);
+      const f1Label=(!f1Signed?'⚠️ ':'')+sfGlobal(dispF1)+pitchPPP(dispF1);
+      const f2Label=dispF2?(' + '+(!f2Signed?'⚠️ ':'')+sfGlobal(dispF2)+pitchPPP(dispF2)):'';
+      document.getElementById('pitch-display').innerHTML=f1Label+f2Label;
+      // Update "Offered" copy field
+      if(offRow&&offTxt&&dispF1){
+        const offStr='Offered '+sfGlobal(dispF1)+(dispF2?' + '+sfGlobal(dispF2):'');
+        offTxt.value=offStr;
+        offRow.style.display='block';
+      }else if(offRow){offRow.style.display='none';}
+      if(poInd){if(pitchOverride.firm1||pitchOverride.firm2){poInd.textContent='(edited)';poInd.style.display='';}else{poInd.style.display='none';}}
+      const tBadge=chambersBadge(p.target_chambers_label);
+      const a1Badge=p.alt1?chambersBadge(p.alt1_chambers_label):'';
+      const cBadge=p.candidate_chambers_label&&p.candidate_chambers_label!=='Not ranked'?'<span class="cb-cand">(you: '+p.candidate_chambers_label+')</span>':'';
+      document.getElementById('chambers-badges').innerHTML=tBadge+(a1Badge?' '+a1Badge:'')+cBadge;
+    }else{
+      // Unmatched candidate — no firms set. Show empty state but keep the edit link usable.
+      document.getElementById('pitch-display').innerHTML='<span style="color:#e67e22;font-weight:600">No firm set — click edit to set manually</span>';
+      if(offRow)offRow.style.display='none';
+      if(poInd)poInd.style.display='none';
+      document.getElementById('chambers-badges').innerHTML='';
+    }
     document.getElementById('pitch-f1').value=pitchOverride.firm1||p.target||'';
     document.getElementById('pitch-f2').value=pitchOverride.firm2!==undefined?pitchOverride.firm2:(p.alt1||'');
   }else if(pr){pr.style.display='none';}
@@ -2123,6 +2131,10 @@ function applyFirmOverride(msg,p){
   if(parts.length<2)return msg; // unexpected shape — leave untouched
   var greeting=parts[0];
   var closing=parts.length>=3?parts.slice(2).join('\n\n'):'';
+  // Normalize a non-canonical closing (e.g. leftover from an unmatched/old-template
+  // record) to a canonical one so manually-set candidates get a clean message.
+  var CANON_CLOSINGS=["Would you be open to a chat and going over options together?","Are these firms that could interest you?","Are these firms you'd consider speaking with?","Are you currently open to conversations?"];
+  if(!closing||CANON_CLOSINGS.indexOf(closing.trim())<0){closing=CANON_CLOSINGS[0];}
   var oldBody=parts[1];
   // Detect practice-specific (Alt2) variant: "...searches for their {spec} group(s) and believe..."
   var prac=oldBody.match(/search(?:es)?\s+for\s+(?:their|its)\s+(.+?)\s+group(?:s)?\s+and\s+believe/i);
