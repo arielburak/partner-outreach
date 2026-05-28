@@ -85,7 +85,8 @@
       "Philadelphia",
       "Los Angeles",
       "Washington, DC",
-      "Miami"
+      "Miami",
+      "Fort Lauderdale"
     ],
     "book_size": "1",
     "misc": ""
@@ -204,7 +205,8 @@
       "Washington, DC",
       "Philadelphia",
       "New York",
-      "Miami"
+      "Miami",
+      "Fort Lauderdale"
     ],
     "book_size": "1",
     "misc": ""
@@ -296,7 +298,8 @@
       "New York",
       "Philadelphia",
       "Los Angeles",
-      "Washington, DC"
+      "Washington, DC",
+      "Fort Lauderdale"
     ],
     "book_size": "1.8",
     "misc": ""
@@ -317,7 +320,8 @@
       "New York",
       "Dallas",
       "Denver",
-      "Miami"
+      "Miami",
+      "Fort Lauderdale"
     ],
     "book_size": "1.8",
     "misc": ""
@@ -572,7 +576,8 @@
       "Washington, DC",
       "Denver",
       "Miami",
-      "Seattle"
+      "Seattle",
+      "Fort Lauderdale"
     ],
     "book_size": "3",
     "misc": ""

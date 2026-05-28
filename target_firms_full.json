@@ -84,7 +84,8 @@
       "Los Angeles",
       "Philadelphia",
       "Chicago",
-      "Miami"
+      "Miami",
+      "Fort Lauderdale"
     ],
     "notes": "",
     "book_min": 500000,
@@ -219,7 +220,8 @@
       "Philadelphia",
       "Chicago",
       "Miami",
-      "San Diego"
+      "San Diego",
+      "Fort Lauderdale"
     ],
     "notes": "",
     "book_min": 750000,
@@ -330,7 +332,8 @@
       "Philadelphia",
       "Chicago",
       "Dallas",
-      "Houston"
+      "Houston",
+      "Fort Lauderdale"
     ],
     "notes": "",
     "book_min": 1200000,
@@ -354,7 +357,8 @@
       "Miami",
       "Dallas",
       "Houston",
-      "Austin"
+      "Austin",
+      "Fort Lauderdale"
     ],
     "notes": "",
     "book_min": 900000,
@@ -682,7 +686,8 @@
       "Miami",
       "Dallas",
       "Houston",
-      "Austin"
+      "Austin",
+      "Fort Lauderdale"
     ],
     "notes": "",
     "book_min": 1500000,
