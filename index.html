@@ -945,7 +945,7 @@ function buildFirmTable(p){
   const myTargetsShort=new Set([...myTargets].map(f=>sfGlobal(f)));
   const pCity=p.city||'';
   // Legitimate city aliases (same place, different formatting)
-  const CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York','Palo Alto':'San Francisco','Silicon Valley':'San Francisco','Menlo Park':'San Francisco','Mountain View':'San Francisco','San Jose':'San Francisco','Sunnyvale':'San Francisco','Redwood City':'San Francisco','Irvine':'Los Angeles','The Woodlands':'Houston'};
+  const CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York','Palo Alto':'San Francisco','Silicon Valley':'San Francisco','Menlo Park':'San Francisco','Mountain View':'San Francisco','San Jose':'San Francisco','Sunnyvale':'San Francisco','Redwood City':'San Francisco','Santa Monica':'Los Angeles','Irvine':'Los Angeles','The Woodlands':'Houston'};
   const pCityNorm=CITY_ALIASES[pCity]||pCity;
   // Build rows from COLD_CALL_FIRMS, filtered by partner's city
   var rows=[];
@@ -1526,7 +1526,7 @@ function fuCityToState(city){
 function pickNewFirms(fu){
   var offered=getOfferedFirms(fu.name);
   var pCity=fu.city||'';
-  var CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York','Palo Alto':'San Francisco','Silicon Valley':'San Francisco','Menlo Park':'San Francisco','Mountain View':'San Francisco','San Jose':'San Francisco','Sunnyvale':'San Francisco','Redwood City':'San Francisco'};
+  var CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York','Palo Alto':'San Francisco','Silicon Valley':'San Francisco','Menlo Park':'San Francisco','Mountain View':'San Francisco','San Jose':'San Francisco','Sunnyvale':'San Francisco','Redwood City':'San Francisco','Santa Monica':'Los Angeles'};
   var pCityNorm=CITY_ALIASES[pCity]||pCity;
   // Backfill book_est from DS if missing on fu
   if(!fu.book_est){var d=DS['general']||[];for(var bi=0;bi<d.length;bi++){if(d[bi].name===fu.name){fu.book_est=d[bi].book_est||0;break;}}}
@@ -1626,7 +1626,7 @@ function buildFuFirmTable(fu){
   panel.style.display='';
   const offeredSet=getOfferedFirms(fu.name);
   const pCity=fu.city||'';
-  const CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York','Palo Alto':'San Francisco','Silicon Valley':'San Francisco','Menlo Park':'San Francisco','Mountain View':'San Francisco','San Jose':'San Francisco','Sunnyvale':'San Francisco','Redwood City':'San Francisco','Irvine':'Los Angeles','The Woodlands':'Houston'};
+  const CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York','Palo Alto':'San Francisco','Silicon Valley':'San Francisco','Menlo Park':'San Francisco','Mountain View':'San Francisco','San Jose':'San Francisco','Sunnyvale':'San Francisco','Redwood City':'San Francisco','Santa Monica':'Los Angeles','Irvine':'Los Angeles','The Woodlands':'Houston'};
   const pCityNorm=CITY_ALIASES[pCity]||pCity;
   var rows=[];
   const seen=new Set();
@@ -2223,7 +2223,7 @@ function togglePitchEditWithPrefill(){
 
 // Live Call tab: filter firms by candidate's geography for use during live calls
 var _liveCityListBuilt=false;
-var LIVE_CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York','Palo Alto':'San Francisco','Silicon Valley':'San Francisco','Menlo Park':'San Francisco','Mountain View':'San Francisco','San Jose':'San Francisco','Sunnyvale':'San Francisco','Redwood City':'San Francisco'};
+var LIVE_CITY_ALIASES={'Washington':'Washington, DC','Washington DC':'Washington, DC','New York City':'New York','NYC':'New York','Palo Alto':'San Francisco','Silicon Valley':'San Francisco','Menlo Park':'San Francisco','Mountain View':'San Francisco','San Jose':'San Francisco','Sunnyvale':'San Francisco','Redwood City':'San Francisco','Santa Monica':'Los Angeles'};
 function liveBuildCityDropdown(){
   if(_liveCityListBuilt)return;
   var sel=document.getElementById('live-city');
