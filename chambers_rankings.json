@@ -1060,7 +1060,7 @@
       "Transportation Road (Automotive)": 2,
       "Government Contracts: Highly Regarded": 1
     },
-    "O\u2019Melveny & Myers": {
+    "O’Melveny & Myers": {
       "Antitrust": 4,
       "Appellate Law": 4,
       "Construction International Disputes": 1,
@@ -1187,25 +1187,6 @@
       "Securities Regulation": 1,
       "Startups & Emerging Companies": 2,
       "Government Contracts": 4
-    },
-    "Winston & Strawn": {
-      "Antitrust": 4,
-      "Banking & Finance": 5,
-      "Capital Markets Securitization": 3,
-      "Construction International Disputes": 1,
-      "Corporate Crime & Investigations": 1,
-      "E-Discovery & Information Governance": 2,
-      "Employee Benefits & Executive Compensation": 4,
-      "Energy & Natural Resources": 4,
-      "Intellectual Property": 4,
-      "Investment Funds Investor Representation": 3,
-      "Offshore Energy": 2,
-      "Private Credit": 4,
-      "Private Equity Fund Formation": 4,
-      "Projects": 2,
-      "Securities Litigation": 5,
-      "Sports Law": 1,
-      "Transportation Shipping/Maritime: Regulatory": 1
     },
     "Linklaters": {
       "Antitrust": 3,
@@ -1937,7 +1918,7 @@
       "Privacy & Data Security": 3,
       "Impact Investing": 3
     },
-    "Cozen O\u2019Connor": {
+    "Cozen O’Connor": {
       "Cannabis Law": 3,
       "Construction": 3,
       "Construction International Disputes": 1,
@@ -2207,7 +2188,7 @@
       "Construction": 5,
       "Government Contracts: Highly Regarded": 2
     },
-    "Moye, O\u2019Brien & Masterson": {
+    "Moye, O’Brien & Masterson": {
       "Construction": 5
     },
     "Phelps Dunbar": {
@@ -2543,7 +2524,7 @@
       "Food & Beverages Alcohol": 2,
       "Investment Funds Investor Representation": 3
     },
-    "Flaherty & O\u2019Hara, P.C.": {
+    "Flaherty & O’Hara, P.C.": {
       "Food & Beverages Alcohol": 3
     },
     "Hinman & Carmichael": {
@@ -3056,7 +3037,7 @@
     "Bush Seyferth": {
       "Product Liability & Mass Torts": 1
     },
-    "Campbell Conroy & O\u2019Neil": {
+    "Campbell Conroy & O’Neil": {
       "Product Liability & Mass Torts": 1
     },
     "Watkins & Eager": {
@@ -3300,6 +3281,25 @@
     },
     "Potomac Law Group": {
       "Government Contracts: Highly Regarded": 2
+    },
+    "Winston Taylor": {
+      "Antitrust": 4,
+      "Banking & Finance": 5,
+      "Capital Markets Securitization": 3,
+      "Construction International Disputes": 1,
+      "Corporate Crime & Investigations": 1,
+      "E-Discovery & Information Governance": 2,
+      "Employee Benefits & Executive Compensation": 4,
+      "Energy & Natural Resources": 4,
+      "Intellectual Property": 4,
+      "Investment Funds Investor Representation": 3,
+      "Offshore Energy": 2,
+      "Private Credit": 4,
+      "Private Equity Fund Formation": 4,
+      "Projects": 2,
+      "Securities Litigation": 5,
+      "Sports Law": 1,
+      "Transportation Shipping/Maritime: Regulatory": 1
     }
   },
   "aliases": {
@@ -3391,7 +3391,6 @@
     "Pillsbury Winthrop Shaw Pittman LLP": "Pillsbury",
     "Reed Smith LLP": "Reed Smith",
     "Sidley Austin LLP": "Sidley Austin",
-    "Winston & Strawn LLP": "Winston & Strawn",
     "McDermott Will & Emery LLP": "McDermott",
     "Milbank LLP": "Milbank",
     "Mintz, Levin, Cohn, Ferris, Glovsky and Popeo, P.C.": "Mintz",
@@ -3417,7 +3416,7 @@
     "King & Spalding": "King & Spalding",
     "Weil Gotshal & Manges": "Weil Gotshal",
     "Blank Rome": "Blank Rome",
-    "Winston Strawn": "Winston & Strawn",
+    "Winston Strawn": "Winston Taylor",
     "Mintz, Levin, Cohn, Ferris, Glovsky and Popeo P.C.": "Mintz",
     "Duane Morris LLP": "Duane Morris",
     "Baker Botts LLP": "Baker Botts",
@@ -3471,7 +3470,7 @@
     "InfoLawGroup LLP": "InfoLawGroup",
     "Freshfields US LLP": "Freshfields",
     "Baker Botts L.L.P.": "Baker Botts",
-    "O\u2019Melveny & Myers LLP": "O\u2019Melveny & Myers",
+    "O’Melveny & Myers LLP": "O’Melveny & Myers",
     "Wilkinson Stekloff LLP": "Wilkinson Stekloff",
     "Hausfeld LLP": "Hausfeld",
     "Susman Godfrey LLP": "Susman Godfrey",
@@ -3519,7 +3518,7 @@
     "Watt, Tieder, Hoffar & Fitzgerald, LLP": "Watt, Tieder, Hoffar & Fitzgerald",
     "Jones Walker LLP": "Jones Walker",
     "Becker & Poliakoff PA": "Becker & Poliakoff",
-    "Moye, O\u2019Brien & Masterson, LLP": "Moye, O\u2019Brien & Masterson",
+    "Moye, O’Brien & Masterson, LLP": "Moye, O’Brien & Masterson",
     "Phelps Dunbar LLP": "Phelps Dunbar",
     "Smith, Gambrell & Russell, LLP": "Smith, Gambrell & Russell",
     "Thompson Hine LLP": "Thompson Hine",
@@ -3566,7 +3565,7 @@
     "GrayRobinson, PA": "GrayRobinson",
     "Buchman Law Firm, LLP": "Buchman Law Firm",
     "Foster Garvey PC": "Foster Garvey",
-    "Flaherty & O\u2019Hara, P.C.,": "Flaherty & O\u2019Hara, P.C.",
+    "Flaherty & O’Hara, P.C.,": "Flaherty & O’Hara, P.C.",
     "Hinman & Carmichael LLP": "Hinman & Carmichael",
     "Burr & Forman LLP": "Burr & Forman",
     "Carle, Mackie, Power & Ross LLP": "Carle, Mackie, Power & Ross",
@@ -3671,7 +3670,7 @@
     "Hintze Law PLLC": "Hintze Law",
     "Bowman and Brooke LLP": "Bowman and Brooke",
     "Bush Seyferth PLLC": "Bush Seyferth",
-    "Campbell Conroy & O\u2019Neil, P.C.": "Campbell Conroy & O\u2019Neil",
+    "Campbell Conroy & O’Neil, P.C.": "Campbell Conroy & O’Neil",
     "Watkins & Eager PLLC": "Watkins & Eager",
     "Lieff Cabraser Heimann & Bernstein, LLP": "Lieff Cabraser Heimann & Bernstein",
     "Motley Rice LLC": "Motley Rice",
@@ -3721,7 +3720,8 @@
     "Peacock Piper LLP": "Peacock Piper",
     "Nichols Law LLC": "Nichols Law",
     "PilieroMazza PLLC": "PilieroMazza",
-    "Frankel PLLC": "Frankel"
+    "Frankel PLLC": "Frankel",
+    "Winston Taylor LLP": "Winston Taylor"
   },
   "source": "Chambers USA 2025 Nationwide",
   "note": "Updated March 2026 from Chambers USA 2025 PDF. 450 firms, 90+ practice areas."

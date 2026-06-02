@@ -517,13 +517,6 @@
     "fox_tier_pct": 0.3333333333333333,
     "ppp": 1576000
   },
-  "Winston & Strawn LLP": {
-    "direct_fox": 0,
-    "fox_tier_moves": 8,
-    "total_moves": 35,
-    "fox_tier_pct": 0.22857142857142856,
-    "ppp": 3521000
-  },
   "Gordon & Rees, LLP": {
     "direct_fox": 0,
     "fox_tier_moves": 9,
@@ -5801,5 +5794,12 @@
     "total_moves": 0,
     "fox_tier_pct": 0.0,
     "ppp": 638000
+  },
+  "Winston Taylor LLP": {
+    "direct_fox": 0,
+    "fox_tier_moves": 8,
+    "total_moves": 35,
+    "fox_tier_pct": 0.22857142857142856,
+    "ppp": 3521000
   }
 }

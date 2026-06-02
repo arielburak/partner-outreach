@@ -41,6 +41,7 @@ FIRM_ALIASES = {
     'vinson & elkins': 'V&E',
     'wilson sonsini goodrich & rosati': 'Wilson Sonsini',
     'wilson sonsini goodrich': 'Wilson Sonsini',
+    'winston & strawn': 'Winston', 'winston taylor': 'Winston',
     'mcdermott will & schulte': 'McDermott',
 }
 

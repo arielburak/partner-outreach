@@ -641,19 +641,6 @@
     ],
     "notes": ""
   },
-  "Winston & Strawn": {
-    "book": 5.0,
-    "cities": [
-      "Washington, DC",
-      "Boston",
-      "New York",
-      "Los Angeles",
-      "Chicago",
-      "San Francisco",
-      "Austin"
-    ],
-    "notes": ""
-  },
   "Paul Hastings": {
     "book": 8.0,
     "cities": [
@@ -729,5 +716,18 @@
       "Chicago"
     ],
     "notes": "Signed client (May 2026). $5M+ book threshold for AmLaw 50 / $3.8M PPP tier."
+  },
+  "Winston Taylor": {
+    "book": 5.0,
+    "cities": [
+      "Washington, DC",
+      "Boston",
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "San Francisco",
+      "Austin"
+    ],
+    "notes": ""
   }
 }

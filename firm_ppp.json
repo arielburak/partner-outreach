@@ -35,7 +35,6 @@
   "Willkie Farr & Gallagher LLP": 4530000,
   "Wilson Sonsini Goodrich & Rosati": 3085000,
   "King & Spalding LLP": 5932000,
-  "Winston & Strawn LLP": 3521000,
   "DLA Piper": 3459000,
   "Orrick, Herrington & Sutcliffe LLP": 3632000,
   "Baker McKenzie": 2103000,
@@ -238,7 +237,6 @@
   "Willkie Farr": 4530000,
   "Wilson Sonsini": 3085000,
   "King & Spalding": 5932000,
-  "Winston & Strawn": 3521000,
   "Orrick, Herrington & Sutcliffe": 3632000,
   "Orrick": 3632000,
   "Munger, Tolles & Olson": 3061000,
@@ -379,5 +377,7 @@
   "Sheppard Mullin": 2434000,
   "Stradley Ronon Stevens & Young": 1320000,
   "Stradley Ronon Stevens & Young LLP": 1320000,
-  "Stradley Ronon": 1320000
+  "Stradley Ronon": 1320000,
+  "Winston Taylor LLP": 3521000,
+  "Winston Taylor": 3521000
 }
