@@ -1603,13 +1603,17 @@ function buildFuMsgs(fu,stage,firmOverride){
 function getOfferedFirms(name){
   var s=new Set();
   if(typeof fuLog==='undefined'||!fuLog)return s;
+  // Only count entries that actually PITCHED firms in the message:
+  //   - 'initial' (the first pitch)
+  //   - 'followup_2', 'followup_4', ... (even followups = firm pitches)
+  // Skip odd followups: 'followup_1' (nudge), 'followup_3'/'followup_5' (check-ins)
+  // — those reference the standing firms but do NOT offer new ones.
+  // Also dedupe by stage: only the MOST RECENT entry per stage counts (fuLog is
+  // most-recent-first via unshift, so first-seen wins). Guards against duplicate
+  // 'initial' or migration artifacts.
+  var seenStages=new Set();
   fuLog.forEach(function(e){
     if(e.name!==name)return;
-    // Only count entries that actually PITCHED firms in the message:
-    //   - 'initial' (the first pitch)
-    //   - 'followup_2', 'followup_4', ... (even followups = firm pitches)
-    // Skip odd followups: 'followup_1' (nudge), 'followup_3'/'followup_5' (check-ins)
-    // — those reference the standing firms but do NOT offer new ones.
     var st=String(e.stage||'');
     var isPitch=(st==='initial');
     if(!isPitch){
@@ -1617,6 +1621,8 @@ function getOfferedFirms(name){
       if(mm && (parseInt(mm[1],10)%2===0)) isPitch=true;
     }
     if(!isPitch)return;
+    if(seenStages.has(st))return;
+    seenStages.add(st);
     if(e.target)s.add(sfGlobal(e.target));
     if(e.alt1)s.add(sfGlobal(e.alt1));
   });
