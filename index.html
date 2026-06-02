@@ -1605,6 +1605,18 @@ function getOfferedFirms(name){
   if(typeof fuLog==='undefined'||!fuLog)return s;
   fuLog.forEach(function(e){
     if(e.name!==name)return;
+    // Only count entries that actually PITCHED firms in the message:
+    //   - 'initial' (the first pitch)
+    //   - 'followup_2', 'followup_4', ... (even followups = firm pitches)
+    // Skip odd followups: 'followup_1' (nudge), 'followup_3'/'followup_5' (check-ins)
+    // — those reference the standing firms but do NOT offer new ones.
+    var st=String(e.stage||'');
+    var isPitch=(st==='initial');
+    if(!isPitch){
+      var mm=st.match(/^followup_(\d+)$/);
+      if(mm && (parseInt(mm[1],10)%2===0)) isPitch=true;
+    }
+    if(!isPitch)return;
     if(e.target)s.add(sfGlobal(e.target));
     if(e.alt1)s.add(sfGlobal(e.alt1));
   });
