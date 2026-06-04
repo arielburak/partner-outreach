@@ -734,12 +734,30 @@
   "K&L Gates": {
     "book": 2.0,
     "cities": [
+      "Austin",
       "Boston",
+      "Charleston",
+      "Charlotte",
+      "Chicago",
+      "Dallas",
+      "Harrisburg",
+      "Houston",
+      "Kansas City",
+      "Los Angeles",
+      "Miami",
+      "Nashville",
       "New York",
-      "Washington, DC",
-      "Seattle",
+      "Newark",
+      "Orange County",
+      "Palo Alto",
+      "Pittsburgh",
+      "Portland",
       "Raleigh",
-      "Chicago"
+      "Research Triangle Park",
+      "San Francisco",
+      "Seattle",
+      "Washington, DC",
+      "Wilmington"
     ],
     "notes": "Priority searches per firm intel: PE/Capital Markets (TX), Investment Funds, Private Credit, RE Finance, Lit, IP. Book $2-3M+."
   }

@@ -822,12 +822,30 @@
   {
     "firm": "K&L Gates",
     "cities": [
+      "Austin",
       "Boston",
+      "Charleston",
+      "Charlotte",
+      "Chicago",
+      "Dallas",
+      "Harrisburg",
+      "Houston",
+      "Kansas City",
+      "Los Angeles",
+      "Miami",
+      "Nashville",
       "New York",
-      "Washington, DC",
-      "Seattle",
+      "Newark",
+      "Orange County",
+      "Palo Alto",
+      "Pittsburgh",
+      "Portland",
       "Raleigh",
-      "Chicago"
+      "Research Triangle Park",
+      "San Francisco",
+      "Seattle",
+      "Washington, DC",
+      "Wilmington"
     ],
     "book_size": "2",
     "misc": "Priority searches per firm intel"
