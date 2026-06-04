@@ -668,7 +668,8 @@
       "Los Angeles",
       "Philadelphia",
       "San Francisco",
-      "Austin"
+      "Austin",
+      "Chicago"
     ],
     "book_size": "4",
     "misc": ""
@@ -817,5 +818,18 @@
     ],
     "book_size": "5",
     "misc": "Signed May 2026"
+  },
+  {
+    "firm": "K&L Gates",
+    "cities": [
+      "Boston",
+      "New York",
+      "Washington, DC",
+      "Seattle",
+      "Raleigh",
+      "Chicago"
+    ],
+    "book_size": "2",
+    "misc": "Priority searches per firm intel"
   }
 ]

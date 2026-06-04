@@ -809,7 +809,8 @@
       "Los Angeles",
       "Philadelphia",
       "San Francisco",
-      "Austin"
+      "Austin",
+      "Chicago"
     ],
     "notes": "",
     "book_min": 2000000,
@@ -1053,5 +1054,20 @@
       "Tax Corporate & Finance": 5,
       "Government Contracts": 4
     }
+  },
+  {
+    "name": "K&L Gates",
+    "ppp": 1511000,
+    "cities": [
+      "Boston",
+      "New York",
+      "Washington, DC",
+      "Seattle",
+      "Raleigh",
+      "Chicago"
+    ],
+    "notes": "Added 2026-05; priority searches per firm intel",
+    "book_min": 2000000,
+    "chambers": {}
   }
 ]

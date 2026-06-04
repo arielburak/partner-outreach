@@ -565,7 +565,8 @@
       "Los Angeles",
       "Philadelphia",
       "San Francisco",
-      "Austin"
+      "Austin",
+      "Chicago"
     ],
     "notes": ""
   },
@@ -729,5 +730,17 @@
       "Austin"
     ],
     "notes": ""
+  },
+  "K&L Gates": {
+    "book": 2.0,
+    "cities": [
+      "Boston",
+      "New York",
+      "Washington, DC",
+      "Seattle",
+      "Raleigh",
+      "Chicago"
+    ],
+    "notes": "Priority searches per firm intel: PE/Capital Markets (TX), Investment Funds, Private Credit, RE Finance, Lit, IP. Book $2-3M+."
   }
 }
