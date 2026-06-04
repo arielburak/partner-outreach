@@ -2,158 +2,264 @@
   "Fox Rothschild": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
-      "Boston",
-      "New York",
-      "Los Angeles",
-      "Philadelphia",
-      "Chicago",
       "Atlanta",
-      "San Francisco",
+      "Atlantic City",
+      "Blue Bell",
+      "Boston",
+      "Charlotte",
+      "Chicago",
+      "Dallas",
       "Denver",
+      "Exton",
+      "Greensboro",
+      "Greenville",
+      "Kansas City",
+      "Las Vegas",
+      "Los Angeles",
       "Miami",
-      "Dallas"
+      "Minneapolis",
+      "Morristown",
+      "New York",
+      "Oklahoma City",
+      "Philadelphia",
+      "Pittsburgh",
+      "Princeton",
+      "Raleigh",
+      "San Francisco",
+      "Sarasota",
+      "Seattle",
+      "Warrington",
+      "Washington, DC",
+      "West Palm Beach",
+      "Wilmington"
     ],
     "notes": ""
   },
   "UB Greensfelder": {
     "book": 1.0,
     "cities": [
+      "Belleville",
+      "Boca Raton",
+      "Chicago",
+      "Cincinnati",
+      "Cleveland",
+      "Columbus",
       "New York",
-      "Chicago"
+      "St. Louis",
+      "Washington, DC"
     ],
     "notes": "For partners we typically look for a book of business around $750K; rates vary by market and practice group (typically $500-$700/hr)."
   },
   "Pryor Cashman": {
     "book": 1.0,
     "cities": [
-      "New York",
       "Los Angeles",
-      "Miami"
+      "Miami",
+      "New York"
     ],
     "notes": "Typically, our floor is $750k in portable business."
   },
   "Armstrong Teasdale": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "Philadelphia",
+      "Boston",
       "Chicago",
       "Denver",
-      "Miami"
+      "Edwardsville",
+      "Jefferson City",
+      "Kansas City",
+      "Las Vegas",
+      "Miami",
+      "New York",
+      "Orange County",
+      "Philadelphia",
+      "Princeton",
+      "Salt Lake City",
+      "St. Louis",
+      "Washington, DC",
+      "Wilmington"
     ],
     "notes": "Actually open to less than 1M, rates around 400-700. Open to 700k if they already have an office"
   },
   "Womble Bond Dickinson": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
-      "Boston",
-      "New York",
-      "Los Angeles",
       "Atlanta",
-      "San Francisco",
+      "Baltimore",
+      "Boston",
+      "Charleston",
+      "Charlotte",
       "Denver",
-      "Houston"
+      "Greenville",
+      "Houston",
+      "Huntsville",
+      "Las Vegas",
+      "Los Angeles",
+      "Nashville",
+      "Phoenix",
+      "Raleigh",
+      "Tucson",
+      "Tysons Corner",
+      "Washington, DC",
+      "Wilmington",
+      "Winston-Salem"
     ],
     "notes": "650 and above. Sweet spot 700-900. Can be lower book for salaried partners"
   },
   "Saul Ewing": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
+      "Baltimore",
       "Boston",
-      "New York",
-      "Los Angeles",
-      "Philadelphia",
       "Chicago",
+      "Fort Lauderdale",
+      "Harrisburg",
+      "Irvine",
+      "Los Angeles",
       "Miami",
-      "Fort Lauderdale"
+      "Minneapolis",
+      "New York",
+      "Newark",
+      "Philadelphia",
+      "Pittsburgh",
+      "Princeton",
+      "Washington, DC",
+      "Wayne",
+      "West Palm Beach",
+      "Wilmington"
     ],
     "notes": ""
   },
   "Winstead": {
     "book": 1.0,
     "cities": [
-      "New York",
+      "Atlanta",
+      "Austin",
+      "Charlotte",
       "Dallas",
+      "Fort Worth",
       "Houston",
-      "Austin"
+      "Nashville",
+      "New York",
+      "San Antonio",
+      "The Woodlands"
     ],
     "notes": "Self-sustaining in New York."
   },
   "Thompson Hine": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "Los Angeles",
+      "Atlanta",
       "Chicago",
-      "Atlanta"
+      "Cincinnati",
+      "Cleveland",
+      "Columbus",
+      "Dayton",
+      "Los Angeles",
+      "Minneapolis",
+      "New York",
+      "San Mateo",
+      "Washington, DC"
     ],
     "notes": "We are always looking for potential commercial litigation partners who have a book of business – even a small one"
   },
   "Stradley Ronon": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
+      "Cherry Hill",
+      "Chicago",
+      "Long Beach",
+      "Malvern",
       "New York",
-      "Los Angeles",
+      "Newark",
       "Philadelphia",
-      "Chicago"
+      "Washington, DC",
+      "Wilmington"
     ],
     "notes": "rates 600-1400"
   },
   "Miles Stockbridge": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
-      "New York"
+      "Baltimore",
+      "Easton",
+      "Frederick",
+      "New York",
+      "North Bethesda",
+      "Richmond",
+      "Tysons Corner",
+      "Washington, DC"
     ],
     "notes": "For partners, we typically need a book of $1M but would consider $750K+ for strategic needs (government contracts, health care regulatory, private equ"
   },
   "Caplin & Drysdale": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
-      "New York"
+      "New York",
+      "Washington, DC"
     ],
     "notes": ""
   },
   "McCarter & English": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
       "Boston",
+      "East Brunswick",
+      "Hartford",
+      "Indianapolis",
+      "Miami",
       "New York",
+      "Newark",
       "Philadelphia",
-      "Miami"
+      "Stamford",
+      "Trenton",
+      "Washington, DC",
+      "Wilmington"
     ],
     "notes": "Can be less for corporate. Flexible on rates, lower than 1k"
   },
   "FBT/Gibbons": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "Los Angeles",
-      "Philadelphia",
-      "San Francisco",
-      "Denver",
+      "Charleston",
+      "Cincinnati",
+      "Columbus",
       "Dallas",
-      "Houston"
+      "Denver",
+      "Florence",
+      "Houston",
+      "Indianapolis",
+      "Lexington",
+      "Los Angeles",
+      "Louisville",
+      "Naples",
+      "Nashville",
+      "New York",
+      "Newark",
+      "Newport Beach",
+      "Orange County",
+      "Philadelphia",
+      "Pittsburgh",
+      "Red Bank",
+      "San Francisco",
+      "Trenton",
+      "Washington, DC",
+      "West Chester",
+      "West Palm Beach",
+      "Wilmington"
     ],
     "notes": ""
   },
   "Withers": {
     "book": 1.0,
     "cities": [
-      "New York",
+      "Greenwich",
       "Los Angeles",
-      "San Francisco",
+      "New Haven",
+      "New York",
       "San Diego",
-      "Houston"
+      "San Francisco",
+      "Texas"
     ],
     "notes": "Rates 900-1200 with the ability to adjust. Flexible on book sometimes."
   },
@@ -167,70 +273,102 @@
   "Buchanan": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "Philadelphia",
+      "Alexandria",
+      "Charlotte",
       "Chicago",
+      "Fort Lauderdale",
+      "Harrisburg",
+      "King of Prussia",
       "Miami",
+      "New York",
+      "Newark",
+      "Philadelphia",
+      "Pittsburgh",
+      "Princeton",
       "San Diego",
-      "Fort Lauderdale"
+      "Tallahassee",
+      "Tampa",
+      "Washington, DC",
+      "Wilmington"
     ],
     "notes": ""
   },
   "Dorsey & Whitney": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "San Francisco",
+      "Anchorage",
+      "Boise",
+      "Chicago",
+      "Costa Mesa",
+      "Dallas",
       "Denver",
-      "Dallas"
+      "Des Moines",
+      "Minneapolis",
+      "Missoula",
+      "New York",
+      "Palo Alto",
+      "Phoenix",
+      "Salt Lake City",
+      "Seattle",
+      "Washington, DC",
+      "Wilmington"
     ],
     "notes": ""
   },
   "Robinson & Cole": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
+      "Austin",
       "Boston",
+      "Hartford",
+      "Miami",
       "New York",
-      "Los Angeles",
       "Philadelphia",
-      "Miami"
+      "Stamford",
+      "Washington, DC",
+      "Wilmington"
     ],
     "notes": ""
   },
   "Goulston & Storrs": {
     "book": 1.5,
     "cities": [
-      "Washington, DC",
       "Boston",
-      "New York"
+      "New York",
+      "Washington, DC"
     ],
     "notes": "+950 rate"
   },
   "Kasowitz": {
     "book": 1.5,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "Los Angeles",
       "Atlanta",
-      "San Francisco",
+      "Boulder",
+      "Houston",
+      "Los Angeles",
       "Miami",
-      "Houston"
+      "New York",
+      "Newark",
+      "San Francisco",
+      "Washington, DC"
     ],
     "notes": "Rates 700-800"
   },
   "Nixon Peabody": {
     "book": 1.5,
     "cities": [
-      "Washington, DC",
+      "Albany",
       "Boston",
-      "New York",
-      "Los Angeles",
+      "Buffalo",
       "Chicago",
-      "San Francisco"
+      "Long Island",
+      "Los Angeles",
+      "Manchester",
+      "New York",
+      "Providence",
+      "Rochester",
+      "San Francisco",
+      "Washington, DC"
     ],
     "notes": "Rates 1k avg but flexible on lower. Book target 2M but OK reviewing 1.5M"
   },
@@ -244,300 +382,457 @@
   "Blank Rome": {
     "book": 1.8,
     "cities": [
-      "Washington, DC",
       "Boston",
-      "New York",
-      "Los Angeles",
-      "Philadelphia",
       "Chicago",
+      "Cincinnati",
       "Dallas",
+      "Fort Lauderdale",
       "Houston",
-      "Fort Lauderdale"
+      "Los Angeles",
+      "New York",
+      "Orange County",
+      "Philadelphia",
+      "Pittsburgh",
+      "Princeton",
+      "San Francisco",
+      "Tampa",
+      "Washington, DC",
+      "Wilmington"
     ],
     "notes": ""
   },
   "Akerman": {
     "book": 1.8,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "Los Angeles",
-      "Chicago",
       "Atlanta",
-      "Denver",
-      "Miami",
-      "Dallas",
-      "Houston",
       "Austin",
-      "Fort Lauderdale"
+      "Boca Raton",
+      "Charlotte",
+      "Chicago",
+      "Dallas",
+      "Denver",
+      "Fort Lauderdale",
+      "Houston",
+      "Jacksonville",
+      "Las Vegas",
+      "Los Angeles",
+      "Miami",
+      "Naples",
+      "New Orleans",
+      "New York",
+      "Orlando",
+      "Salt Lake City",
+      "San Antonio",
+      "Tallahassee",
+      "Tampa",
+      "Washington, DC",
+      "West Palm Beach",
+      "Wilmington"
     ],
     "notes": ""
   },
   "Brown Rudnick": {
     "book": 2.0,
     "cities": [
-      "Washington, DC",
       "Boston",
-      "New York",
+      "Hartford",
+      "Houston",
       "Los Angeles",
-      "Houston"
+      "New York",
+      "Orange County",
+      "Washington, DC"
     ],
     "notes": "Crisis Management (includes restructuring and Special Situations); Global Litigation; Brand and Reputation Management; Life Sciences and Technology"
   },
   "Foley & Lardner": {
     "book": 2.0,
     "cities": [
-      "Washington, DC",
+      "Austin",
       "Boston",
-      "New York",
-      "Los Angeles",
       "Chicago",
-      "San Francisco",
-      "Denver",
-      "Miami",
-      "San Diego",
       "Dallas",
+      "Denver",
+      "Detroit",
       "Houston",
-      "Austin"
+      "Jacksonville",
+      "Los Angeles",
+      "Madison",
+      "Miami",
+      "Milwaukee",
+      "Nashville",
+      "New York",
+      "Orlando",
+      "Raleigh",
+      "Sacramento",
+      "Salt Lake City",
+      "San Diego",
+      "San Francisco",
+      "Silicon Valley",
+      "Tallahassee",
+      "Tampa",
+      "Washington, DC"
     ],
     "notes": "Rates 1k avg"
   },
   "Dentons": {
     "book": 2.0,
     "cities": [
-      "Washington, DC",
+      "Atlanta",
       "Boston",
-      "New York",
+      "Charleston",
+      "Chicago",
+      "Cincinnati",
+      "Dallas",
+      "Denver",
+      "Evansville",
+      "Harrisburg",
+      "Hilo",
+      "Honolulu",
+      "Houston",
+      "Indianapolis",
+      "Jasper",
+      "Kansas City",
+      "Lexington",
       "Los Angeles",
-      "Chicago"
+      "Louisville",
+      "Miami",
+      "Naples",
+      "New Orleans",
+      "New York",
+      "Orange County",
+      "Phoenix",
+      "Pittsburgh",
+      "Sacramento",
+      "San Diego",
+      "San Francisco",
+      "Short Hills",
+      "Silicon Valley",
+      "St. Louis",
+      "Washington, DC"
     ],
     "notes": ""
   },
   "Cadwalader": {
     "book": 2.0,
     "cities": [
-      "Washington, DC",
-      "New York"
+      "Charlotte",
+      "New York",
+      "Washington, DC"
     ],
     "notes": "Didn’t explicitly say the book size, but based on some opportunistics I think this is their interest"
   },
   "Seyfarth": {
     "book": 2.0,
     "cities": [
-      "Washington, DC",
-      "Boston",
-      "New York",
-      "Los Angeles",
-      "Chicago",
       "Atlanta",
-      "San Francisco",
+      "Boston",
+      "Century City",
+      "Charlotte",
+      "Chicago",
       "Dallas",
-      "Houston"
+      "Houston",
+      "Los Angeles",
+      "New York",
+      "Sacramento",
+      "San Francisco",
+      "Seattle",
+      "Washington, DC"
     ],
     "notes": "Didn’t explicitly say the book size, but based on some opportunistics I think this is their interest"
   },
   "Haynes and Boone": {
     "book": 2.0,
     "cities": [
-      "Washington, DC",
-      "New York",
+      "Austin",
+      "Boston",
+      "Charlotte",
       "Chicago",
-      "San Francisco",
-      "Denver",
+      "Costa Mesa",
       "Dallas",
+      "Denver",
+      "Fort Worth",
       "Houston",
-      "Austin"
+      "New York",
+      "Palo Alto",
+      "Plano",
+      "San Antonio",
+      "San Francisco",
+      "The Woodlands",
+      "Tysons Corner",
+      "Washington, DC"
     ],
     "notes": ""
   },
   "Mintz": {
     "book": 2.0,
     "cities": [
-      "Washington, DC",
       "Boston",
-      "New York",
       "Los Angeles",
-      "San Francisco",
       "Miami",
-      "San Diego"
+      "New York",
+      "San Diego",
+      "San Francisco",
+      "Washington, DC"
     ],
     "notes": "Rates +1k"
   },
   "Sheppard Mullin": {
     "book": 2.0,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "Los Angeles",
+      "Century City",
       "Chicago",
-      "San Francisco",
-      "San Diego",
       "Dallas",
-      "Houston"
+      "Del Mar Heights",
+      "Houston",
+      "Los Angeles",
+      "New York",
+      "Orange County",
+      "San Diego",
+      "San Francisco",
+      "Santa Barbara",
+      "Silicon Valley",
+      "Washington, DC"
     ],
     "notes": ""
   },
   "Allen Matkins": {
     "book": 2.5,
     "cities": [
-      "New York",
+      "Century City",
       "Los Angeles",
-      "San Francisco",
-      "San Diego"
+      "New York",
+      "Orange County",
+      "San Diego",
+      "San Francisco"
     ],
     "notes": "Book flexibkle for rising star. West Coast rates high 8s low thous, New york 1k-1.8k"
   },
   "DLA Piper": {
     "book": 3.0,
     "cities": [
-      "Washington, DC",
-      "Boston",
-      "New York",
-      "Los Angeles",
-      "Philadelphia",
-      "Chicago",
       "Atlanta",
-      "San Francisco",
-      "Miami",
-      "San Diego",
+      "Austin",
+      "Baltimore",
+      "Boston",
+      "Chicago",
       "Dallas",
       "Houston",
-      "Austin"
+      "Los Angeles",
+      "Miami",
+      "Minneapolis",
+      "New York",
+      "Palo Alto",
+      "Philadelphia",
+      "Phoenix",
+      "Raleigh",
+      "Reston",
+      "San Diego",
+      "San Francisco",
+      "Seattle",
+      "Short Hills",
+      "Washington, DC",
+      "Wilmington"
     ],
     "notes": ""
   },
   "Katten": {
     "book": 3.0,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "Los Angeles",
+      "Charlotte",
       "Chicago",
-      "Dallas"
+      "Dallas",
+      "Los Angeles",
+      "New York",
+      "Orange County",
+      "Washington, DC"
     ],
     "notes": "Private equity and investment management are top priority; seeking partners with large practices/groups in those areas."
   },
   "Perkins Coie": {
     "book": 3.0,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "Los Angeles",
+      "Anchorage",
+      "Austin",
+      "Bellevue",
+      "Boise",
       "Chicago",
-      "San Francisco",
-      "Denver",
-      "San Diego",
       "Dallas",
-      "Austin"
+      "Denver",
+      "Los Angeles",
+      "Madison",
+      "New York",
+      "Palo Alto",
+      "Phoenix",
+      "Portland",
+      "San Diego",
+      "San Francisco",
+      "Seattle",
+      "Washington, DC"
     ],
     "notes": ""
   },
   "Cooley": {
     "book": 3.0,
     "cities": [
-      "Washington, DC",
       "Boston",
-      "New York",
-      "Los Angeles",
       "Chicago",
-      "San Francisco",
       "Denver",
+      "Los Angeles",
       "Miami",
-      "San Diego"
+      "New York",
+      "Palo Alto",
+      "Reston",
+      "San Diego",
+      "San Francisco",
+      "Santa Monica",
+      "Washington, DC"
     ],
     "notes": ""
   },
   "ArentFox Schiff": {
     "book": 3.0,
     "cities": [
-      "Washington, DC",
+      "Ann Arbor",
       "Boston",
-      "New York",
-      "Los Angeles",
       "Chicago",
-      "San Francisco"
+      "Lake Forest",
+      "Los Angeles",
+      "New York",
+      "San Francisco",
+      "Washington, DC"
     ],
     "notes": ""
   },
   "Fenwick": {
     "book": 3.0,
     "cities": [
-      "Washington, DC",
       "Boston",
       "New York",
-      "Los Angeles",
-      "San Francisco"
+      "San Francisco",
+      "Santa Monica",
+      "Seattle",
+      "Silicon Valley",
+      "Washington, DC"
     ],
     "notes": "Some flexibility"
   },
   "Holland & Knight": {
     "book": 3.0,
     "cities": [
-      "Washington, DC",
-      "Boston",
-      "New York",
-      "Los Angeles",
-      "Philadelphia",
-      "Chicago",
       "Atlanta",
-      "San Francisco",
-      "Denver",
-      "Miami",
-      "Dallas",
-      "Houston",
       "Austin",
-      "Fort Lauderdale"
+      "Birmingham",
+      "Boston",
+      "Century City",
+      "Charlotte",
+      "Chattanooga",
+      "Chicago",
+      "Dallas",
+      "Denver",
+      "Fort Lauderdale",
+      "Houston",
+      "Jacksonville",
+      "Los Angeles",
+      "Miami",
+      "Nashville",
+      "New York",
+      "Newport Beach",
+      "Orlando",
+      "Philadelphia",
+      "Portland",
+      "Richmond",
+      "San Francisco",
+      "Seattle",
+      "Stamford",
+      "Tallahassee",
+      "Tampa",
+      "Tysons",
+      "Washington, DC",
+      "West Palm Beach"
     ],
     "notes": ""
   },
   "Troutman Pepper": {
     "book": 3.0,
     "cities": [
-      "Washington, DC",
-      "Boston",
-      "New York",
-      "Los Angeles",
-      "Philadelphia",
-      "Chicago",
       "Atlanta",
-      "San Francisco",
-      "Miami",
-      "San Diego",
+      "Austin",
+      "Boston",
+      "Charlotte",
+      "Chicago",
+      "Cincinnati",
       "Dallas",
+      "Detroit",
+      "Harrisburg",
+      "Hartford",
       "Houston",
-      "Austin"
+      "Los Angeles",
+      "Miami",
+      "New Orleans",
+      "New York",
+      "Orange County",
+      "Philadelphia",
+      "Pittsburgh",
+      "Portland",
+      "Princeton",
+      "Providence",
+      "Raleigh",
+      "Richmond",
+      "Rochester",
+      "San Diego",
+      "San Francisco",
+      "Stamford",
+      "Virginia Beach",
+      "Washington, DC",
+      "West Palm Beach",
+      "Wilmington"
     ],
     "notes": ""
   },
   "Pillsbury": {
     "book": 3.0,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "Los Angeles",
-      "San Francisco",
-      "Miami",
-      "San Diego",
+      "Austin",
+      "Boston",
       "Houston",
-      "Austin"
+      "Los Angeles",
+      "Miami",
+      "Nashville",
+      "New York",
+      "Northern Virginia",
+      "Palm Beach",
+      "Sacramento",
+      "San Diego",
+      "San Francisco",
+      "Silicon Valley",
+      "Washington, DC"
     ],
     "notes": ""
   },
   "Reed Smith": {
     "book": 4.0,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "Los Angeles",
-      "Philadelphia",
-      "Chicago",
       "Atlanta",
-      "San Francisco",
-      "Denver",
-      "Miami",
+      "Austin",
+      "Boston",
+      "Century City",
+      "Chicago",
       "Dallas",
+      "Denver",
       "Houston",
-      "Austin"
+      "Los Angeles",
+      "Miami",
+      "New York",
+      "Orange County",
+      "Philadelphia",
+      "Pittsburgh",
+      "Princeton",
+      "Richmond",
+      "San Francisco",
+      "Silicon Valley",
+      "Tysons",
+      "Washington, DC",
+      "Wilmington"
     ],
     "notes": ""
   },
@@ -559,175 +854,221 @@
   "Dechert": {
     "book": 4.0,
     "cities": [
-      "Washington, DC",
+      "Austin",
       "Boston",
-      "New York",
+      "Charlotte",
+      "Chicago",
+      "Dallas",
+      "Houston",
       "Los Angeles",
+      "New York",
       "Philadelphia",
       "San Francisco",
-      "Austin",
-      "Chicago"
+      "Washington, DC"
     ],
     "notes": ""
   },
   "Goodwin": {
     "book": 5.0,
     "cities": [
-      "Washington, DC",
       "Boston",
-      "New York",
       "Los Angeles",
+      "New York",
+      "Orange County",
       "Philadelphia",
-      "San Francisco"
+      "San Francisco",
+      "Santa Monica",
+      "Silicon Valley",
+      "Washington, DC"
     ],
     "notes": ""
   },
   "Milbank": {
     "book": 5.0,
     "cities": [
-      "Washington, DC",
+      "Los Angeles",
       "New York",
-      "Los Angeles"
+      "Washington, DC"
     ],
     "notes": ""
   },
   "Sidley Austin": {
     "book": 5.0,
     "cities": [
-      "Washington, DC",
       "Boston",
-      "New York",
-      "Los Angeles",
+      "Century City",
       "Chicago",
-      "San Francisco",
-      "Miami",
-      "San Diego",
       "Dallas",
-      "Houston"
+      "Houston",
+      "Los Angeles",
+      "Miami",
+      "New York",
+      "Palo Alto",
+      "San Diego",
+      "San Francisco",
+      "Washington, DC"
     ],
     "notes": ""
   },
   "McDermott": {
     "book": 5.0,
     "cities": [
-      "Washington, DC",
+      "Atlanta",
+      "Austin",
+      "Boca Raton",
       "Boston",
-      "New York",
-      "Los Angeles",
       "Chicago",
-      "San Francisco",
-      "Miami",
-      "San Diego",
       "Dallas",
       "Houston",
-      "Austin"
+      "Los Angeles",
+      "Miami",
+      "Nashville",
+      "New York",
+      "Orange County",
+      "San Diego",
+      "San Francisco",
+      "Silicon Valley",
+      "Washington, DC",
+      "Wilmington"
     ],
     "notes": "Less for non-equity partners. Min rates Equity 1.8K and 1.6k for non equity"
   },
   "Latham & Watkins": {
     "book": 5.0,
     "cities": [
-      "Washington, DC",
+      "Austin",
       "Boston",
-      "New York",
-      "Los Angeles",
       "Chicago",
-      "Atlanta",
-      "San Francisco",
-      "Miami",
-      "San Diego",
-      "Dallas",
       "Houston",
-      "Austin"
+      "Los Angeles",
+      "New York",
+      "Orange County",
+      "San Diego",
+      "San Francisco",
+      "Silicon Valley",
+      "Washington, DC"
     ],
     "notes": ""
   },
   "Paul Hastings": {
     "book": 8.0,
     "cities": [
-      "Washington, DC",
+      "Atlanta",
       "Boston",
-      "New York",
+      "Century City",
+      "Charlotte",
+      "Chicago",
+      "Dallas",
+      "Houston",
       "Los Angeles",
-      "Chicago"
+      "New York",
+      "Orange County",
+      "Palo Alto",
+      "San Diego",
+      "San Francisco",
+      "Washington, DC"
     ],
     "notes": ""
   },
   "Gibson Dunn": {
     "book": 10.0,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "Los Angeles",
-      "San Francisco",
-      "Denver",
+      "Century City",
       "Dallas",
-      "Houston"
+      "Denver",
+      "Houston",
+      "Los Angeles",
+      "New York",
+      "Orange County",
+      "Palo Alto",
+      "San Francisco",
+      "Washington, DC"
     ],
     "notes": "Focus on M&A/PE/Finance/Funds "
   },
   "Simpson Thacher & Bartlett": {
     "book": 10.0,
     "cities": [
-      "Washington, DC",
       "Boston",
-      "New York",
+      "Houston",
       "Los Angeles",
-      "Austin"
+      "New York",
+      "Palo Alto",
+      "San Francisco",
+      "Washington, DC"
     ],
     "notes": ""
   },
   "Ballard Spahr": {
     "book": 1.0,
     "cities": [
-      "Washington, DC",
-      "New York",
-      "Los Angeles",
-      "Philadelphia",
+      "Anchorage",
       "Atlanta",
+      "Baltimore",
+      "Boulder",
       "Denver",
+      "Las Vegas",
+      "Los Angeles",
       "Minneapolis",
-      "Baltimore"
+      "New York",
+      "Newark",
+      "Philadelphia",
+      "Phoenix",
+      "Portland",
+      "Salt Lake City",
+      "San Francisco",
+      "Seattle",
+      "Sioux Falls",
+      "Washington, DC",
+      "Wilmington"
     ],
     "notes": "$1M+ portable. Strong real estate, public finance, litigation, and consumer financial services."
   },
   "Skadden": {
     "book": 7.0,
     "cities": [
-      "Washington, DC",
       "Boston",
-      "New York",
-      "Los Angeles",
       "Chicago",
-      "San Francisco",
-      "Houston"
+      "Houston",
+      "Los Angeles",
+      "New York",
+      "Palo Alto",
+      "Washington, DC",
+      "Wilmington"
     ],
     "notes": "Looking for $7M+ portable."
   },
   "Akin, Gump, Strauss, Hauer & Feld, LLP": {
     "book": 5.0,
     "cities": [
-      "New York",
-      "Washington, DC",
-      "Houston",
-      "Los Angeles",
-      "Dallas",
-      "Philadelphia",
       "Boston",
-      "Chicago"
+      "Chicago",
+      "Dallas",
+      "Fort Worth",
+      "Houston",
+      "Irvine",
+      "Los Angeles",
+      "New York",
+      "Philadelphia",
+      "San Antonio",
+      "San Francisco",
+      "Washington, DC"
     ],
     "notes": "Signed client (May 2026). $5M+ book threshold for AmLaw 50 / $3.8M PPP tier."
   },
   "Winston Taylor": {
     "book": 5.0,
     "cities": [
-      "Washington, DC",
-      "Boston",
-      "New York",
-      "Los Angeles",
+      "Charlotte",
       "Chicago",
+      "Dallas",
+      "Houston",
+      "Los Angeles",
+      "Miami",
+      "New York",
       "San Francisco",
-      "Austin"
+      "Silicon Valley",
+      "Washington, DC"
     ],
     "notes": ""
   },
