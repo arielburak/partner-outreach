@@ -867,8 +867,10 @@ function render(){
       const f1Label=(!f1Signed?'⚠️ ':'')+sfGlobal(dispF1)+pitchPPP(dispF1);
       const f2Label=dispF2?(' + '+(!f2Signed?'⚠️ ':'')+sfGlobal(dispF2)+pitchPPP(dispF2)):'';
       document.getElementById('pitch-display').innerHTML=f1Label+f2Label;
-      // Update "Offered" copy field
-      if(offRow&&offTxt&&dispF1){
+      // Update "Offered" copy field — only on the general/fox tabs, never bleed
+      // through onto Follow-ups/Log/Stats/Live (this row lives outside those views)
+      var _onGeneralView=(tab==='general'||tab==='fox');
+      if(offRow&&offTxt&&dispF1&&_onGeneralView){
         const offStr='Offered '+sfGlobal(dispF1)+(dispF2?' + '+sfGlobal(dispF2):'');
         offTxt.value=offStr;
         offRow.style.display='block';
