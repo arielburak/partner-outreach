@@ -1962,7 +1962,21 @@ function fuOutcome(outcome){
       }
     }
     saveSnooze();
+    saveS();
     showToast(fu.first+' snoozed for 6 months');
+  }
+  // If "interested", mirror to General status so the progress bar counts it
+  // (this was the long-standing bug behind 28+ missing 'interested' statuses)
+  if(outcome==='interested'){
+    const d=DS['general'];
+    for(var gi2=0;gi2<d.length;gi2++){
+      if(d[gi2].name===fu.name){
+        status['general_'+d[gi2].name]='interested';
+        break;
+      }
+    }
+    saveS();
+    showToast(fu.first+' marked interested');
   }
   saveFu();updateFuBadge();
   try{fbSaveNow();}catch(e){console.error('[FB]',e);updateFbStatus('error',e.message);}
