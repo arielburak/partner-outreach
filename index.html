@@ -1324,6 +1324,7 @@ function copyMsg(){
 function openLI(){const c=cur();if(c&&c.p.linkedin)window.open(c.p.linkedin,'_blank');}
 function openFP(){const c=cur();if(c&&c.p.fp)window.open(c.p.fp,'_blank');}
 document.addEventListener('keydown',e=>{
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
   if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT'||e.target.tagName==='TEXTAREA')return;
   if(e.key==='Enter')next();
   else if(e.key==='s'||e.key==='S')skip();
