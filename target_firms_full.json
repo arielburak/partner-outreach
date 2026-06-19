@@ -1416,5 +1416,31 @@
     "notes": "Added 2026-05; priority searches per firm intel",
     "book_min": 2000000,
     "chambers": {}
+  },
+  {
+    "name": "Orrick, Herrington & Sutcliffe LLP",
+    "ppp": 3632000,
+    "cities": [
+      "Austin",
+      "Boston",
+      "Charlotte",
+      "Chicago",
+      "Houston",
+      "Los Angeles",
+      "Silicon Valley",
+      "Miami",
+      "New York",
+      "Orange County",
+      "Portland",
+      "Sacramento",
+      "San Francisco",
+      "Santa Monica",
+      "Seattle",
+      "Washington, DC",
+      "Wheeling"
+    ],
+    "notes": "Added 2026-06; $3M book",
+    "book_min": 3000000,
+    "chambers": {}
   }
 ]

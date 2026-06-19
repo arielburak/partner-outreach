@@ -1101,5 +1101,28 @@
       "Wilmington"
     ],
     "notes": "Priority searches per firm intel: PE/Capital Markets (TX), Investment Funds, Private Credit, RE Finance, Lit, IP. Book $2-3M+."
+  },
+  "Orrick, Herrington & Sutcliffe LLP": {
+    "book": 3.0,
+    "cities": [
+      "Austin",
+      "Boston",
+      "Charlotte",
+      "Chicago",
+      "Houston",
+      "Los Angeles",
+      "Silicon Valley",
+      "Miami",
+      "New York",
+      "Orange County",
+      "Portland",
+      "Sacramento",
+      "San Francisco",
+      "Santa Monica",
+      "Seattle",
+      "Washington, DC",
+      "Wheeling"
+    ],
+    "notes": "$3M+ book threshold. Verified offices orrick.com (2026-06)."
   }
 }
