@@ -821,7 +821,7 @@ function buildQ(){
   // Filter out partners with no message and no target (unmatched cities)
   if(tab==='general')idxs=idxs.filter(i=>d[i].message||d[i].target);
   // Build effective last-contact from NOTE_DATES (Excel note dates) — this is the authoritative sort key
-  function elc(i){var nd=NOTE_DATES[d[i].name]||'';var nt=0;try{nt=nd?parseLC(nd):0;}catch(e){}if(isNaN(nt))nt=0;return nt;}
+  function elc(i){var nd=NOTE_DATES[d[i].name]||d[i].last_note_date||'';var nt=0;try{nt=nd?parseLC(nd):0;}catch(e){}if(isNaN(nt))nt=0;return nt;}
   // Sort: unseen first, then skipped/later, then sent
   // Within each tier: oldest last_contact first (no-date goes last)
   function sortRank(i){
