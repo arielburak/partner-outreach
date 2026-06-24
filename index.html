@@ -474,8 +474,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     <span class="done-count" id="fu-done-count" style="color:#e67e22"></span>
   </div>
   <div class="fu-filter-bar">
-    <button class="filter-btn active" data-fu-filter="all" onclick="fuSetFilter('all',this)">All</button>
-    <button class="filter-btn overdue-btn" data-fu-filter="overdue" onclick="fuSetFilter('overdue',this)">Past Due</button>
+    <button class="filter-btn" data-fu-filter="all" onclick="fuSetFilter('all',this)">All</button>
+    <button class="filter-btn overdue-btn active" data-fu-filter="overdue" onclick="fuSetFilter('overdue',this)">Past Due</button>
     <button class="filter-btn" data-fu-filter="upcoming" onclick="fuSetFilter('upcoming',this)">Upcoming</button>
     <span id="fu-overdue-count" style="font-size:11px;color:#e74c3c;margin-left:4px;font-weight:600"></span>
   </div>
@@ -2249,7 +2249,7 @@ _ensureLogEntries();
 updateFuBadge();
 
 // === FOLLOW-UP FILTERS & FIRM EDITING ===
-let fuFilter='all';
+let fuFilter='overdue';
 let fuPractice='all';
 
 function fuSetFilter(f,btn){
