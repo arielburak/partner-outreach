@@ -249,6 +249,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .fu-filter-bar{background:#f7f8fa;padding:6px 16px;display:flex;gap:6px;border-bottom:1px solid #e8eaef;flex-shrink:0;align-items:center;}
 .fu-filter-bar .filter-btn.active{background:#e67e22;border-color:#e67e22;color:#fff;}
 .fu-filter-bar .filter-btn.overdue-btn.active{background:#e74c3c;border-color:#e74c3c;}
+.fu-practice-bar{background:#fbfbfd;padding:5px 16px;display:flex;gap:6px;border-bottom:1px solid #e8eaef;flex-shrink:0;align-items:center;flex-wrap:wrap;}
+.fu-practice-bar .plabel{font-size:10px;color:#9a9aae;text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-right:2px;}
+.fu-practice-bar .pchip{padding:3px 10px;border-radius:20px;border:1px solid #d8dce3;background:#fff;color:#6a6a7e;font-size:11px;cursor:pointer;transition:all .15s;}
+.fu-practice-bar .pchip:hover{border-color:#1a3060;}
+.fu-practice-bar .pchip.active{background:#1a3060;border-color:#1a3060;color:#fff;}
+.fu-practice-bar .pchip .pc-n{opacity:.55;margin-left:4px;}
 
 .live-chambers-section{margin-top:8px;padding-top:8px;border-top:1px solid #f0f2f5;}
 .live-chambers-label{font-size:10px;text-transform:uppercase;letter-spacing:0.6px;color:#8a8a9e;font-weight:600;margin-bottom:4px;}
@@ -473,6 +479,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     <button class="filter-btn" data-fu-filter="upcoming" onclick="fuSetFilter('upcoming',this)">Upcoming</button>
     <span id="fu-overdue-count" style="font-size:11px;color:#e74c3c;margin-left:4px;font-weight:600"></span>
   </div>
+  <div class="fu-practice-bar" id="fu-practice-bar" style="display:none"></div>
 <div class="main" id="fu-main" style="gap:16px;flex-wrap:nowrap;justify-content:center;align-items:flex-start;">
     <div class="card" id="fu-card">
       <div class="card-header">
@@ -2243,12 +2250,37 @@ updateFuBadge();
 
 // === FOLLOW-UP FILTERS & FIRM EDITING ===
 let fuFilter='all';
+let fuPractice='all';
 
 function fuSetFilter(f,btn){
   fuFilter=f;
   document.querySelectorAll('[data-fu-filter]').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   fuBuildQ();fuQi=0;renderFuTab();
+}
+
+// ── Practice filter (firm-pitch follow-ups only, i.e. past the nudge = stage>=2) ──
+// Purely additive: it filters/groups the existing follow-up queue by practice area.
+// 'all' = unchanged behavior (nudges included). A specific practice = only that
+// practice's stage>=2 entries. Practice comes from the fuData entry (falls back to
+// the DS record), using the first listed Practice Area as the primary group.
+function fuPrac(e){var p=e&&e.practice;if(!p){var d=fuLookupDS(e&&e.name);p=(d&&d.practice)||'';}return ((p||'').split(',')[0]||'').trim();}
+function fuSetPractice(p){fuPractice=p;fuBuildQ();fuQi=0;renderFuTab();}
+function fuRenderPracticeChips(counts){
+  var bar=document.getElementById('fu-practice-bar');if(!bar)return;
+  // Keep the currently-selected practice visible even if its count dropped to 0.
+  if(fuPractice!=='all'&&!(fuPractice in counts))counts[fuPractice]=0;
+  var keys=Object.keys(counts);
+  if(keys.length===0){bar.style.display='none';bar.innerHTML='';return;}
+  var total=0;keys.forEach(function(k){total+=counts[k];});
+  keys.sort(function(a,b){return counts[b]-counts[a]||(a<b?-1:1);});
+  var h='<span class="plabel">Practice</span>';
+  h+='<button class="pchip'+(fuPractice==='all'?' active':'')+'" onclick="fuSetPractice(\'all\')">All<span class="pc-n">'+total+'</span></button>';
+  keys.forEach(function(k){
+    var safe=k.replace(/'/g,"\\'");
+    h+='<button class="pchip'+(fuPractice===k?' active':'')+'" onclick="fuSetPractice(\''+safe+'\')">'+k+'<span class="pc-n">'+counts[k]+'</span></button>';
+  });
+  bar.innerHTML=h;bar.style.display='flex';
 }
 
 // Patch fuBuildQ to respect filter — uses Object.entries to preserve keys
@@ -2272,7 +2304,14 @@ fuBuildQ=function(){
   //   2) Past-due stage 2+ (new firms pitched — less urgent)
   //   3) Upcoming (not yet past due)
   // Within each tier, oldest due-date first.
-  filtered.sort((a,b)=>{
+  // Practice chips: count past-nudge (stage>=2) entries within the current date
+  // filter, grouped by primary practice. Counts reflect exactly what each chip yields.
+  const _pcCounts={};
+  filtered.forEach(function(e){ if((e.stage||1)>=2){ var pr=fuPrac(e); if(pr)_pcCounts[pr]=(_pcCounts[pr]||0)+1; } });
+  fuRenderPracticeChips(_pcCounts);
+  // Apply the practice filter on top — only narrows past-nudge firm-pitch follow-ups.
+  const filteredP = (fuPractice==='all') ? filtered : filtered.filter(function(e){return (e.stage||1)>=2 && fuPrac(e)===fuPractice;});
+  filteredP.sort((a,b)=>{
     var da=a.nextDate||a.due_date||'9999';
     var db=b.nextDate||b.due_date||'9999';
     // "Overdue" includes due-today (matches the filter at the top of fuBuildQ
@@ -2284,7 +2323,7 @@ fuBuildQ=function(){
     if(rankA!==rankB) return rankA-rankB;
     return da<db?-1:da>db?1:0;
   });
-  fuQ=filtered.map(e=>e._key);fuQi=0;
+  fuQ=filteredP.map(e=>e._key);fuQi=0;
   // Update overdue count badge with stage 1 vs stage 2+ split
   const overdueEntries=entries.filter(e=>{var dd=e.nextDate||e.due_date;return dd&&daysDiff(dd)<=0;});
   const overdueN=overdueEntries.length;
