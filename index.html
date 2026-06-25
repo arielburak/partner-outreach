@@ -2717,10 +2717,11 @@ document.addEventListener('click',function(e){
   }
 });
 
-/* ════════ DIRECT PUSH ════════ Isolated bolt-on bucket for the few candidates Ari pushes harder.
+/* ════════ DIRECT PUSH ════════ Isolated bolt-on cadence for the few candidates Ari pushes harder.
    Stores ONLY pushData/pushLog in Firebase — never status / fuData / fuLog / snoozeData. Candidates
    are added with ONE click from the Follow-ups or General Outreach card ("+ Direct Push"); each block
-   shows the candidate's info + everything offered so far (pulled live from the log). Self-contained:
+   shows info + everything offered so far (live from the log), lets Ari log a call/email and set the
+   next follow-up date (its OWN cadence, independent of the LinkedIn follow-ups). Self-contained:
    injects its own style, tab, and view, and wraps switchTab / renderFuTab / render without altering them. */
 var pushData={},pushLog=[],_pushSynced={},_pushSyncedLogLen=0;
 function pushKey(n){return (n||'').replace(/[.#$/\[\]]/g,'_');}
@@ -2743,7 +2744,7 @@ function pushSaveNow(){
     }).catch(function(e){console.error('[push save]',e);});
   }catch(e){console.error('[push save]',e);}
 }
-function pushUpdateBadge(){var b=document.getElementById('push-badge');if(!b)return;var n=0;for(var k in pushData){if(pushData[k]&&!pushData[k].done)n++;}b.textContent=n;}
+function pushUpdateBadge(){var b=document.getElementById('push-badge');if(!b)return;var t=todayStr(),n=0;for(var k in pushData){var p=pushData[k];if(!p||p.done)continue;if(!p.nextDate||p.nextDate<=t)n++;}b.textContent=n;}
 function pushOfferedList(p){
   var out=[],seen={};
   function add(f){if(f==null)return;f=String(f).trim();var k=f.toLowerCase();if(k&&!seen[k]){seen[k]=1;out.push(f);}}
@@ -2751,33 +2752,61 @@ function pushOfferedList(p){
   (p.offers||[]).forEach(function(o){var f=(o&&o.firms)||o;String(f||'').split(/\s*[+,]\s*/).forEach(add);});
   return out;
 }
+function pushDueLabel(p){
+  if(p.done)return {txt:'Done',cls:'color:#999;'};
+  if(!p.nextDate)return {txt:'Set a next follow-up date',cls:'color:#c0392b;font-weight:600;'};
+  var diff=daysDiff(p.nextDate);
+  if(diff<0)return {txt:Math.abs(diff)+'d overdue',cls:'color:#e74c3c;font-weight:600;'};
+  if(diff===0)return {txt:'Due today',cls:'color:#e67e22;font-weight:600;'};
+  return {txt:'Due '+fmtD(p.nextDate),cls:'color:#888;'};
+}
 function pushAddCandidate(name,firm,city){
   if(!name){showToast('No candidate to add');return;}
   var key=pushKey(name);
   if(pushData[key]){showToast(name+' is already in Direct Push');switchTab('push');pushRender();return;}
-  pushData[key]={name:name,firm:firm||'',city:city||'',offers:[],created:todayStr()};
+  pushData[key]={name:name,firm:firm||'',city:city||'',offers:[],touches:[],nextDate:'',created:todayStr(),done:false};
   pushSaveNow();pushUpdateBadge();showToast('Added '+name+' to Direct Push');switchTab('push');pushRender();
 }
 function pushFromFu(){var fu=(typeof fuCur==='function')?fuCur():null;if(fu)pushAddCandidate(fu.name,fu.firm,fu.city);}
 function pushFromGeneral(){var c=(typeof cur==='function')?cur():null;if(c&&c.p)pushAddCandidate(c.p.name,c.p.firm,c.p.city);}
 function pushAddOffer(key){var p=pushData[key];if(!p)return;var inp=document.getElementById('push-off-'+key);var v=inp?inp.value.trim():'';if(!v)return;if(!p.offers)p.offers=[];p.offers.push({date:todayStr(),firms:v});pushSaveNow();pushRender();}
+function pushLogTouch(key,channel){var p=pushData[key];if(!p)return;if(!p.touches)p.touches=[];p.touches.unshift({date:todayStr(),channel:channel});try{pushLog.unshift({name:p.name,firm:p.firm||'',date:todayStr(),channel:channel});}catch(e){}pushSaveNow();showToast((channel==='call'?'Call':'Email')+' logged');pushRender();}
+function pushSetNextDate(key,val){var p=pushData[key];if(!p)return;p.nextDate=val||'';pushSaveNow();pushUpdateBadge();pushRender();}
 function pushRemove(key){var p=pushData[key];if(!p)return;if(!confirm('Remove '+p.name+' from Direct Push? This does NOT affect their LinkedIn follow-up.'))return;delete pushData[key];pushSaveNow();pushUpdateBadge();pushRender();}
 function pushRender(){
   var list=document.getElementById('push-list');if(!list)return;
   var keys=Object.keys(pushData);
   if(!keys.length){list.innerHTML='<div style="color:#999;font-size:14px;padding:18px 2px;">No one here yet. On a Follow-ups or General Outreach card, hit the green <b>+ Direct Push</b> button to drop a candidate in — their info and everything you have offered them come over automatically.</div>';return;}
-  keys.sort(function(a,b){return (pushData[a].created||'')<(pushData[b].created||'')?1:-1;});
+  var t=todayStr();
+  keys.sort(function(a,b){
+    var pa=pushData[a],pb=pushData[b];
+    function g(p){if(p.done)return 3;if(!p.nextDate||p.nextDate<=t)return 0;return 1;}
+    var ga=g(pa),gb=g(pb);if(ga!==gb)return ga-gb;
+    var da=pa.nextDate||'0000',db=pb.nextDate||'0000';return da<db?-1:da>db?1:0;
+  });
   list.innerHTML=keys.map(pushCardHTML).join('');
 }
 function pushCardHTML(key){
   var p=pushData[key],jk=pushJsKey(key),firms=pushOfferedList(p);
-  var firmsHtml=firms.length?firms.map(function(f){return '<span style="display:inline-block;background:#eef1f6;color:#33415c;font-size:12px;padding:3px 10px;border-radius:12px;margin:2px 5px 2px 0;">'+pushEsc(f)+'</span>';}).join(''):'<span style="font-size:12px;color:#999;">Nothing offered yet.</span>';
+  var firmsHtml=firms.length?firms.map(function(f){return '<span class="push-pill">'+pushEsc(f)+'</span>';}).join(''):'<span style="font-size:12px;color:#999;">Nothing offered yet.</span>';
+  var touches=p.touches||[];
+  var touchHtml=touches.length?touches.map(function(tt){var ic=tt.channel==='call'?'&#128222;':'&#9993;';return '<div style="font-size:12px;color:#555;padding:1px 0;">'+ic+' '+(tt.channel==='call'?'Call':'Email')+' <span style="color:#aaa;">'+pushEsc(tt.date||'')+'</span></div>';}).join(''):'<div style="font-size:12px;color:#999;">No calls or emails logged yet.</div>';
+  var due=pushDueLabel(p);
   return '<div class="push-card">'
-    +'<div class="push-name">'+pushEsc(p.name)+'</div>'
+    +'<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;">'
+    +  '<div class="push-name">'+pushEsc(p.name)+'</div>'
+    +  '<div style="font-size:12px;'+due.cls+'">'+due.txt+'</div>'
+    +'</div>'
     +'<div class="push-meta">'+pushEsc(p.firm||'')+(p.city?' &middot; '+pushEsc(p.city):'')+'</div>'
-    +'<div style="margin:12px 0 6px;font-size:11px;font-weight:600;color:#8a8a9e;text-transform:uppercase;letter-spacing:.5px;">Offered so far</div>'
-    +'<div>'+firmsHtml+'</div>'
-    +'<div style="display:flex;gap:6px;margin-top:12px;"><input id="push-off-'+pushEsc(key)+'" placeholder="Note another firm you offered (optional)" style="flex:1;font-size:12px;padding:6px 8px;border:1px solid #d0d5e0;border-radius:6px;"><button onclick="pushAddOffer(\''+jk+'\')" style="font-size:12px;padding:6px 12px;border-radius:6px;border:1px solid #0d7a5f;background:#0d7a5f;color:#fff;cursor:pointer;">+ Offer</button></div>'
+    +'<div class="push-lbl">Offered so far</div><div>'+firmsHtml+'</div>'
+    +'<div class="push-lbl">Activity</div>'+touchHtml
+    +'<div style="display:flex;gap:6px;margin-top:10px;align-items:center;flex-wrap:wrap;">'
+    +  '<button class="push-act" onclick="pushLogTouch(\''+jk+'\',\'call\')">&#128222; Log call</button>'
+    +  '<button class="push-act" onclick="pushLogTouch(\''+jk+'\',\'email\')">&#9993; Log email</button>'
+    +  '<span style="font-size:12px;color:#666;margin-left:8px;">Next follow-up:</span>'
+    +  '<input type="date" value="'+pushEsc(p.nextDate||'')+'" onchange="pushSetNextDate(\''+jk+'\',this.value)" style="font-size:12px;padding:5px 7px;border:1px solid #d0d5e0;border-radius:6px;">'
+    +'</div>'
+    +'<div style="display:flex;gap:6px;margin-top:10px;"><input id="push-off-'+pushEsc(key)+'" placeholder="Note another firm you offered (optional)" style="flex:1;font-size:12px;padding:6px 8px;border:1px solid #d0d5e0;border-radius:6px;"><button onclick="pushAddOffer(\''+jk+'\')" class="push-offbtn">+ Offer</button></div>'
     +'<div class="push-btns" style="margin-top:10px;"><button onclick="pushRemove(\''+jk+'\')">Remove</button></div>'
     +'</div>';
 }
@@ -2815,6 +2844,11 @@ function pushShow(){
    +'.push-card{background:#fff;border:1px solid #e0e4ec;border-radius:10px;padding:16px 18px;margin-bottom:14px;}'
    +'.push-name{font-size:16px;font-weight:700;color:#1a1a2e;}'
    +'.push-meta{font-size:12px;color:#666;margin:3px 0 0;line-height:1.7;}'
+   +'.push-lbl{margin:12px 0 5px;font-size:11px;font-weight:600;color:#8a8a9e;text-transform:uppercase;letter-spacing:.5px;}'
+   +'.push-pill{display:inline-block;background:#eef1f6;color:#33415c;font-size:12px;padding:3px 10px;border-radius:12px;margin:2px 5px 2px 0;}'
+   +'.push-act{font-size:12px;padding:6px 11px;border-radius:6px;border:1px solid #d0d5e0;background:#fff;cursor:pointer;color:#33415c;}'
+   +'.push-act:hover{border-color:#0d7a5f;}'
+   +'.push-offbtn{font-size:12px;padding:6px 12px;border-radius:6px;border:1px solid #0d7a5f;background:#0d7a5f;color:#fff;cursor:pointer;}'
    +'.push-btns{display:flex;flex-wrap:wrap;gap:6px;}.push-btns button{font-size:12px;padding:6px 12px;border-radius:6px;border:1px solid #d0d5e0;background:#fff;cursor:pointer;color:#444;}';
   document.head.appendChild(st);
   var tabFu=document.getElementById('tab-followups');
@@ -2827,7 +2861,7 @@ function pushShow(){
   if(fuView&&!document.getElementById('push-view')){
     var v=document.createElement('div');v.className='push-view';v.id='push-view';v.style.display='none';
     v.innerHTML='<div class="push-wrap"><div class="push-h">Direct Push</div>'
-     +'<div class="push-sub">A separate bolt-on bucket for the few candidates you push harder. Add anyone with one click from a Follow-ups or General Outreach card, their info and everything you have offered come over automatically. Completely separate from your LinkedIn sequence, adding someone here changes nothing in it.</div>'
+     +'<div class="push-sub">A separate bolt-on cadence for the few candidates you push harder. Add anyone with one click from a Follow-ups or General Outreach card. Log calls and emails, set the next follow-up date, and they resurface when due. Completely separate from your LinkedIn sequence, adding someone here changes nothing in it.</div>'
      +'<div id="push-list"></div></div>';
     fuView.parentNode.insertBefore(v,fuView.nextSibling);
   }
