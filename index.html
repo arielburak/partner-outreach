@@ -1555,12 +1555,10 @@ function buildFuMsg(fu,stage){
   }
   // Odd stages 3,5,7..: check-in, vary the language
   const checkIns=[
-    'No pressure at all. Even if you\u2019re not looking to move right now, I\u2019m always happy to chat about what the market looks like and stay in touch.',
-    'Even if a move isn\u2019t on your radar, I\u2019m glad to share what I\u2019m seeing in the market anytime. No pressure, it\u2019s useful either way.',
-    'No rush on my end. Even if you\u2019re staying put for now, happy to talk market and keep in touch for whenever the timing\u2019s right.'
+    'Just checking in. Even if you\u2019re happy where you are, I\u2019m always around to talk market and keep in touch.'
   ];
   const ci=checkIns[Math.floor((stage-3)/2)%checkIns.length];
-  return 'Hi '+first+',\n\n'+ci;
+  return 'Hey '+first+',\n\n'+ci;
 }
 
 // Returns array of message variants. For even stages: 3 variants (with-practice, no-practice, alt-angle).
@@ -1966,14 +1964,13 @@ function fuSent(){
   fuLog.unshift({name:fu.name||'',first:fu.first||'',firm:fu.firm||'',city:fu.city||'',practice:fu.practice||'',
     target:logTarget,alt1:logAlt1,alt2:fu.alt2||'',date_sent:today,linkedin:fu.linkedin||'',fp:fu.fp||'',stage:'followup_'+fu.stage,msg_variant:['primary','alt1','alt2'][fuAltIdx]||'primary'});
   try{localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
-  // Infinite cycle: 1(8d)->2(60d)->3(14d)->4(60d)->5(14d)-> ...
-  // Stage 1 = nudge (sent 8d after initial). After nudge, schedule the firm
-  // pitch 60d out (was 30d — gives candidates more breathing room).
-  // Subsequent firm pitches (stage 4, 6, ...) also 60d after the prior check-in.
+  // Infinite cycle: 1(8d)->2(60d)->3(14d)->4(90d)->5(14d)-> ...
+  // Stage 1 = nudge (sent 8d after initial). After nudge, schedule the firm pitch 60d out.
   // Check-ins (stage 3, 5, ...) are quick 14d follow-ups after a firm pitch.
+  // The firm pitch AFTER a check-in (stage 4, 6, ...) is now 3 months (90d) out.
   if(fu.stage===1){fu.stage=2;fu.due_date=addDays(today,60);}
   else if(fu.stage%2===0){fu.stage+=1;fu.due_date=addDays(today,14);}
-  else{fu.stage+=1;fu.due_date=addDays(today,60);}
+  else{fu.stage+=1;fu.due_date=addDays(today,90);}
   fu.nextDate=fu.due_date;
   saveFu();updateFuBadge();
   try{fbSaveNow();}catch(e){console.error('[FB]',e);updateFbStatus('error',e.message);}
