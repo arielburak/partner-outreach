@@ -1555,9 +1555,9 @@ function buildFuMsg(fu,stage){
   }
   // Odd stages 3,5,7..: check-in, vary the language
   const checkIns=[
-    'Just wanted to make sure my last message got through. No pressure at all, happy to chat whenever the timing is right.',
-    'Checking in one more time. I know timing is everything in these decisions, so whenever you\u2019re open to a conversation, I\u2019m here.',
-    'Just a quick note to make sure I\u2019m not missing you. Happy to connect whenever it works for you.'
+    'No pressure at all. Even if you\u2019re not looking to move right now, I\u2019m always happy to chat about what the market looks like and stay in touch.',
+    'Even if a move isn\u2019t on your radar, I\u2019m glad to share what I\u2019m seeing in the market anytime. No pressure, it\u2019s useful either way.',
+    'No rush on my end. Even if you\u2019re staying put for now, happy to talk market and keep in touch for whenever the timing\u2019s right.'
   ];
   const ci=checkIns[Math.floor((stage-3)/2)%checkIns.length];
   return 'Hi '+first+',\n\n'+ci;
