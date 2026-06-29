@@ -1525,7 +1525,7 @@ function buildFuMsg(fu,stage){
   // Stage 1: simple check-in on original pitch (~8d after initial — quick nudge)
   if(stage===1){
     const f1=sf(target),f2=sf(alt1);
-    return 'Hi '+first+',\n\nJust wanted to follow up on my note about '+f1+(f2?' and '+f2:'')+'. Have you had a chance to think about it?\n\nHappy to jump on a quick call whenever works.';
+    return 'Hi '+first+', just wanted to follow up on my note about '+f1+(f2?' and '+f2:'')+'. Have you had a chance to think about it?\n\nHappy to jump on a quick call whenever works.';
   }
   // Even stages (2,4,6..): pitch NEW firms not yet offered
   if(stage%2===0){
