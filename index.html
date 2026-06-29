@@ -1548,9 +1548,12 @@ function buildFuMsg(fu,stage){
     var f1=sf(firms[0]),f2=sf(firms[1]);
     const prac=(practice||'').split(',')[0].trim().toLowerCase()||'partner',diff=f1!==f2;
     var firmsSubj=(diff?f1+' and '+f2:f1);
+    var grow=(prac==='corporate')
+      ? (firmsSubj+' '+(diff?'are':'is')+' also actively recruiting partners and could be a great platform for you')
+      : (firmsSubj+' '+(diff?'are':'is')+' also looking to grow '+(diff?'their '+prac+' groups':'its '+prac+' group'));
     return 'Hi '+first+',\n\n'
          +'Just wanted to reach out as it’s been a couple of months since my last message. '
-         +firmsSubj+' '+(diff?'are':'is')+' also looking to grow '+(diff?'their '+prac+' groups':'its '+prac+' group')+'.\n\n'
+         +grow+'.\n\n'
          +'Would you be open to a chat and going over options together?';
   }
   // Odd stages 3,5,7..: check-in, vary the language
@@ -1679,7 +1682,10 @@ function buildFuMsgs(fu,stage,firmOverride){
         +'Just wanted to reach out as it’s been a couple of months since my last message. '
         +firmsPhrase+' also actively recruiting partners and could be a great platform for you.\n\n'
         +'Would you be open to a chat and going over options together?';
-  return [v1,v2];
+  // Corporate is too broad to name ("...their corporate groups"), so for corporate
+  // candidates the firm-pitch message uses the no-practice version only. Every other
+  // practice keeps the specific group mention as the primary.
+  return (prac==='corporate')?[v2]:[v1,v2];
 }
 
 function getOfferedFirms(name){
