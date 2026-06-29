@@ -2882,7 +2882,7 @@ function ccEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g
 function ccFmt(d){try{return (typeof fmtD==='function')?fmtD(d):d;}catch(e){return d;}}
 function ccInit(){
   if(typeof _fbRef==='undefined'||!_fbRef){setTimeout(ccInit,500);return;}
-  _fbRef.child('coldCallData').once('value').then(function(s){ccData=s.val()||{};try{_ccSynced=JSON.parse(JSON.stringify(ccData));}catch(e){}ccUpdateBadge();var cv=document.getElementById('cc-view');if(cv&&cv.style.display!=='none')ccRender();}).catch(function(e){console.error('[ccInit]',e);});
+  _fbRef.child('coldCallData').once('value').then(function(s){ccData=s.val()||{};try{_ccSynced=JSON.parse(JSON.stringify(ccData));}catch(e){}ccUpdateBadge();setTimeout(ccUpdateBadge,2500);var cv=document.getElementById('cc-view');if(cv&&cv.style.display!=='none')ccRender();}).catch(function(e){console.error('[ccInit]',e);});
 }
 function ccSaveNow(){
   if(typeof _fbRef==='undefined'||!_fbRef)return;
@@ -2892,6 +2892,21 @@ function ccSaveNow(){
     for(k in _ccSynced){if(!(k in ccData)&&!bad.test(k))upd['coldCallData/'+k]=null;}
     _fbRef.update(upd).then(function(){try{_ccSynced=JSON.parse(JSON.stringify(ccData));}catch(e){}}).catch(function(e){console.error('[cc save]',e);});
   }catch(e){console.error('[cc save]',e);}
+}
+function ccOffers(name){
+  // Each firm-offer SET (initial + even followups) with the date it was sent. fuLog is
+  // most-recent-first, so this returns the newest set first. Deduped by stage.
+  var out=[],seen={};
+  for(var j=0;j<fuLog.length;j++){
+    var e=fuLog[j];if(!e||e.name!==name)continue;
+    var s=String(e.stage||''),m=s.match(/^followup_(\d+)$/);
+    if(!(s==='initial'||(m&&parseInt(m[1],10)%2===0)))continue;
+    if(seen[s])continue;seen[s]=1;
+    var t=e.target?sfGlobal(e.target):'',a=e.alt1?sfGlobal(e.alt1):'';
+    var firms=[];if(t)firms.push(t);if(a&&a!==t)firms.push(a);
+    out.push({date:e.date_sent||e.date||'',firms:firms});
+  }
+  return out;
 }
 function ccList(){
   var stMap={},firmMap={},cityMap={};
@@ -2910,8 +2925,8 @@ function ccList(){
   for(var nm in latest){
     var st=stMap[nm]||'';
     if(st==='not_interested'||st==='benched')continue;
-    var firms=[];try{var of=getOfferedFirms(nm);if(of&&of.forEach)of.forEach(function(f){firms.push(f);});}catch(e){}
-    rows.push({name:nm,firm:firmMap[nm]||firmFromLog[nm]||'',city:cityMap[nm]||'',phone:OFFICE_PHONES[nm]||'',firms:firms,offerDate:latest[nm],called:!!ccData[ccKey(nm)]});
+    var offers=ccOffers(nm);
+    rows.push({name:nm,firm:firmMap[nm]||firmFromLog[nm]||'',city:cityMap[nm]||'',phone:OFFICE_PHONES[nm]||'',offers:offers,offerDate:(offers[0]&&offers[0].date)||latest[nm],called:!!ccData[ccKey(nm)]});
   }
   rows.sort(function(a,b){
     if(a.called!==b.called)return a.called?1:-1;
@@ -2924,7 +2939,7 @@ function ccUncall(name){var k=ccKey(name);delete ccData[k];ccSaveNow();ccUpdateB
 function ccUpdateBadge(){var b=document.getElementById('cc-badge');if(!b)return;try{var rows=ccList();var n=rows.filter(function(r){return !r.called;}).length;b.textContent=n;}catch(e){}}
 function ccCardHTML(r){
   var k=ccKey(r.name),called=ccData[k];
-  var firmsHtml=r.firms.length?r.firms.map(function(f){return '<span class="cc-pill">'+ccEsc(f)+'</span>';}).join(''):'<span style="color:#999;font-size:12px;">(none on file)</span>';
+  var firmsHtml=(r.offers&&r.offers.length)?r.offers.map(function(o){return '<div class="cc-set">'+o.firms.map(function(f){return '<span class="cc-pill">'+ccEsc(f)+'</span>';}).join('')+'<span class="cc-setdate">'+ccEsc(ccFmt(o.date))+'</span></div>';}).join(''):'<span style="color:#999;font-size:12px;">(none on file)</span>';
   var phoneHtml=r.phone?'<a href="tel:'+ccEsc((r.phone||'').replace(/[^+\d]/g,''))+'" class="cc-phone">'+ccEsc(r.phone)+'</a>':'<span style="color:#c0392b;font-size:12px;">no phone on file</span>';
   return '<div class="cc-card'+(called?' cc-done':'')+'">'
     +'<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;">'
@@ -2932,7 +2947,7 @@ function ccCardHTML(r){
     +'<div style="font-size:12px;color:#888;">offered '+ccEsc(ccFmt(r.offerDate))+'</div></div>'
     +'<div class="cc-meta">'+ccEsc(r.firm||'')+(r.city?' &middot; '+ccEsc(r.city):'')+'</div>'
     +'<div style="margin:8px 0;font-size:15px;">'+phoneHtml+'</div>'
-    +'<div class="cc-lbl">Offer them</div><div>'+firmsHtml+'</div>'
+    +'<div class="cc-lbl">Offered (by date)</div><div>'+firmsHtml+'</div>'
     +'<div class="cc-btns">'+(called?'<span class="cc-called">Called '+ccEsc(called.last||'')+'</span>':'')
     +'<button class="cc-mark" onclick="ccMarkCalled(\''+ccJs(r.name)+'\')">'+(called?'Log another call':'Mark called')+'</button>'
     +(called?'<button onclick="ccUncall(\''+ccJs(r.name)+'\')">Undo</button>':'')+'</div>'
@@ -2943,6 +2958,7 @@ function ccRender(){
   var rows=ccList();
   if(!rows.length){list.innerHTML='<div style="color:#999;font-size:14px;padding:18px 2px;">No one to call yet. People appear here automatically once you have offered them firms.</div>';return;}
   var uncalled=rows.filter(function(r){return !r.called;}).length;
+  var bb=document.getElementById('cc-badge');if(bb)bb.textContent=uncalled;
   list.innerHTML='<div class="cc-count">'+rows.length+' offered firms &middot; '+uncalled+' not yet called &middot; most recent offer first</div>'+rows.map(ccCardHTML).join('');
 }
 function ccShow(){
@@ -2970,6 +2986,8 @@ function ccShow(){
    +'.cc-phone{font-weight:700;color:#0d7a5f;text-decoration:none;}'
    +'.cc-lbl{margin:8px 0 5px;font-size:11px;font-weight:600;color:#8a8a9e;text-transform:uppercase;letter-spacing:.5px;}'
    +'.cc-pill{display:inline-block;background:#eef1f6;color:#33415c;font-size:12px;padding:3px 10px;border-radius:12px;margin:2px 5px 2px 0;}'
+   +'.cc-set{display:flex;align-items:center;flex-wrap:wrap;gap:2px;padding:3px 0;}'
+   +'.cc-setdate{font-size:11px;color:#999;margin-left:6px;white-space:nowrap;}'
    +'.cc-btns{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;}'
    +'.cc-btns button{font-size:12px;padding:6px 12px;border-radius:6px;border:1px solid #d0d5e0;background:#fff;cursor:pointer;color:#444;}'
    +'.cc-mark{background:#b8860b!important;color:#fff!important;border-color:#b8860b!important;}'
