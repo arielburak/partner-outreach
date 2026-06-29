@@ -1550,7 +1550,7 @@ function buildFuMsg(fu,stage){
     var firmsSubj=(diff?f1+' and '+f2:f1);
     var grow=(prac==='corporate')
       ? (firmsSubj+' '+(diff?'are':'is')+' also actively recruiting partners and could be a great platform for you')
-      : (firmsSubj+' '+(diff?'are':'is')+' also looking to grow '+(diff?'their '+prac+' groups':'its '+prac+' group'));
+      : (firmsSubj+' '+(diff?'are':'is')+' also looking to grow '+(diff?'their '+fuPracLabel(prac)+' groups':'its '+fuPracLabel(prac)+' group'));
     return 'Hi '+first+',\n\n'
          +'Just wanted to reach out as it’s been a couple of months since my last message. '
          +grow+'.\n\n'
@@ -1558,10 +1558,10 @@ function buildFuMsg(fu,stage){
   }
   // Odd stages 3,5,7..: check-in, vary the language
   const checkIns=[
-    'Just checking in. Even if you\u2019re happy where you are, I\u2019m always around to talk market and keep in touch.'
+    'a lot of the people I work with aren\u2019t looking when we first connect. Happy to stay close and be useful whenever the timing\u2019s right.'
   ];
   const ci=checkIns[Math.floor((stage-3)/2)%checkIns.length];
-  return 'Hey '+first+',\n\n'+ci;
+  return 'Hey '+first+', '+ci;
 }
 
 // Returns array of message variants. For even stages: 3 variants (with-practice, no-practice, alt-angle).
@@ -1662,6 +1662,7 @@ function fuGetPitchFirms(fu, firmOverride){
   }
   return {f1Raw:f1Raw, f2Raw:f2Raw};
 }
+function fuPracLabel(prac){return prac==='banking'?'finance':prac==='intellectual property'?'IP':prac;}
 function buildFuMsgs(fu,stage,firmOverride){
   if(stage!==2 && stage%2!==0||stage<2){return [buildFuMsg(fu,stage)];}
   var sf=sfGlobal;
@@ -1675,7 +1676,7 @@ function buildFuMsgs(fu,stage,firmOverride){
   // Variant 1: with practice/group mention
   var v1='Hi '+first+',\n\n'
         +'Just wanted to reach out as it’s been a couple of months since my last message. '
-        +firmsPhraseSubj+' '+(diff?'are':'is')+' also looking to grow '+(diff?'their '+prac+' groups':'its '+prac+' group')+'.\n\n'
+        +firmsPhraseSubj+' '+(diff?'are':'is')+' also looking to grow '+(diff?'their '+fuPracLabel(prac)+' groups':'its '+fuPracLabel(prac)+' group')+'.\n\n'
         +'Would you be open to a chat and going over options together?';
   // Variant 2: same template, group not mentioned
   var v2='Hi '+first+',\n\n'
