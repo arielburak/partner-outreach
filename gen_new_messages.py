@@ -39,6 +39,7 @@ FIRM_ALIASES = {
     'alston & bird': 'Alston & Bird', 'morrison & foerster': 'MoFo',
     'orrick, herrington & sutcliffe': 'Orrick', 'proskauer rose': 'Proskauer',
     'perkins coie': 'Perkins',
+    'hunton andrews kurth': 'Hunton',
     'vinson & elkins': 'V&E',
     'wilson sonsini goodrich & rosati': 'Wilson Sonsini',
     'wilson sonsini goodrich': 'Wilson Sonsini',

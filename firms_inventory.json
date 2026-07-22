@@ -1,1148 +1,1165 @@
 [
-  {
-    "firm": "Fox Rothschild",
-    "cities": [
-      "Atlanta",
-      "Atlantic City",
-      "Blue Bell",
-      "Boston",
-      "Charlotte",
-      "Chicago",
-      "Dallas",
-      "Denver",
-      "Exton",
-      "Greensboro",
-      "Greenville",
-      "Kansas City",
-      "Las Vegas",
-      "Los Angeles",
-      "Miami",
-      "Minneapolis",
-      "Morristown",
-      "New York",
-      "Oklahoma City",
-      "Philadelphia",
-      "Pittsburgh",
-      "Princeton",
-      "Raleigh",
-      "San Francisco",
-      "Sarasota",
-      "Seattle",
-      "Warrington",
-      "Washington, DC",
-      "West Palm Beach",
-      "Wilmington"
-    ],
-    "book_size": "1",
-    "misc": ""
-  },
-  {
-    "firm": "UB Greensfelder",
-    "cities": [
-      "Belleville",
-      "Boca Raton",
-      "Chicago",
-      "Cincinnati",
-      "Cleveland",
-      "Columbus",
-      "New York",
-      "St. Louis",
-      "Washington, DC"
-    ],
-    "book_size": "1",
-    "misc": "For partners we typically look for a book of business around $750K; rates vary by market and practice group (typically $500-$700/hr)."
-  },
-  {
-    "firm": "Pryor Cashman",
-    "cities": [
-      "Los Angeles",
-      "Miami",
-      "New York"
-    ],
-    "book_size": "1",
-    "misc": "Typically, our floor is $750k in portable business."
-  },
-  {
-    "firm": "Armstrong Teasdale",
-    "cities": [
-      "Boston",
-      "Chicago",
-      "Denver",
-      "Edwardsville",
-      "Jefferson City",
-      "Kansas City",
-      "Las Vegas",
-      "Miami",
-      "New York",
-      "Orange County",
-      "Philadelphia",
-      "Princeton",
-      "Salt Lake City",
-      "St. Louis",
-      "Washington, DC",
-      "Wilmington"
-    ],
-    "book_size": "1",
-    "misc": "Actually open to less than 1M, rates around 400-700. Open to 700k if they already have an office"
-  },
-  {
-    "firm": "Womble Bond Dickinson",
-    "cities": [
-      "Atlanta",
-      "Baltimore",
-      "Boston",
-      "Charleston",
-      "Charlotte",
-      "Denver",
-      "Greenville",
-      "Houston",
-      "Huntsville",
-      "Las Vegas",
-      "Los Angeles",
-      "Nashville",
-      "Phoenix",
-      "Raleigh",
-      "Tucson",
-      "Tysons Corner",
-      "Washington, DC",
-      "Wilmington",
-      "Winston-Salem"
-    ],
-    "book_size": "1",
-    "misc": "650 and above. Sweet spot 700-900. Can be lower book for salaried partners"
-  },
-  {
-    "firm": "Saul Ewing",
-    "cities": [
-      "Baltimore",
-      "Boston",
-      "Chicago",
-      "Fort Lauderdale",
-      "Harrisburg",
-      "Irvine",
-      "Los Angeles",
-      "Miami",
-      "Minneapolis",
-      "New York",
-      "Newark",
-      "Philadelphia",
-      "Pittsburgh",
-      "Princeton",
-      "Washington, DC",
-      "Wayne",
-      "West Palm Beach",
-      "Wilmington"
-    ],
-    "book_size": "1",
-    "misc": ""
-  },
-  {
-    "firm": "Winstead",
-    "cities": [
-      "Atlanta",
-      "Austin",
-      "Charlotte",
-      "Dallas",
-      "Fort Worth",
-      "Houston",
-      "Nashville",
-      "New York",
-      "San Antonio",
-      "The Woodlands"
-    ],
-    "book_size": "1",
-    "misc": "Self-sustaining in New York."
-  },
-  {
-    "firm": "Thompson Hine",
-    "cities": [
-      "Atlanta",
-      "Chicago",
-      "Cincinnati",
-      "Cleveland",
-      "Columbus",
-      "Dayton",
-      "Los Angeles",
-      "Minneapolis",
-      "New York",
-      "San Mateo",
-      "Washington, DC"
-    ],
-    "book_size": "1",
-    "misc": "We are always looking for potential commercial litigation partners who have a book of business – even a small one"
-  },
-  {
-    "firm": "Stradley Ronon",
-    "cities": [
-      "Cherry Hill",
-      "Chicago",
-      "Long Beach",
-      "Malvern",
-      "New York",
-      "Newark",
-      "Philadelphia",
-      "Washington, DC",
-      "Wilmington"
-    ],
-    "book_size": "1",
-    "misc": "rates 600-1400"
-  },
-  {
-    "firm": "Miles Stockbridge",
-    "cities": [
-      "Baltimore",
-      "Easton",
-      "Frederick",
-      "New York",
-      "North Bethesda",
-      "Richmond",
-      "Tysons Corner",
-      "Washington, DC"
-    ],
-    "book_size": "1",
-    "misc": "For partners, we typically need a book of $1M but would consider $750K+ for strategic needs (government contracts, health care regulatory, private equity, finance, or a litigator in DC, Richmond, or Tysons)."
-  },
-  {
-    "firm": "Caplin & Drysdale",
-    "cities": [
-      "New York",
-      "Washington, DC"
-    ],
-    "book_size": "1",
-    "misc": ""
-  },
-  {
-    "firm": "McCarter & English",
-    "cities": [
-      "Boston",
-      "East Brunswick",
-      "Hartford",
-      "Indianapolis",
-      "Miami",
-      "New York",
-      "Newark",
-      "Philadelphia",
-      "Stamford",
-      "Trenton",
-      "Washington, DC",
-      "Wilmington"
-    ],
-    "book_size": "1",
-    "misc": "Can be less for corporate. Flexible on rates, lower than 1k"
-  },
-  {
-    "firm": "FBT/Gibbons",
-    "cities": [
-      "Charleston",
-      "Cincinnati",
-      "Columbus",
-      "Dallas",
-      "Denver",
-      "Florence",
-      "Houston",
-      "Indianapolis",
-      "Lexington",
-      "Los Angeles",
-      "Louisville",
-      "Naples",
-      "Nashville",
-      "New York",
-      "Newark",
-      "Newport Beach",
-      "Orange County",
-      "Philadelphia",
-      "Pittsburgh",
-      "Red Bank",
-      "San Francisco",
-      "Trenton",
-      "Washington, DC",
-      "West Chester",
-      "West Palm Beach",
-      "Wilmington"
-    ],
-    "book_size": "1",
-    "misc": ""
-  },
-  {
-    "firm": "Withers",
-    "cities": [
-      "Greenwich",
-      "Los Angeles",
-      "New Haven",
-      "New York",
-      "San Diego",
-      "San Francisco",
-      "Houston"
-    ],
-    "book_size": "1",
-    "misc": "Rates 900-1200 with the ability to adjust. Flexible on book sometimes."
-  },
-  {
-    "firm": "Davis Graham & Stubbs",
-    "cities": [
-      "Denver"
-    ],
-    "book_size": "1",
-    "misc": "Corporat +1.5,1M RE,IP, 400k Employment"
-  },
-  {
-    "firm": "Buchanan",
-    "cities": [
-      "Alexandria",
-      "Charlotte",
-      "Chicago",
-      "Fort Lauderdale",
-      "Harrisburg",
-      "King of Prussia",
-      "Miami",
-      "New York",
-      "Newark",
-      "Philadelphia",
-      "Pittsburgh",
-      "Princeton",
-      "San Diego",
-      "Tallahassee",
-      "Tampa",
-      "Washington, DC",
-      "Wilmington"
-    ],
-    "book_size": "1",
-    "misc": ""
-  },
-  {
-    "firm": "Dorsey & Whitney",
-    "cities": [
-      "Anchorage",
-      "Boise",
-      "Chicago",
-      "Costa Mesa",
-      "Dallas",
-      "Denver",
-      "Des Moines",
-      "Minneapolis",
-      "Missoula",
-      "New York",
-      "Palo Alto",
-      "Phoenix",
-      "Salt Lake City",
-      "Seattle",
-      "Washington, DC",
-      "Wilmington"
-    ],
-    "book_size": "1",
-    "misc": ""
-  },
-  {
-    "firm": "Robinson & Cole",
-    "cities": [
-      "Austin",
-      "Boston",
-      "Hartford",
-      "Miami",
-      "New York",
-      "Philadelphia",
-      "Stamford",
-      "Washington, DC",
-      "Wilmington"
-    ],
-    "book_size": "1",
-    "misc": ""
-  },
-  {
-    "firm": "Goulston & Storrs",
-    "cities": [
-      "Boston",
-      "New York",
-      "Washington, DC"
-    ],
-    "book_size": "1.5",
-    "misc": "+950 rate"
-  },
-  {
-    "firm": "Kasowitz",
-    "cities": [
-      "Atlanta",
-      "Boulder",
-      "Houston",
-      "Los Angeles",
-      "Miami",
-      "New York",
-      "Newark",
-      "San Francisco",
-      "Washington, DC"
-    ],
-    "book_size": "1.5",
-    "misc": "Rates 700-800"
-  },
-  {
-    "firm": "Nixon Peabody",
-    "cities": [
-      "Albany",
-      "Boston",
-      "Buffalo",
-      "Chicago",
-      "Long Island",
-      "Los Angeles",
-      "Manchester",
-      "New York",
-      "Providence",
-      "Rochester",
-      "San Francisco",
-      "Washington, DC"
-    ],
-    "book_size": "1.5",
-    "misc": "Rates 1k avg but flexible on lower. Book target 2M but OK reviewing 1.5M"
-  },
-  {
-    "firm": "Levenfeld Perlstein",
-    "cities": [
-      "Chicago"
-    ],
-    "book_size": "1.5",
-    "misc": ""
-  },
-  {
-    "firm": "Blank Rome",
-    "cities": [
-      "Boston",
-      "Chicago",
-      "Cincinnati",
-      "Dallas",
-      "Fort Lauderdale",
-      "Houston",
-      "Los Angeles",
-      "New York",
-      "Orange County",
-      "Philadelphia",
-      "Pittsburgh",
-      "Princeton",
-      "San Francisco",
-      "Tampa",
-      "Washington, DC",
-      "Wilmington"
-    ],
-    "book_size": "1.8",
-    "misc": ""
-  },
-  {
-    "firm": "Akerman",
-    "cities": [
-      "Atlanta",
-      "Austin",
-      "Boca Raton",
-      "Charlotte",
-      "Chicago",
-      "Dallas",
-      "Denver",
-      "Fort Lauderdale",
-      "Houston",
-      "Jacksonville",
-      "Las Vegas",
-      "Los Angeles",
-      "Miami",
-      "Naples",
-      "New Orleans",
-      "New York",
-      "Orlando",
-      "Salt Lake City",
-      "San Antonio",
-      "Tallahassee",
-      "Tampa",
-      "Washington, DC",
-      "West Palm Beach",
-      "Wilmington"
-    ],
-    "book_size": "1.8",
-    "misc": ""
-  },
-  {
-    "firm": "Brown Rudnick",
-    "cities": [
-      "Boston",
-      "Hartford",
-      "Houston",
-      "Los Angeles",
-      "New York",
-      "Orange County",
-      "Washington, DC"
-    ],
-    "book_size": "2",
-    "misc": "Crisis Management (includes restructuring and Special Situations); Global Litigation; Brand and Reputation Management; Life Sciences and Technology"
-  },
-  {
-    "firm": "Foley & Lardner",
-    "cities": [
-      "Austin",
-      "Boston",
-      "Chicago",
-      "Dallas",
-      "Denver",
-      "Detroit",
-      "Houston",
-      "Jacksonville",
-      "Los Angeles",
-      "Madison",
-      "Miami",
-      "Milwaukee",
-      "Nashville",
-      "New York",
-      "Orlando",
-      "Raleigh",
-      "Sacramento",
-      "Salt Lake City",
-      "San Diego",
-      "San Francisco",
-      "Silicon Valley",
-      "Tallahassee",
-      "Tampa",
-      "Washington, DC"
-    ],
-    "book_size": "2",
-    "misc": "Rates 1k avg"
-  },
-  {
-    "firm": "Dentons",
-    "cities": [
-      "Atlanta",
-      "Boston",
-      "Charleston",
-      "Chicago",
-      "Cincinnati",
-      "Dallas",
-      "Denver",
-      "Evansville",
-      "Harrisburg",
-      "Hilo",
-      "Honolulu",
-      "Houston",
-      "Indianapolis",
-      "Jasper",
-      "Kansas City",
-      "Lexington",
-      "Los Angeles",
-      "Louisville",
-      "Miami",
-      "Naples",
-      "New Orleans",
-      "New York",
-      "Orange County",
-      "Phoenix",
-      "Pittsburgh",
-      "Sacramento",
-      "San Diego",
-      "San Francisco",
-      "Short Hills",
-      "Silicon Valley",
-      "St. Louis",
-      "Washington, DC"
-    ],
-    "book_size": "2",
-    "misc": ""
-  },
-  {
-    "firm": "Cadwalader",
-    "cities": [
-      "Charlotte",
-      "New York",
-      "Washington, DC"
-    ],
-    "book_size": "2",
-    "misc": "Didn’t explicitly say the book size, but based on some opportunistics I think this is their interest"
-  },
-  {
-    "firm": "Seyfarth",
-    "cities": [
-      "Atlanta",
-      "Boston",
-      "Century City",
-      "Charlotte",
-      "Chicago",
-      "Dallas",
-      "Houston",
-      "Los Angeles",
-      "New York",
-      "Sacramento",
-      "San Francisco",
-      "Seattle",
-      "Washington, DC"
-    ],
-    "book_size": "2",
-    "misc": "Didn’t explicitly say the book size, but based on some opportunistics I think this is their interest"
-  },
-  {
-    "firm": "Haynes and Boone",
-    "cities": [
-      "Austin",
-      "Boston",
-      "Charlotte",
-      "Chicago",
-      "Costa Mesa",
-      "Dallas",
-      "Denver",
-      "Fort Worth",
-      "Houston",
-      "New York",
-      "Palo Alto",
-      "Plano",
-      "San Antonio",
-      "San Francisco",
-      "The Woodlands",
-      "Tysons Corner",
-      "Washington, DC"
-    ],
-    "book_size": "2",
-    "misc": ""
-  },
-  {
-    "firm": "Mintz",
-    "cities": [
-      "Boston",
-      "Los Angeles",
-      "Miami",
-      "New York",
-      "San Diego",
-      "San Francisco",
-      "Washington, DC"
-    ],
-    "book_size": "2",
-    "misc": "Rates +1k"
-  },
-  {
-    "firm": "Sheppard Mullin",
-    "cities": [
-      "Century City",
-      "Chicago",
-      "Dallas",
-      "Del Mar Heights",
-      "Houston",
-      "Los Angeles",
-      "New York",
-      "Orange County",
-      "San Diego",
-      "San Francisco",
-      "Santa Barbara",
-      "Silicon Valley",
-      "Washington, DC"
-    ],
-    "book_size": "2",
-    "misc": ""
-  },
-  {
-    "firm": "Allen Matkins",
-    "cities": [
-      "Century City",
-      "Los Angeles",
-      "New York",
-      "Orange County",
-      "San Diego",
-      "San Francisco"
-    ],
-    "book_size": "2.5",
-    "misc": "Book flexibkle for rising star. West Coast rates high 8s low thous, New york 1k-1.8k"
-  },
-  {
-    "firm": "DLA Piper",
-    "cities": [
-      "Atlanta",
-      "Austin",
-      "Baltimore",
-      "Boston",
-      "Chicago",
-      "Dallas",
-      "Houston",
-      "Los Angeles",
-      "Miami",
-      "Minneapolis",
-      "New York",
-      "Palo Alto",
-      "Philadelphia",
-      "Phoenix",
-      "Raleigh",
-      "Reston",
-      "San Diego",
-      "San Francisco",
-      "Seattle",
-      "Short Hills",
-      "Washington, DC",
-      "Wilmington"
-    ],
-    "book_size": "3",
-    "misc": ""
-  },
-  {
-    "firm": "Katten",
-    "cities": [
-      "Charlotte",
-      "Chicago",
-      "Dallas",
-      "Los Angeles",
-      "New York",
-      "Orange County",
-      "Washington, DC"
-    ],
-    "book_size": "3",
-    "misc": "Private equity and investment management are top priority; seeking partners with large practices/groups in those areas."
-  },
-  {
-    "firm": "Perkins Coie",
-    "cities": [
-      "Anchorage",
-      "Austin",
-      "Bellevue",
-      "Boise",
-      "Chicago",
-      "Dallas",
-      "Denver",
-      "Los Angeles",
-      "Madison",
-      "New York",
-      "Palo Alto",
-      "Phoenix",
-      "Portland",
-      "San Diego",
-      "San Francisco",
-      "Seattle",
-      "Washington, DC"
-    ],
-    "book_size": "3",
-    "misc": ""
-  },
-  {
-    "firm": "Cooley",
-    "cities": [
-      "Boston",
-      "Chicago",
-      "Denver",
-      "Los Angeles",
-      "Miami",
-      "New York",
-      "Palo Alto",
-      "Reston",
-      "San Diego",
-      "San Francisco",
-      "Santa Monica",
-      "Washington, DC"
-    ],
-    "book_size": "3",
-    "misc": ""
-  },
-  {
-    "firm": "ArentFox Schiff",
-    "cities": [
-      "Ann Arbor",
-      "Boston",
-      "Chicago",
-      "Lake Forest",
-      "Los Angeles",
-      "New York",
-      "San Francisco",
-      "Washington, DC"
-    ],
-    "book_size": "3",
-    "misc": ""
-  },
-  {
-    "firm": "Fenwick",
-    "cities": [
-      "Boston",
-      "New York",
-      "San Francisco",
-      "Santa Monica",
-      "Seattle",
-      "Silicon Valley",
-      "Washington, DC"
-    ],
-    "book_size": "3",
-    "misc": "Some flexibility"
-  },
-  {
-    "firm": "Holland & Knight",
-    "cities": [
-      "Atlanta",
-      "Austin",
-      "Birmingham",
-      "Boston",
-      "Century City",
-      "Charlotte",
-      "Chattanooga",
-      "Chicago",
-      "Dallas",
-      "Denver",
-      "Fort Lauderdale",
-      "Houston",
-      "Jacksonville",
-      "Los Angeles",
-      "Miami",
-      "Nashville",
-      "New York",
-      "Newport Beach",
-      "Orlando",
-      "Philadelphia",
-      "Portland",
-      "Richmond",
-      "San Francisco",
-      "Seattle",
-      "Stamford",
-      "Tallahassee",
-      "Tampa",
-      "Tysons",
-      "Washington, DC",
-      "West Palm Beach"
-    ],
-    "book_size": "3",
-    "misc": ""
-  },
-  {
-    "firm": "Troutman Pepper",
-    "cities": [
-      "Atlanta",
-      "Austin",
-      "Boston",
-      "Charlotte",
-      "Chicago",
-      "Cincinnati",
-      "Dallas",
-      "Detroit",
-      "Harrisburg",
-      "Hartford",
-      "Houston",
-      "Los Angeles",
-      "Miami",
-      "New Orleans",
-      "New York",
-      "Orange County",
-      "Philadelphia",
-      "Pittsburgh",
-      "Portland",
-      "Princeton",
-      "Providence",
-      "Raleigh",
-      "Richmond",
-      "Rochester",
-      "San Diego",
-      "San Francisco",
-      "Stamford",
-      "Virginia Beach",
-      "Washington, DC",
-      "West Palm Beach",
-      "Wilmington"
-    ],
-    "book_size": "3",
-    "misc": ""
-  },
-  {
-    "firm": "Pillsbury",
-    "cities": [
-      "Austin",
-      "Boston",
-      "Houston",
-      "Los Angeles",
-      "Miami",
-      "Nashville",
-      "New York",
-      "Northern Virginia",
-      "Palm Beach",
-      "Sacramento",
-      "San Diego",
-      "San Francisco",
-      "Silicon Valley",
-      "Washington, DC"
-    ],
-    "book_size": "3",
-    "misc": ""
-  },
-  {
-    "firm": "Reed Smith",
-    "cities": [
-      "Atlanta",
-      "Austin",
-      "Boston",
-      "Century City",
-      "Chicago",
-      "Dallas",
-      "Denver",
-      "Houston",
-      "Los Angeles",
-      "Miami",
-      "New York",
-      "Orange County",
-      "Philadelphia",
-      "Pittsburgh",
-      "Princeton",
-      "Richmond",
-      "San Francisco",
-      "Silicon Valley",
-      "Tysons",
-      "Washington, DC",
-      "Wilmington"
-    ],
-    "book_size": "4",
-    "misc": ""
-  },
-  {
-    "firm": "Hogan Lovells",
-    "cities": [
-      "Houston",
-      "Boston",
-      "Baltimore",
-      "San Francisco",
-      "Minneapolis",
-      "New York",
-      "Philadelphia",
-      "Los Angeles",
-      "Washington, DC",
-      "Denver",
-      "Miami"
-    ],
-    "book_size": "4",
-    "misc": ""
-  },
-  {
-    "firm": "Dechert",
-    "cities": [
-      "Austin",
-      "Boston",
-      "Charlotte",
-      "Chicago",
-      "Dallas",
-      "Houston",
-      "Los Angeles",
-      "New York",
-      "Philadelphia",
-      "San Francisco",
-      "Washington, DC"
-    ],
-    "book_size": "4",
-    "misc": ""
-  },
-  {
-    "firm": "Goodwin",
-    "cities": [
-      "Boston",
-      "Los Angeles",
-      "New York",
-      "Orange County",
-      "Philadelphia",
-      "San Francisco",
-      "Santa Monica",
-      "Silicon Valley",
-      "Washington, DC"
-    ],
-    "book_size": "5",
-    "misc": ""
-  },
-  {
-    "firm": "Milbank",
-    "cities": [
-      "Los Angeles",
-      "New York",
-      "Washington, DC"
-    ],
-    "book_size": "5",
-    "misc": ""
-  },
-  {
-    "firm": "Sidley Austin",
-    "cities": [
-      "Boston",
-      "Century City",
-      "Chicago",
-      "Dallas",
-      "Houston",
-      "Los Angeles",
-      "Miami",
-      "New York",
-      "Palo Alto",
-      "San Diego",
-      "San Francisco",
-      "Washington, DC"
-    ],
-    "book_size": "5",
-    "misc": ""
-  },
-  {
-    "firm": "McDermott",
-    "cities": [
-      "Atlanta",
-      "Austin",
-      "Boca Raton",
-      "Boston",
-      "Chicago",
-      "Dallas",
-      "Houston",
-      "Los Angeles",
-      "Miami",
-      "Nashville",
-      "New York",
-      "Orange County",
-      "San Diego",
-      "San Francisco",
-      "Silicon Valley",
-      "Washington, DC",
-      "Wilmington"
-    ],
-    "book_size": "5",
-    "misc": "Less for non-equity partners. Min rates Equity 1.8K and 1.6k for non equity"
-  },
-  {
-    "firm": "Latham & Watkins",
-    "cities": [
-      "Austin",
-      "Boston",
-      "Chicago",
-      "Houston",
-      "Los Angeles",
-      "New York",
-      "Orange County",
-      "San Diego",
-      "San Francisco",
-      "Silicon Valley",
-      "Washington, DC"
-    ],
-    "book_size": "5",
-    "misc": ""
-  },
-  {
-    "firm": "Winston Taylor",
-    "cities": [
-      "Charlotte",
-      "Chicago",
-      "Dallas",
-      "Houston",
-      "Los Angeles",
-      "Miami",
-      "New York",
-      "San Francisco",
-      "Silicon Valley",
-      "Washington, DC"
-    ],
-    "book_size": "5",
-    "misc": ""
-  },
-  {
-    "firm": "Paul Hastings",
-    "cities": [
-      "Atlanta",
-      "Boston",
-      "Century City",
-      "Charlotte",
-      "Chicago",
-      "Dallas",
-      "Houston",
-      "Los Angeles",
-      "New York",
-      "Orange County",
-      "Palo Alto",
-      "San Diego",
-      "San Francisco",
-      "Washington, DC"
-    ],
-    "book_size": "8",
-    "misc": ""
-  },
-  {
-    "firm": "Gibson Dunn",
-    "cities": [
-      "Century City",
-      "Dallas",
-      "Denver",
-      "Houston",
-      "Los Angeles",
-      "New York",
-      "Orange County",
-      "Palo Alto",
-      "San Francisco",
-      "Washington, DC"
-    ],
-    "book_size": "10",
-    "misc": "Focus on M&A/PE/Finance/Funds"
-  },
-  {
-    "firm": "Simpson Thacher & Bartlett",
-    "cities": [
-      "Boston",
-      "Houston",
-      "Los Angeles",
-      "New York",
-      "Palo Alto",
-      "San Francisco",
-      "Washington, DC"
-    ],
-    "book_size": "10",
-    "misc": ""
-  },
-  {
-    "firm": "Akin, Gump, Strauss, Hauer & Feld, LLP",
-    "cities": [
-      "Boston",
-      "Chicago",
-      "Dallas",
-      "Fort Worth",
-      "Houston",
-      "Irvine",
-      "Los Angeles",
-      "New York",
-      "Philadelphia",
-      "San Antonio",
-      "San Francisco",
-      "Washington, DC"
-    ],
-    "book_size": "5",
-    "misc": "Signed May 2026"
-  },
-  {
-    "firm": "K&L Gates",
-    "cities": [
-      "Austin",
-      "Boston",
-      "Charleston",
-      "Charlotte",
-      "Chicago",
-      "Dallas",
-      "Harrisburg",
-      "Houston",
-      "Kansas City",
-      "Los Angeles",
-      "Miami",
-      "Nashville",
-      "New York",
-      "Newark",
-      "Orange County",
-      "Palo Alto",
-      "Pittsburgh",
-      "Portland",
-      "Raleigh",
-      "Research Triangle Park",
-      "San Francisco",
-      "Seattle",
-      "Washington, DC",
-      "Wilmington"
-    ],
-    "book_size": "2",
-    "misc": "Priority searches per firm intel"
-  },
-  {
-    "firm": "Orrick, Herrington & Sutcliffe LLP",
-    "cities": [
-      "Austin",
-      "Boston",
-      "Charlotte",
-      "Chicago",
-      "Houston",
-      "Los Angeles",
-      "Silicon Valley",
-      "Miami",
-      "New York",
-      "Orange County",
-      "Portland",
-      "Sacramento",
-      "San Francisco",
-      "Santa Monica",
-      "Seattle",
-      "Washington, DC",
-      "Wheeling"
-    ],
-    "book_size": "3",
-    "misc": "Verified 2026-06"
-  }
+ {
+  "firm": "Fox Rothschild",
+  "cities": [
+   "Atlanta",
+   "Atlantic City",
+   "Blue Bell",
+   "Boston",
+   "Charlotte",
+   "Chicago",
+   "Dallas",
+   "Denver",
+   "Exton",
+   "Greensboro",
+   "Greenville",
+   "Kansas City",
+   "Las Vegas",
+   "Los Angeles",
+   "Miami",
+   "Minneapolis",
+   "Morristown",
+   "New York",
+   "Oklahoma City",
+   "Philadelphia",
+   "Pittsburgh",
+   "Princeton",
+   "Raleigh",
+   "San Francisco",
+   "Sarasota",
+   "Seattle",
+   "Warrington",
+   "Washington, DC",
+   "West Palm Beach",
+   "Wilmington"
+  ],
+  "book_size": "1",
+  "misc": ""
+ },
+ {
+  "firm": "UB Greensfelder",
+  "cities": [
+   "Belleville",
+   "Boca Raton",
+   "Chicago",
+   "Cincinnati",
+   "Cleveland",
+   "Columbus",
+   "New York",
+   "St. Louis",
+   "Washington, DC"
+  ],
+  "book_size": "1",
+  "misc": "For partners we typically look for a book of business around $750K; rates vary by market and practice group (typically $500-$700/hr)."
+ },
+ {
+  "firm": "Pryor Cashman",
+  "cities": [
+   "Los Angeles",
+   "Miami",
+   "New York"
+  ],
+  "book_size": "1",
+  "misc": "Typically, our floor is $750k in portable business."
+ },
+ {
+  "firm": "Armstrong Teasdale",
+  "cities": [
+   "Boston",
+   "Chicago",
+   "Denver",
+   "Edwardsville",
+   "Jefferson City",
+   "Kansas City",
+   "Las Vegas",
+   "Miami",
+   "New York",
+   "Orange County",
+   "Philadelphia",
+   "Princeton",
+   "Salt Lake City",
+   "St. Louis",
+   "Washington, DC",
+   "Wilmington"
+  ],
+  "book_size": "1",
+  "misc": "Actually open to less than 1M, rates around 400-700. Open to 700k if they already have an office"
+ },
+ {
+  "firm": "Womble Bond Dickinson",
+  "cities": [
+   "Atlanta",
+   "Baltimore",
+   "Boston",
+   "Charleston",
+   "Charlotte",
+   "Denver",
+   "Greenville",
+   "Houston",
+   "Huntsville",
+   "Las Vegas",
+   "Los Angeles",
+   "Nashville",
+   "Phoenix",
+   "Raleigh",
+   "Tucson",
+   "Tysons Corner",
+   "Washington, DC",
+   "Wilmington",
+   "Winston-Salem"
+  ],
+  "book_size": "1",
+  "misc": "650 and above. Sweet spot 700-900. Can be lower book for salaried partners"
+ },
+ {
+  "firm": "Saul Ewing",
+  "cities": [
+   "Baltimore",
+   "Boston",
+   "Chicago",
+   "Fort Lauderdale",
+   "Harrisburg",
+   "Irvine",
+   "Los Angeles",
+   "Miami",
+   "Minneapolis",
+   "New York",
+   "Newark",
+   "Philadelphia",
+   "Pittsburgh",
+   "Princeton",
+   "Washington, DC",
+   "Wayne",
+   "West Palm Beach",
+   "Wilmington"
+  ],
+  "book_size": "1",
+  "misc": ""
+ },
+ {
+  "firm": "Winstead",
+  "cities": [
+   "Atlanta",
+   "Austin",
+   "Charlotte",
+   "Dallas",
+   "Fort Worth",
+   "Houston",
+   "Nashville",
+   "New York",
+   "San Antonio",
+   "The Woodlands"
+  ],
+  "book_size": "1",
+  "misc": "Self-sustaining in New York."
+ },
+ {
+  "firm": "Thompson Hine",
+  "cities": [
+   "Atlanta",
+   "Chicago",
+   "Cincinnati",
+   "Cleveland",
+   "Columbus",
+   "Dayton",
+   "Los Angeles",
+   "Minneapolis",
+   "New York",
+   "San Mateo",
+   "Washington, DC"
+  ],
+  "book_size": "1",
+  "misc": "We are always looking for potential commercial litigation partners who have a book of business – even a small one"
+ },
+ {
+  "firm": "Stradley Ronon",
+  "cities": [
+   "Cherry Hill",
+   "Chicago",
+   "Long Beach",
+   "Malvern",
+   "New York",
+   "Newark",
+   "Philadelphia",
+   "Washington, DC",
+   "Wilmington"
+  ],
+  "book_size": "1",
+  "misc": "rates 600-1400"
+ },
+ {
+  "firm": "Miles Stockbridge",
+  "cities": [
+   "Baltimore",
+   "Easton",
+   "Frederick",
+   "New York",
+   "North Bethesda",
+   "Richmond",
+   "Tysons Corner",
+   "Washington, DC"
+  ],
+  "book_size": "1",
+  "misc": "For partners, we typically need a book of $1M but would consider $750K+ for strategic needs (government contracts, health care regulatory, private equity, finance, or a litigator in DC, Richmond, or Tysons)."
+ },
+ {
+  "firm": "Caplin & Drysdale",
+  "cities": [
+   "New York",
+   "Washington, DC"
+  ],
+  "book_size": "1",
+  "misc": ""
+ },
+ {
+  "firm": "McCarter & English",
+  "cities": [
+   "Boston",
+   "East Brunswick",
+   "Hartford",
+   "Indianapolis",
+   "Miami",
+   "New York",
+   "Newark",
+   "Philadelphia",
+   "Stamford",
+   "Trenton",
+   "Washington, DC",
+   "Wilmington"
+  ],
+  "book_size": "1",
+  "misc": "Can be less for corporate. Flexible on rates, lower than 1k"
+ },
+ {
+  "firm": "FBT/Gibbons",
+  "cities": [
+   "Charleston",
+   "Cincinnati",
+   "Columbus",
+   "Dallas",
+   "Denver",
+   "Florence",
+   "Houston",
+   "Indianapolis",
+   "Lexington",
+   "Los Angeles",
+   "Louisville",
+   "Naples",
+   "Nashville",
+   "New York",
+   "Newark",
+   "Newport Beach",
+   "Orange County",
+   "Philadelphia",
+   "Pittsburgh",
+   "Red Bank",
+   "San Francisco",
+   "Trenton",
+   "Washington, DC",
+   "West Chester",
+   "West Palm Beach",
+   "Wilmington"
+  ],
+  "book_size": "1",
+  "misc": ""
+ },
+ {
+  "firm": "Withers",
+  "cities": [
+   "Greenwich",
+   "Los Angeles",
+   "New Haven",
+   "New York",
+   "San Diego",
+   "San Francisco",
+   "Houston"
+  ],
+  "book_size": "1",
+  "misc": "Rates 900-1200 with the ability to adjust. Flexible on book sometimes."
+ },
+ {
+  "firm": "Davis Graham & Stubbs",
+  "cities": [
+   "Denver"
+  ],
+  "book_size": "1",
+  "misc": "Corporat +1.5,1M RE,IP, 400k Employment"
+ },
+ {
+  "firm": "Buchanan",
+  "cities": [
+   "Alexandria",
+   "Charlotte",
+   "Chicago",
+   "Fort Lauderdale",
+   "Harrisburg",
+   "King of Prussia",
+   "Miami",
+   "New York",
+   "Newark",
+   "Philadelphia",
+   "Pittsburgh",
+   "Princeton",
+   "San Diego",
+   "Tallahassee",
+   "Tampa",
+   "Washington, DC",
+   "Wilmington"
+  ],
+  "book_size": "1",
+  "misc": ""
+ },
+ {
+  "firm": "Dorsey & Whitney",
+  "cities": [
+   "Anchorage",
+   "Boise",
+   "Chicago",
+   "Costa Mesa",
+   "Dallas",
+   "Denver",
+   "Des Moines",
+   "Minneapolis",
+   "Missoula",
+   "New York",
+   "Palo Alto",
+   "Phoenix",
+   "Salt Lake City",
+   "Seattle",
+   "Washington, DC",
+   "Wilmington"
+  ],
+  "book_size": "1",
+  "misc": ""
+ },
+ {
+  "firm": "Robinson & Cole",
+  "cities": [
+   "Austin",
+   "Boston",
+   "Hartford",
+   "Miami",
+   "New York",
+   "Philadelphia",
+   "Stamford",
+   "Washington, DC",
+   "Wilmington"
+  ],
+  "book_size": "1",
+  "misc": ""
+ },
+ {
+  "firm": "Goulston & Storrs",
+  "cities": [
+   "Boston",
+   "New York",
+   "Washington, DC"
+  ],
+  "book_size": "1.5",
+  "misc": "+950 rate"
+ },
+ {
+  "firm": "Kasowitz",
+  "cities": [
+   "Atlanta",
+   "Boulder",
+   "Houston",
+   "Los Angeles",
+   "Miami",
+   "New York",
+   "Newark",
+   "San Francisco",
+   "Washington, DC"
+  ],
+  "book_size": "1.5",
+  "misc": "Rates 700-800"
+ },
+ {
+  "firm": "Nixon Peabody",
+  "cities": [
+   "Albany",
+   "Boston",
+   "Buffalo",
+   "Chicago",
+   "Long Island",
+   "Los Angeles",
+   "Manchester",
+   "New York",
+   "Providence",
+   "Rochester",
+   "San Francisco",
+   "Washington, DC"
+  ],
+  "book_size": "1.5",
+  "misc": "Rates 1k avg but flexible on lower. Book target 2M but OK reviewing 1.5M"
+ },
+ {
+  "firm": "Levenfeld Perlstein",
+  "cities": [
+   "Chicago"
+  ],
+  "book_size": "1.5",
+  "misc": ""
+ },
+ {
+  "firm": "Blank Rome",
+  "cities": [
+   "Boston",
+   "Chicago",
+   "Cincinnati",
+   "Dallas",
+   "Fort Lauderdale",
+   "Houston",
+   "Los Angeles",
+   "New York",
+   "Orange County",
+   "Philadelphia",
+   "Pittsburgh",
+   "Princeton",
+   "San Francisco",
+   "Tampa",
+   "Washington, DC",
+   "Wilmington"
+  ],
+  "book_size": "1.8",
+  "misc": ""
+ },
+ {
+  "firm": "Akerman",
+  "cities": [
+   "Atlanta",
+   "Austin",
+   "Boca Raton",
+   "Charlotte",
+   "Chicago",
+   "Dallas",
+   "Denver",
+   "Fort Lauderdale",
+   "Houston",
+   "Jacksonville",
+   "Las Vegas",
+   "Los Angeles",
+   "Miami",
+   "Naples",
+   "New Orleans",
+   "New York",
+   "Orlando",
+   "Salt Lake City",
+   "San Antonio",
+   "Tallahassee",
+   "Tampa",
+   "Washington, DC",
+   "West Palm Beach",
+   "Wilmington"
+  ],
+  "book_size": "1.8",
+  "misc": ""
+ },
+ {
+  "firm": "Brown Rudnick",
+  "cities": [
+   "Boston",
+   "Hartford",
+   "Houston",
+   "Los Angeles",
+   "New York",
+   "Orange County",
+   "Washington, DC"
+  ],
+  "book_size": "2",
+  "misc": "Crisis Management (includes restructuring and Special Situations); Global Litigation; Brand and Reputation Management; Life Sciences and Technology"
+ },
+ {
+  "firm": "Foley & Lardner",
+  "cities": [
+   "Austin",
+   "Boston",
+   "Chicago",
+   "Dallas",
+   "Denver",
+   "Detroit",
+   "Houston",
+   "Jacksonville",
+   "Los Angeles",
+   "Madison",
+   "Miami",
+   "Milwaukee",
+   "Nashville",
+   "New York",
+   "Orlando",
+   "Raleigh",
+   "Sacramento",
+   "Salt Lake City",
+   "San Diego",
+   "San Francisco",
+   "Silicon Valley",
+   "Tallahassee",
+   "Tampa",
+   "Washington, DC"
+  ],
+  "book_size": "2",
+  "misc": "Rates 1k avg"
+ },
+ {
+  "firm": "Dentons",
+  "cities": [
+   "Atlanta",
+   "Boston",
+   "Charleston",
+   "Chicago",
+   "Cincinnati",
+   "Dallas",
+   "Denver",
+   "Evansville",
+   "Harrisburg",
+   "Hilo",
+   "Honolulu",
+   "Houston",
+   "Indianapolis",
+   "Jasper",
+   "Kansas City",
+   "Lexington",
+   "Los Angeles",
+   "Louisville",
+   "Miami",
+   "Naples",
+   "New Orleans",
+   "New York",
+   "Orange County",
+   "Phoenix",
+   "Pittsburgh",
+   "Sacramento",
+   "San Diego",
+   "San Francisco",
+   "Short Hills",
+   "Silicon Valley",
+   "St. Louis",
+   "Washington, DC"
+  ],
+  "book_size": "2",
+  "misc": ""
+ },
+ {
+  "firm": "Cadwalader",
+  "cities": [
+   "Charlotte",
+   "New York",
+   "Washington, DC"
+  ],
+  "book_size": "2",
+  "misc": "Didn’t explicitly say the book size, but based on some opportunistics I think this is their interest"
+ },
+ {
+  "firm": "Seyfarth",
+  "cities": [
+   "Atlanta",
+   "Boston",
+   "Century City",
+   "Charlotte",
+   "Chicago",
+   "Dallas",
+   "Houston",
+   "Los Angeles",
+   "New York",
+   "Sacramento",
+   "San Francisco",
+   "Seattle",
+   "Washington, DC"
+  ],
+  "book_size": "2",
+  "misc": "Didn’t explicitly say the book size, but based on some opportunistics I think this is their interest"
+ },
+ {
+  "firm": "Haynes and Boone",
+  "cities": [
+   "Austin",
+   "Boston",
+   "Charlotte",
+   "Chicago",
+   "Costa Mesa",
+   "Dallas",
+   "Denver",
+   "Fort Worth",
+   "Houston",
+   "New York",
+   "Palo Alto",
+   "Plano",
+   "San Antonio",
+   "San Francisco",
+   "The Woodlands",
+   "Tysons Corner",
+   "Washington, DC"
+  ],
+  "book_size": "2",
+  "misc": ""
+ },
+ {
+  "firm": "Mintz",
+  "cities": [
+   "Boston",
+   "Los Angeles",
+   "Miami",
+   "New York",
+   "San Diego",
+   "San Francisco",
+   "Washington, DC"
+  ],
+  "book_size": "2",
+  "misc": "Rates +1k"
+ },
+ {
+  "firm": "Sheppard Mullin",
+  "cities": [
+   "Century City",
+   "Chicago",
+   "Dallas",
+   "Del Mar Heights",
+   "Houston",
+   "Los Angeles",
+   "New York",
+   "Orange County",
+   "San Diego",
+   "San Francisco",
+   "Santa Barbara",
+   "Silicon Valley",
+   "Washington, DC"
+  ],
+  "book_size": "2",
+  "misc": ""
+ },
+ {
+  "firm": "Allen Matkins",
+  "cities": [
+   "Century City",
+   "Los Angeles",
+   "New York",
+   "Orange County",
+   "San Diego",
+   "San Francisco"
+  ],
+  "book_size": "2.5",
+  "misc": "Book flexibkle for rising star. West Coast rates high 8s low thous, New york 1k-1.8k"
+ },
+ {
+  "firm": "DLA Piper",
+  "cities": [
+   "Atlanta",
+   "Austin",
+   "Baltimore",
+   "Boston",
+   "Chicago",
+   "Dallas",
+   "Houston",
+   "Los Angeles",
+   "Miami",
+   "Minneapolis",
+   "New York",
+   "Palo Alto",
+   "Philadelphia",
+   "Phoenix",
+   "Raleigh",
+   "Reston",
+   "San Diego",
+   "San Francisco",
+   "Seattle",
+   "Short Hills",
+   "Washington, DC",
+   "Wilmington"
+  ],
+  "book_size": "3",
+  "misc": ""
+ },
+ {
+  "firm": "Katten",
+  "cities": [
+   "Charlotte",
+   "Chicago",
+   "Dallas",
+   "Los Angeles",
+   "New York",
+   "Orange County",
+   "Washington, DC"
+  ],
+  "book_size": "3",
+  "misc": "Private equity and investment management are top priority; seeking partners with large practices/groups in those areas."
+ },
+ {
+  "firm": "Perkins Coie",
+  "cities": [
+   "Anchorage",
+   "Austin",
+   "Bellevue",
+   "Boise",
+   "Chicago",
+   "Dallas",
+   "Denver",
+   "Los Angeles",
+   "Madison",
+   "New York",
+   "Palo Alto",
+   "Phoenix",
+   "Portland",
+   "San Diego",
+   "San Francisco",
+   "Seattle",
+   "Washington, DC"
+  ],
+  "book_size": "3",
+  "misc": ""
+ },
+ {
+  "firm": "Cooley",
+  "cities": [
+   "Boston",
+   "Chicago",
+   "Denver",
+   "Los Angeles",
+   "Miami",
+   "New York",
+   "Palo Alto",
+   "Reston",
+   "San Diego",
+   "San Francisco",
+   "Santa Monica",
+   "Washington, DC"
+  ],
+  "book_size": "3",
+  "misc": ""
+ },
+ {
+  "firm": "ArentFox Schiff",
+  "cities": [
+   "Ann Arbor",
+   "Boston",
+   "Chicago",
+   "Lake Forest",
+   "Los Angeles",
+   "New York",
+   "San Francisco",
+   "Washington, DC"
+  ],
+  "book_size": "3",
+  "misc": ""
+ },
+ {
+  "firm": "Fenwick",
+  "cities": [
+   "Boston",
+   "New York",
+   "San Francisco",
+   "Santa Monica",
+   "Seattle",
+   "Silicon Valley",
+   "Washington, DC"
+  ],
+  "book_size": "3",
+  "misc": "Some flexibility"
+ },
+ {
+  "firm": "Holland & Knight",
+  "cities": [
+   "Atlanta",
+   "Austin",
+   "Birmingham",
+   "Boston",
+   "Century City",
+   "Charlotte",
+   "Chattanooga",
+   "Chicago",
+   "Dallas",
+   "Denver",
+   "Fort Lauderdale",
+   "Houston",
+   "Jacksonville",
+   "Los Angeles",
+   "Miami",
+   "Nashville",
+   "New York",
+   "Newport Beach",
+   "Orlando",
+   "Philadelphia",
+   "Portland",
+   "Richmond",
+   "San Francisco",
+   "Seattle",
+   "Stamford",
+   "Tallahassee",
+   "Tampa",
+   "Tysons",
+   "Washington, DC",
+   "West Palm Beach"
+  ],
+  "book_size": "3",
+  "misc": ""
+ },
+ {
+  "firm": "Troutman Pepper",
+  "cities": [
+   "Atlanta",
+   "Austin",
+   "Boston",
+   "Charlotte",
+   "Chicago",
+   "Cincinnati",
+   "Dallas",
+   "Detroit",
+   "Harrisburg",
+   "Hartford",
+   "Houston",
+   "Los Angeles",
+   "Miami",
+   "New Orleans",
+   "New York",
+   "Orange County",
+   "Philadelphia",
+   "Pittsburgh",
+   "Portland",
+   "Princeton",
+   "Providence",
+   "Raleigh",
+   "Richmond",
+   "Rochester",
+   "San Diego",
+   "San Francisco",
+   "Stamford",
+   "Virginia Beach",
+   "Washington, DC",
+   "West Palm Beach",
+   "Wilmington"
+  ],
+  "book_size": "3",
+  "misc": ""
+ },
+ {
+  "firm": "Pillsbury",
+  "cities": [
+   "Austin",
+   "Boston",
+   "Houston",
+   "Los Angeles",
+   "Miami",
+   "Nashville",
+   "New York",
+   "Northern Virginia",
+   "Palm Beach",
+   "Sacramento",
+   "San Diego",
+   "San Francisco",
+   "Silicon Valley",
+   "Washington, DC"
+  ],
+  "book_size": "3",
+  "misc": ""
+ },
+ {
+  "firm": "Reed Smith",
+  "cities": [
+   "Atlanta",
+   "Austin",
+   "Boston",
+   "Century City",
+   "Chicago",
+   "Dallas",
+   "Denver",
+   "Houston",
+   "Los Angeles",
+   "Miami",
+   "New York",
+   "Orange County",
+   "Philadelphia",
+   "Pittsburgh",
+   "Princeton",
+   "Richmond",
+   "San Francisco",
+   "Silicon Valley",
+   "Tysons",
+   "Washington, DC",
+   "Wilmington"
+  ],
+  "book_size": "4",
+  "misc": ""
+ },
+ {
+  "firm": "Hogan Lovells",
+  "cities": [
+   "Houston",
+   "Boston",
+   "Baltimore",
+   "San Francisco",
+   "Minneapolis",
+   "New York",
+   "Philadelphia",
+   "Los Angeles",
+   "Washington, DC",
+   "Denver",
+   "Miami"
+  ],
+  "book_size": "4",
+  "misc": ""
+ },
+ {
+  "firm": "Dechert",
+  "cities": [
+   "Austin",
+   "Boston",
+   "Charlotte",
+   "Chicago",
+   "Dallas",
+   "Houston",
+   "Los Angeles",
+   "New York",
+   "Philadelphia",
+   "San Francisco",
+   "Washington, DC"
+  ],
+  "book_size": "4",
+  "misc": ""
+ },
+ {
+  "firm": "Goodwin",
+  "cities": [
+   "Boston",
+   "Los Angeles",
+   "New York",
+   "Orange County",
+   "Philadelphia",
+   "San Francisco",
+   "Santa Monica",
+   "Silicon Valley",
+   "Washington, DC"
+  ],
+  "book_size": "5",
+  "misc": ""
+ },
+ {
+  "firm": "Milbank",
+  "cities": [
+   "Los Angeles",
+   "New York",
+   "Washington, DC"
+  ],
+  "book_size": "5",
+  "misc": ""
+ },
+ {
+  "firm": "Sidley Austin",
+  "cities": [
+   "Boston",
+   "Century City",
+   "Chicago",
+   "Dallas",
+   "Houston",
+   "Los Angeles",
+   "Miami",
+   "New York",
+   "Palo Alto",
+   "San Diego",
+   "San Francisco",
+   "Washington, DC"
+  ],
+  "book_size": "5",
+  "misc": ""
+ },
+ {
+  "firm": "McDermott",
+  "cities": [
+   "Atlanta",
+   "Austin",
+   "Boca Raton",
+   "Boston",
+   "Chicago",
+   "Dallas",
+   "Houston",
+   "Los Angeles",
+   "Miami",
+   "Nashville",
+   "New York",
+   "Orange County",
+   "San Diego",
+   "San Francisco",
+   "Silicon Valley",
+   "Washington, DC",
+   "Wilmington"
+  ],
+  "book_size": "5",
+  "misc": "Less for non-equity partners. Min rates Equity 1.8K and 1.6k for non equity"
+ },
+ {
+  "firm": "Latham & Watkins",
+  "cities": [
+   "Austin",
+   "Boston",
+   "Chicago",
+   "Houston",
+   "Los Angeles",
+   "New York",
+   "Orange County",
+   "San Diego",
+   "San Francisco",
+   "Silicon Valley",
+   "Washington, DC"
+  ],
+  "book_size": "5",
+  "misc": ""
+ },
+ {
+  "firm": "Winston Taylor",
+  "cities": [
+   "Charlotte",
+   "Chicago",
+   "Dallas",
+   "Houston",
+   "Los Angeles",
+   "Miami",
+   "New York",
+   "San Francisco",
+   "Silicon Valley",
+   "Washington, DC"
+  ],
+  "book_size": "5",
+  "misc": ""
+ },
+ {
+  "firm": "Paul Hastings",
+  "cities": [
+   "Atlanta",
+   "Boston",
+   "Century City",
+   "Charlotte",
+   "Chicago",
+   "Dallas",
+   "Houston",
+   "Los Angeles",
+   "New York",
+   "Orange County",
+   "Palo Alto",
+   "San Diego",
+   "San Francisco",
+   "Washington, DC"
+  ],
+  "book_size": "8",
+  "misc": ""
+ },
+ {
+  "firm": "Gibson Dunn",
+  "cities": [
+   "Century City",
+   "Dallas",
+   "Denver",
+   "Houston",
+   "Los Angeles",
+   "New York",
+   "Orange County",
+   "Palo Alto",
+   "San Francisco",
+   "Washington, DC"
+  ],
+  "book_size": "10",
+  "misc": "Focus on M&A/PE/Finance/Funds"
+ },
+ {
+  "firm": "Simpson Thacher & Bartlett",
+  "cities": [
+   "Boston",
+   "Houston",
+   "Los Angeles",
+   "New York",
+   "Palo Alto",
+   "San Francisco",
+   "Washington, DC"
+  ],
+  "book_size": "10",
+  "misc": ""
+ },
+ {
+  "firm": "Akin, Gump, Strauss, Hauer & Feld, LLP",
+  "cities": [
+   "Boston",
+   "Chicago",
+   "Dallas",
+   "Fort Worth",
+   "Houston",
+   "Irvine",
+   "Los Angeles",
+   "New York",
+   "Philadelphia",
+   "San Antonio",
+   "San Francisco",
+   "Washington, DC"
+  ],
+  "book_size": "5",
+  "misc": "Signed May 2026"
+ },
+ {
+  "firm": "K&L Gates",
+  "cities": [
+   "Austin",
+   "Boston",
+   "Charleston",
+   "Charlotte",
+   "Chicago",
+   "Dallas",
+   "Harrisburg",
+   "Houston",
+   "Kansas City",
+   "Los Angeles",
+   "Miami",
+   "Nashville",
+   "New York",
+   "Newark",
+   "Orange County",
+   "Palo Alto",
+   "Pittsburgh",
+   "Portland",
+   "Raleigh",
+   "Research Triangle Park",
+   "San Francisco",
+   "Seattle",
+   "Washington, DC",
+   "Wilmington"
+  ],
+  "book_size": "2",
+  "misc": "Priority searches per firm intel"
+ },
+ {
+  "firm": "Orrick, Herrington & Sutcliffe LLP",
+  "cities": [
+   "Austin",
+   "Boston",
+   "Charlotte",
+   "Chicago",
+   "Houston",
+   "Los Angeles",
+   "Silicon Valley",
+   "Miami",
+   "New York",
+   "Orange County",
+   "Portland",
+   "Sacramento",
+   "San Francisco",
+   "Santa Monica",
+   "Seattle",
+   "Washington, DC",
+   "Wheeling"
+  ],
+  "book_size": "3",
+  "misc": "Verified 2026-06"
+ },
+ {
+  "firm": "Hunton Andrews Kurth",
+  "cities": [
+   "Atlanta",
+   "Austin",
+   "Boston",
+   "Charlotte",
+   "Dallas",
+   "Houston",
+   "Los Angeles",
+   "Miami",
+   "New York",
+   "Richmond",
+   "San Francisco",
+   "Washington, DC"
+  ]
+ }
 ]
