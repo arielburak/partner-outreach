@@ -3039,7 +3039,16 @@ function mmJs(k){return String(k).replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
 function mmEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function mmInit(){
   if(typeof _fbRef==='undefined'||!_fbRef){setTimeout(mmInit,500);return;}
-  _fbRef.child('mandateMatchData').once('value').then(function(s){mmData=s.val()||{};try{_mmSynced=JSON.parse(JSON.stringify(mmData));}catch(e){}mmUpdateBadge();var v=document.getElementById('mm-view');if(v&&v.style.display!=='none')mmRender();}).catch(function(e){console.error('[mmInit]',e);});
+  _fbRef.child('mandateMatchData').once('value').then(function(s){
+    mmData=s.val()||{};try{_mmSynced=JSON.parse(JSON.stringify(mmData));}catch(e){}
+    // migrate legacy {date:...} (whole-candidate offered) -> per-firm offered
+    try{var migrated=false;Object.keys(mmData).forEach(function(k){var v=mmData[k];
+      if(v&&v.date&&!Object.keys(v).some(function(kk){return v[kk]&&typeof v[kk]==='object'&&v[kk].s;})){
+        var m=mmByName((function(){for(var i=0;i<MANDATE_MATCHES.length;i++){if(mmKey(MANDATE_MATCHES[i].name)===k)return MANDATE_MATCHES[i].name;}return '';})());
+        var nv={};if(m)m.mandates.forEach(function(x){nv[mmFK(x.firm)]={s:'o',d:v.date};});mmData[k]=nv;migrated=true;}
+    });if(migrated)mmSaveNow();}catch(e){console.error('[mm migrate]',e);}
+    mmUpdateBadge();var v=document.getElementById('mm-view');if(v&&v.style.display!=='none')mmRender();
+  }).catch(function(e){console.error('[mmInit]',e);});
 }
 function mmSaveNow(){
   if(typeof _fbRef==='undefined'||!_fbRef)return;
@@ -3049,10 +3058,26 @@ function mmSaveNow(){
     _fbRef.update(upd).then(function(){try{_mmSynced=JSON.parse(JSON.stringify(mmData));}catch(e){}}).catch(function(e){console.error('[mm save]',e);});
   }catch(e){console.error('[mm save]',e);}
 }
-function mmUpdateBadge(){var b=document.getElementById('mm-badge');if(!b)return;var n=0;for(var i=0;i<MANDATE_MATCHES.length;i++){if(!mmData[mmKey(MANDATE_MATCHES[i].name)])n++;}b.textContent=n;}
+function mmFK(firm){return (firm||'').replace(/[.#$/\[\]]/g,'_');}
+function mmByName(name){for(var i=0;i<MANDATE_MATCHES.length;i++){if(MANDATE_MATCHES[i].name===name)return MANDATE_MATCHES[i];}return null;}
+function mmFirmState(name,firm){var e=mmData[mmKey(name)];var fk=mmFK(firm);return (e&&e[fk])?e[fk]:null;}
+function mmResolved(m){var e=mmData[mmKey(m.name)]||{};return (m.mandates||[]).every(function(x){return e[mmFK(x.firm)];});}
+function mmUpdateBadge(){var b=document.getElementById('mm-badge');if(!b)return;var n=0;for(var i=0;i<MANDATE_MATCHES.length;i++){if(!mmResolved(MANDATE_MATCHES[i]))n++;}b.textContent=n;}
 function mmClusters(){var c={};MANDATE_MATCHES.forEach(function(m){(m.clusters||[]).forEach(function(cl){c[cl]=(c[cl]||0)+1;});});return c;}
 function mmInFilter(m){return mmFilter==='all'||(m.clusters||[]).indexOf(mmFilter)>=0;}
-function mmMarkOffered(name){var k=mmKey(name);if(mmData[k])delete mmData[k];else mmData[k]={date:todayStr()};mmSaveNow();mmUpdateBadge();mmRender();}
+function mmSetFirm(name,firm,status){
+  var k=mmKey(name),fk=mmFK(firm);
+  if(!mmData[k])mmData[k]={};
+  var cur=mmData[k][fk];
+  if(cur&&cur.s===status){delete mmData[k][fk];if(!Object.keys(mmData[k]).length)delete mmData[k];}
+  else mmData[k][fk]={s:status,d:todayStr()};
+  mmSaveNow();mmUpdateBadge();mmRender();
+}
+function mmSkipRest(name){
+  var m=mmByName(name);if(!m)return;var k=mmKey(name);if(!mmData[k])mmData[k]={};
+  (m.mandates||[]).forEach(function(x){var fk=mmFK(x.firm);if(!mmData[k][fk])mmData[k][fk]={s:'s',d:todayStr()};});
+  mmSaveNow();mmUpdateBadge();mmRender();
+}
 function mmRender(){
   var list=document.getElementById('mm-list');if(!list)return;
   var chips=document.getElementById('mm-chips');
@@ -3061,34 +3086,38 @@ function mmRender(){
   chips.innerHTML='<button class="mm-chip'+(mmFilter==='all'?' active':'')+'" onclick="mmSetFilter(\'all\')">All <span class="mm-n">'+total+'</span></button>'+
     keys.map(function(k){return '<button class="mm-chip'+(mmFilter===k?' active':'')+'" onclick="mmSetFilter(\''+mmJs(k)+'\')">'+mmEsc(k)+' <span class="mm-n">'+cl[k]+'</span></button>';}).join('');
   var rows=MANDATE_MATCHES.filter(mmInFilter);
-  // offered sink to bottom, otherwise by est book desc
-  rows=rows.slice().sort(function(a,b){var oa=mmData[mmKey(a.name)]?1:0,ob=mmData[mmKey(b.name)]?1:0;if(oa!==ob)return oa-ob;return (b.est_book_M||0)-(a.est_book_M||0);});
-  var uncalled=rows.filter(function(m){return !mmData[mmKey(m.name)];}).length;
-  list.innerHTML='<div class="mm-count">'+rows.length+' verified matches &middot; '+uncalled+' not yet offered</div>'+rows.map(mmCardHTML).join('');
+  // fully-handled candidates sink to bottom, otherwise by est book desc
+  rows=rows.slice().sort(function(a,b){var oa=mmResolved(a)?1:0,ob=mmResolved(b)?1:0;if(oa!==ob)return oa-ob;return (b.est_book_M||0)-(a.est_book_M||0);});
+  var open=rows.filter(function(m){return !mmResolved(m);}).length;
+  list.innerHTML='<div class="mm-count">'+rows.length+' verified matches &middot; '+open+' still open</div>'+rows.map(mmCardHTML).join('');
 }
 function mmSetFilter(f){mmFilter=f;mmRender();}
 function mmCardHTML(m){
-  var k=mmKey(m.name),offered=mmData[k];
-  var mans=(m.mandates||[]).filter(function(x){return mmFilter==='all'||x.cluster===mmFilter;});
-  if(!mans.length)mans=m.mandates||[];
-  var firms=mans.map(function(x){
-    var seen={};var pieces=[];
-    return '<div class="mm-firm"><span class="mm-firm-n">'+mmEsc(x.firm)+'</span> <span class="mm-ask">'+mmEsc(x.ask)+'</span> <span class="mm-book">book '+mmEsc(x.book)+'</span>'+(x.contact&&x.contact!=='confirm'?' <span class="mm-contact">&middot; '+mmEsc(x.contact)+'</span>':'')+(x.subpractice?'<div class="mm-why"><b>Verified:</b> '+mmEsc(x.subpractice)+(x.reason?' <span style="color:#999;">('+mmEsc(x.reason)+')</span>':'')+'</div>':'')+'</div>';
+  var nm=mmJs(m.name),done=mmResolved(m);
+  var firms=(m.mandates||[]).map(function(x){
+    var fs=mmFirmState(m.name,x.firm),fj=mmJs(x.firm),act;
+    if(fs&&fs.s==='o')act='<span class="mm-st mm-o">Offered'+(fs.d?' '+mmEsc(fs.d):'')+'</span><button class="mm-undo" onclick="mmSetFirm(\''+nm+'\',\''+fj+'\',\'o\')">Undo</button>';
+    else if(fs&&fs.s==='s')act='<span class="mm-st mm-sk">Skipped</span><button class="mm-undo" onclick="mmSetFirm(\''+nm+'\',\''+fj+'\',\'s\')">Undo</button>';
+    else act='<button class="mm-offer" onclick="mmSetFirm(\''+nm+'\',\''+fj+'\',\'o\')">Offer this</button><button class="mm-skip" onclick="mmSetFirm(\''+nm+'\',\''+fj+'\',\'s\')">Skip</button>';
+    return '<div class="mm-firm'+(fs?' mm-firm-'+(fs.s==='o'?'o':'sk'):'')+'">'
+      +'<div class="mm-firm-info"><span class="mm-firm-n">'+mmEsc(x.firm)+'</span> <span class="mm-ask">'+mmEsc(x.ask)+'</span> <span class="mm-book">book '+mmEsc(x.book)+'</span>'+(x.contact&&x.contact!=='confirm'?' <span class="mm-contact">&middot; '+mmEsc(x.contact)+'</span>':'')+(x.subpractice?'<div class="mm-why"><b>Verified:</b> '+mmEsc(x.subpractice)+(x.reason?' <span style="color:#999;">('+mmEsc(x.reason)+')</span>':'')+'</div>':'')+'</div>'
+      +'<div class="mm-firm-act">'+act+'</div></div>';
   }).join('');
   var tags=(m.clusters||[]).map(function(c){return '<span class="mm-cl">'+mmEsc(c)+'</span>';}).join('');
   var st=m.stage?(' &middot; follow-up stage '+mmEsc(m.stage)):'';
   var eb=(m.est_book_M?(' &middot; est book $'+mmEsc(m.est_book_M)+'M'):'');
+  var e=mmData[mmKey(m.name)]||{},handled=(m.mandates||[]).filter(function(x){return e[mmFK(x.firm)];}).length,total=(m.mandates||[]).length;
   var links='';
   if(m.fp)links+='<button class="mm-link" onclick="window.open(\''+mmJs(m.fp)+'\',\'_blank\')">Firm prospect &#8599;</button>';
   if(m.linkedin)links+='<button class="mm-link mm-li" onclick="window.open(\''+mmJs(m.linkedin)+'\',\'_blank\')">LinkedIn &#8599;</button>';
-  return '<div class="mm-card'+(offered?' mm-done':'')+'">'
+  return '<div class="mm-card'+(done?' mm-done':'')+'">'
     +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;">'
     +'<div class="mm-name">'+mmEsc(m.name)+'</div>'
     +'<div class="mm-cls">'+tags+'</div></div>'
     +'<div class="mm-meta">'+mmEsc(m.firm||'')+(m.city?' &middot; '+mmEsc(m.city):'')+eb+st+'</div>'
     +(links?'<div class="mm-links">'+links+'</div>':'')
-    +'<div class="mm-lbl">Offer them</div>'+firms
-    +'<div class="mm-btns">'+(offered?'<span class="mm-offered">Offered '+mmEsc(offered.date||'')+'</span>':'')+'<button class="mm-mark" onclick="mmMarkOffered(\''+mmJs(m.name)+'\')">'+(offered?'Undo':'Mark offered')+'</button></div>'
+    +'<div class="mm-lbl">Offer them a specific firm</div>'+firms
+    +'<div class="mm-btns"><span class="mm-prog">'+handled+' of '+total+' handled</span>'+(handled<total?'<button class="mm-skipall" onclick="mmSkipRest(\''+nm+'\')">Skip candidate</button>':'')+'</div>'
     +'</div>';
 }
 function mmShow(){
@@ -3122,12 +3151,18 @@ function mmShow(){
    +'.mm-link{font-size:11.5px;font-weight:600;color:#7c3aed;text-decoration:none;border:1px solid #d8cef0;background:#faf7ff;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:inherit;}'
    +'.mm-link:hover{background:#f0e8ff;}.mm-link.mm-li{color:#0a66c2;border-color:#cfe0f5;background:#f6faff;}'
    +'.mm-lbl{margin:10px 0 5px;font-size:11px;font-weight:600;color:#8a8a9e;text-transform:uppercase;letter-spacing:.5px;}'
-   +'.mm-firm{font-size:12.5px;color:#333;padding:5px 0;border-top:1px solid #f0f0f4;}.mm-firm:first-child{border-top:none;}'
+   +'.mm-firm{font-size:12.5px;color:#333;padding:8px 0;border-top:1px solid #f0f0f4;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;}.mm-firm:first-child{border-top:none;}'
+   +'.mm-firm-info{flex:1;min-width:230px;}.mm-firm-act{display:flex;gap:6px;align-items:center;flex-shrink:0;}'
+   +'.mm-firm-o{opacity:.85;}.mm-firm-sk{opacity:.45;}'
    +'.mm-firm-n{font-weight:700;color:#1a3060;}.mm-ask{color:#555;}.mm-book{color:#0d7a5f;font-weight:600;}.mm-contact{color:#888;}'
    +'.mm-why{font-size:11.5px;color:#555;margin-top:3px;line-height:1.45;}'
-   +'.mm-btns{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;}'
-   +'.mm-btns button{font-size:12px;padding:6px 12px;border-radius:6px;border:1px solid #d0d5e0;background:#fff;cursor:pointer;color:#444;}'
-   +'.mm-mark{background:#7c3aed!important;color:#fff!important;border-color:#7c3aed!important;}.mm-offered{font-size:12px;color:#1e8449;font-weight:600;}';
+   +'.mm-firm-act button{font-size:11.5px;padding:5px 11px;border-radius:6px;border:1px solid #d0d5e0;background:#fff;cursor:pointer;color:#444;font-family:inherit;white-space:nowrap;}'
+   +'.mm-offer{background:#7c3aed!important;color:#fff!important;border-color:#7c3aed!important;font-weight:600;}'
+   +'.mm-skip:hover{background:#f4f4f7;}.mm-undo{color:#888!important;}'
+   +'.mm-st{font-size:11.5px;font-weight:600;padding:4px 8px;border-radius:6px;}.mm-st.mm-o{color:#1e8449;background:#e8f6ee;}.mm-st.mm-sk{color:#8a8a9e;background:#f0f0f4;}'
+   +'.mm-btns{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid #f0f0f4;}'
+   +'.mm-prog{font-size:11.5px;color:#8a8a9e;font-weight:600;}'
+   +'.mm-skipall{font-size:11.5px;padding:5px 11px;border-radius:6px;border:1px solid #e0d0d0;background:#fff;cursor:pointer;color:#a05050;font-family:inherit;}.mm-skipall:hover{background:#fdf2f2;}';
   document.head.appendChild(st);
   var anchor=document.getElementById('tab-cc')||document.getElementById('tab-push')||document.getElementById('tab-followups');
   if(anchor&&!document.getElementById('tab-mm')){
@@ -3147,6 +3182,7 @@ function mmShow(){
   setTimeout(mmInit,1300);
 })();
 /* ════════ END MANDATE MATCH ════════ */
+
 
 
 </script>
