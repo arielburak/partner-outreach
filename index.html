@@ -3079,8 +3079,8 @@ function mmCardHTML(m){
   var st=m.stage?(' &middot; follow-up stage '+mmEsc(m.stage)):'';
   var eb=(m.est_book_M?(' &middot; est book $'+mmEsc(m.est_book_M)+'M'):'');
   var links='';
-  if(m.fp)links+='<a class="mm-link" href="'+mmEsc(m.fp)+'" target="_blank" rel="noopener">Firm prospect &#8599;</a>';
-  if(m.linkedin)links+='<a class="mm-link mm-li" href="'+mmEsc(m.linkedin)+'" target="_blank" rel="noopener">LinkedIn &#8599;</a>';
+  if(m.fp)links+='<button class="mm-link" onclick="window.open(\''+mmJs(m.fp)+'\',\'_blank\')">Firm prospect &#8599;</button>';
+  if(m.linkedin)links+='<button class="mm-link mm-li" onclick="window.open(\''+mmJs(m.linkedin)+'\',\'_blank\')">LinkedIn &#8599;</button>';
   return '<div class="mm-card'+(offered?' mm-done':'')+'">'
     +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;">'
     +'<div class="mm-name">'+mmEsc(m.name)+'</div>'
@@ -3119,7 +3119,7 @@ function mmShow(){
    +'.mm-cl{font-size:10.5px;font-weight:600;color:#7c3aed;background:#f0e8ff;padding:2px 8px;border-radius:10px;}'
    +'.mm-meta{font-size:12px;color:#666;margin:3px 0 0;}'
    +'.mm-links{margin:8px 0 2px;display:flex;gap:8px;flex-wrap:wrap;}'
-   +'.mm-link{font-size:11.5px;font-weight:600;color:#7c3aed;text-decoration:none;border:1px solid #d8cef0;background:#faf7ff;padding:4px 10px;border-radius:6px;}'
+   +'.mm-link{font-size:11.5px;font-weight:600;color:#7c3aed;text-decoration:none;border:1px solid #d8cef0;background:#faf7ff;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:inherit;}'
    +'.mm-link:hover{background:#f0e8ff;}.mm-link.mm-li{color:#0a66c2;border-color:#cfe0f5;background:#f6faff;}'
    +'.mm-lbl{margin:10px 0 5px;font-size:11px;font-weight:600;color:#8a8a9e;text-transform:uppercase;letter-spacing:.5px;}'
    +'.mm-firm{font-size:12.5px;color:#333;padding:5px 0;border-top:1px solid #f0f0f4;}.mm-firm:first-child{border-top:none;}'
@@ -3147,6 +3147,7 @@ function mmShow(){
   setTimeout(mmInit,1300);
 })();
 /* ════════ END MANDATE MATCH ════════ */
+
 
 </script>
 </body>
