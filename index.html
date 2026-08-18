@@ -1524,7 +1524,7 @@ function logSent(p){
 }
 
 function updateFuBadge(){
-  const pending=Object.values(fuData).filter(f=>!f.done).length;
+  const pending=Object.values(fuData).filter(f=>!f.done&&!f.callQueue).length;
   const el=document.getElementById('fu-badge');if(el)el.textContent=pending;
   const lel=document.getElementById('log-badge');if(lel)lel.textContent=fuLog.length;
 }
@@ -2322,8 +2322,8 @@ fuBuildQ=function(){
   const today=todayStr();
   // Auto-unsnooze entries whose snooze date has passed (matches inner fuBuildQ)
   Object.values(fuData).forEach(function(f){if(f.snoozedUntil&&f.snoozedUntil<=today){delete f.snoozedUntil;}});
-  // Exclude done AND currently-snoozed entries (matches inner fuBuildQ)
-  const entries=Object.entries(fuData).filter(([k,f])=>!f.done&&!f.snoozedUntil).map(([k,f])=>({_key:k,...f}));
+  // Exclude done, currently-snoozed, AND callQueue (retired followup_2 -> Warm Calls) entries
+  const entries=Object.entries(fuData).filter(([k,f])=>!f.done&&!f.snoozedUntil&&!f.callQueue).map(([k,f])=>({_key:k,...f}));
   const filtered=entries.filter(e=>{
     const dd=e.nextDate||e.due_date||'';
     if(!dd)return fuFilter==='all';
