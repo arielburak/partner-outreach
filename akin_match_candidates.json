@@ -1,0 +1,1468 @@
+{
+  "akin_strong_practices": {
+    "Bankruptcy/Restructuring": 1,
+    "Construction International Disputes": 2,
+    "Corporate Crime & Investigations": 2,
+    "Corporate/M&A": 3,
+    "Energy & Natural Resources": 2,
+    "Energy Transition": 2,
+    "Government Relations": 3,
+    "Healthcare": 1,
+    "Hedge Funds": 3,
+    "International Trade": 1,
+    "Investment Funds Investor Representation": 2,
+    "Investment Funds Regulatory & Compliance": 3,
+    "Native American Law": 1,
+    "Political Law": 3,
+    "Privacy & Data Security": 1,
+    "Private Credit": 2,
+    "Private Equity Fund Formation": 3,
+    "Private Equity Secondaries": 3,
+    "Space": 2
+  },
+  "akin_cities": [
+    "Boston",
+    "Chicago",
+    "Dallas",
+    "Houston",
+    "Los Angeles",
+    "New York",
+    "Philadelphia",
+    "Washington, DC"
+  ],
+  "pending_in_akin_cities": 537,
+  "pending_with_akin_practice_fit": 191,
+  "candidates_by_bucket": {
+    "New York | Corporate": [
+      {
+        "name": "Rony Rothken",
+        "firm": "Simpson Thacher & Bartlett LLP",
+        "score": 67.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Jordan Cross",
+        "firm": "Simpson Thacher & Bartlett LLP",
+        "score": 67.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Mark Boyagi",
+        "firm": "Kirkland & Ellis LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Erin Bergey",
+        "firm": "Latham & Watkins LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Matthew Haddad",
+        "firm": "Willkie Farr & Gallagher LLP",
+        "score": 72.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Lindsey Goldstein",
+        "firm": "Ropes & Gray LLP",
+        "score": 40.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Dan Blumenthal",
+        "firm": "McDermott Will & Schulte",
+        "score": 53.9,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Hozefa Botee",
+        "firm": "Gunderson Dettmer Stough Villeneuve Franklin & Hachigian LLP",
+        "score": 56.9,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Marsha Mogilevich",
+        "firm": "Orrick, Herrington & Sutcliffe LLP",
+        "score": 39.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Jake Ornstein",
+        "firm": "Orrick, Herrington & Sutcliffe LLP",
+        "score": 39.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Oliver Yee",
+        "firm": "Kirkland & Ellis LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Max Cantor",
+        "firm": "Orrick, Herrington & Sutcliffe LLP",
+        "score": 39.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Henry Shin",
+        "firm": "K&L Gates",
+        "score": 74.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Ryan Laforce",
+        "firm": "Paul Hastings LLP",
+        "score": 38.3,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Agatha Kluk",
+        "firm": "Perkins Coie",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Scott Beal",
+        "firm": "Barnes & Thornburg LLP",
+        "score": 69.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Tej Prakash",
+        "firm": "Willkie Farr & Gallagher LLP",
+        "score": 72.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Ian Nussbaum",
+        "firm": "Latham & Watkins LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Steven Zaorski",
+        "firm": "Ropes & Gray LLP",
+        "score": 40.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Eric Perelman",
+        "firm": "Kirkland & Ellis LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Joshua Turner",
+        "firm": "Haynes and Boone, LLP",
+        "score": 36.7,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Jeannette Figg",
+        "firm": "Simpson Thacher & Bartlett LLP",
+        "score": 67.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Neil Toomey",
+        "firm": "Gunderson Dettmer Stough Villeneuve Franklin & Hachigian LLP",
+        "score": 56.9,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Sara Shouse",
+        "firm": "Sidley Austin LLP",
+        "score": 69.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Matthew Carroll",
+        "firm": "Spencer Fane",
+        "score": 49.1,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Stacey Song",
+        "firm": "Cooley LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Danielle Asaad",
+        "firm": "Squire Patton Boggs",
+        "score": 71.1,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Ayo Badejo",
+        "firm": "Sidley Austin LLP",
+        "score": 69.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Josh Apfelroth",
+        "firm": "Proskauer Rose LLP",
+        "score": 37.7,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Pierre-Emmanuel Perais",
+        "firm": "Linklaters",
+        "score": 20.3,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Izzy Lubarsky",
+        "firm": "Cooley LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Sergio Urias",
+        "firm": "Akin, Gump, Strauss, Hauer & Feld, LLP",
+        "score": 41.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Brent Morowitz",
+        "firm": "Pillsbury Winthrop Shaw Pittman LLP",
+        "score": 58.1,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Vince Onorato",
+        "firm": "Sidley Austin LLP",
+        "score": 69.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Sam Levitt",
+        "firm": "Ropes & Gray LLP",
+        "score": 40.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Giovanni Caruso",
+        "firm": "Loeb & Loeb LLP",
+        "score": 47.3,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Katherine Krause",
+        "firm": "Simpson Thacher & Bartlett LLP",
+        "score": 67.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Matthew Goodman",
+        "firm": "Sullivan & Cromwell LLP",
+        "score": 31.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Kartik Khanna",
+        "firm": "Kirkland & Ellis LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "David Nestler",
+        "firm": "McDermott Will & Schulte",
+        "score": 53.9,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Christopher Glenn",
+        "firm": "A&O Shearman",
+        "score": 44.5,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Stephen Cohen",
+        "firm": "Sheppard, Mullin, Richter & Hampton LLP",
+        "score": 70,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Benjamin Steelsmith",
+        "firm": "Simpson Thacher & Bartlett LLP",
+        "score": 67.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Colin Bumby",
+        "firm": "Herbert Smith Freehills Kramer LLP",
+        "score": 26.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Charles Allen",
+        "firm": "Cleary, Gottlieb, Steen & Hamilton",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Patrick Dorime",
+        "firm": "Ropes & Gray LLP",
+        "score": 40.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Sophie Hasse",
+        "firm": "Simpson Thacher & Bartlett LLP",
+        "score": 67.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Amy Wollensack",
+        "firm": "Akin, Gump, Strauss, Hauer & Feld, LLP",
+        "score": 41.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Michael Holick",
+        "firm": "Simpson Thacher & Bartlett LLP",
+        "score": 67.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Thiago Spercel",
+        "firm": "Sichenzia Ross Ference Carmel LLP",
+        "score": 57.9,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Madelyn Calabrese",
+        "firm": "Haynes and Boone, LLP",
+        "score": 36.7,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Elise Michael",
+        "firm": "Katten Muchin Rosenman LLP",
+        "score": 65.2,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Jason Koenig",
+        "firm": "Fried, Frank, Harris, Shriver & Jacobson LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Peter Byrne",
+        "firm": "Cooley LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Nadeea Zakaria",
+        "firm": "Dechert LLP",
+        "score": 45.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Justin Roland",
+        "firm": "Jones Day",
+        "score": 42.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Javad Husain",
+        "firm": "Hughes Hubbard & Reed LLP",
+        "score": 47.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Eyal Orgad",
+        "firm": "Latham & Watkins LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Justin Levy",
+        "firm": "Winston & Strawn LLP",
+        "score": 73.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Jack Hamilton",
+        "firm": "Wilson Sonsini Goodrich & Rosati",
+        "score": 63.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Justin Macke",
+        "firm": "Sidley Austin LLP",
+        "score": 69.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Marina Richter",
+        "firm": "Arnold & Porter Kaye Scholer LLP",
+        "score": 53.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Michelle Heisner",
+        "firm": "Baker McKenzie",
+        "score": 53.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Frederick Bryant II",
+        "firm": "Foley & Lardner LLP",
+        "score": 53.1,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Jenny Hochenberg",
+        "firm": "Freshfields",
+        "score": 39.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Jeff Schatz",
+        "firm": "Fried, Frank, Harris, Shriver & Jacobson LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Alexander Argyris",
+        "firm": "Cleary, Gottlieb, Steen & Hamilton",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Matthew Leighton",
+        "firm": "Simpson Thacher & Bartlett LLP",
+        "score": 67.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Kevin Neubauer",
+        "firm": "Seward & Kissel LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Oliver Prakash-Jenkins",
+        "firm": "Latham & Watkins LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "David Whelan",
+        "firm": "Simpson Thacher & Bartlett LLP",
+        "score": 67.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Brien Wassner",
+        "firm": "Sidley Austin LLP",
+        "score": 69.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Iliana Kirova",
+        "firm": "Mayer Brown LLP",
+        "score": 64.7,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Arash Amouzgar",
+        "firm": "Blake, Cassels & Graydon LLP",
+        "score": 67,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Lance Phillips",
+        "firm": "Eversheds Sutherland (US) LLP",
+        "score": 32.2,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Christian Witzke",
+        "firm": "Herbert Smith Freehills Kramer LLP",
+        "score": 26.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Jonathan Kret",
+        "firm": "Windels Marx Lane & Mittendorf LLP",
+        "score": 7,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Greg Kramer",
+        "firm": "Haynes and Boone, LLP",
+        "score": 36.7,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Bryan Joggerst",
+        "firm": "Morrison Cohen LLP",
+        "score": 43.3,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Zachary Swartz",
+        "firm": "Vinson & Elkins LLP",
+        "score": 70,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Rob Broderick",
+        "firm": "Wilson Sonsini Goodrich & Rosati",
+        "score": 63.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Paul Humphreys",
+        "firm": "Freshfields",
+        "score": 39.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Mile Kurta",
+        "firm": "Torys LLP",
+        "score": 7,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Jean Samedi",
+        "firm": "Lowenstein Sandler",
+        "score": 58.7,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Ariel Yehezkel",
+        "firm": "Sheppard, Mullin, Richter & Hampton LLP",
+        "score": 70,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Noelle Indelicato",
+        "firm": "Seward & Kissel LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Philadelphia | Corporate, Health Care": [
+      {
+        "name": "John Devine",
+        "firm": "Holland & Knight LLP",
+        "score": 51.9,
+        "akin_match": "Healthcare",
+        "band": 1
+      }
+    ],
+    "Boston | Corporate": [
+      {
+        "name": "David Conway",
+        "firm": "Mintz, Levin, Cohn, Ferris, Glovsky and Popeo P.C.",
+        "score": 37.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Keith Macleod",
+        "firm": "Ropes & Gray LLP",
+        "score": 40.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Hillary O'Rourke",
+        "firm": "K&L Gates",
+        "score": 72.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Elizabeth Slawsby",
+        "firm": "Latham & Watkins LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Abigail Hemnes",
+        "firm": "K&L Gates",
+        "score": 72.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Scott Lenahan",
+        "firm": "Kirkland & Ellis LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Kyle Garry",
+        "firm": "Kirkland & Ellis LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Sarah Wilk",
+        "firm": "Womble Bond Dickinson",
+        "score": 23.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Alex Aber",
+        "firm": "Hogan Lovells",
+        "score": 45.3,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Suzanne Filippi",
+        "firm": "Morgan, Lewis & Bockius LLP",
+        "score": 43.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Matt Byron",
+        "firm": "Ropes & Gray LLP",
+        "score": 40.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Sean Small",
+        "firm": "Choate Hall & Stewart LLP",
+        "score": 48.2,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Jason Kolman",
+        "firm": "Ropes & Gray LLP",
+        "score": 40.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Emily Willey",
+        "firm": "Weil Gotshal & Manges LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Daniel Vaczy",
+        "firm": "Kirkland & Ellis LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Charles Chambers",
+        "firm": "Sullivan & Worcester LLP",
+        "score": 23.7,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Jon-Luc Dupuy",
+        "firm": "K&L Gates",
+        "score": 72.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Kaitlin Mcgrath",
+        "firm": "Dechert LLP",
+        "score": 38.5,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Kristen Ferris",
+        "firm": "Goulston & Storrs",
+        "score": 48.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Adam Leamon",
+        "firm": "Ropes & Gray LLP",
+        "score": 40.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "New York | Real Estate, Bankruptcy": [
+      {
+        "name": "Nathan Pagett",
+        "firm": "King & Spalding LLP",
+        "score": 75,
+        "akin_match": "Bankruptcy/Restructuring",
+        "band": 1
+      }
+    ],
+    "New York | Corporate, Real Estate": [
+      {
+        "name": "Max Rosenberg",
+        "firm": "Paul Hastings LLP",
+        "score": 38.3,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Chicago | Labor & Employment, Data Privacy": [
+      {
+        "name": "Alex Karasik",
+        "firm": "Duane Morris LLP",
+        "score": 74.3,
+        "akin_match": "Privacy & Data Security",
+        "band": 1
+      }
+    ],
+    "Dallas | Corporate": [
+      {
+        "name": "Kyle Park",
+        "firm": "A&O Shearman",
+        "score": 28.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Jordan Bethea",
+        "firm": "Baker & Hostetler LLP",
+        "score": 39.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Robert Bruner",
+        "firm": "Haynes and Boone, LLP",
+        "score": 34.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Ashton Butcher",
+        "firm": "Akin, Gump, Strauss, Hauer & Feld, LLP",
+        "score": 38.7,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Jason Glennon",
+        "firm": "Akin, Gump, Strauss, Hauer & Feld, LLP",
+        "score": 38.7,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Boston | Corporate, Banking": [
+      {
+        "name": "Robert Tammero",
+        "firm": "K&L Gates",
+        "score": 72.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Los Angeles | Corporate": [
+      {
+        "name": "Kevin Bettsteller",
+        "firm": "Gibson, Dunn & Crutcher LLP",
+        "score": 37.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Joshua Duclos",
+        "firm": "Sidley Austin LLP",
+        "score": 69.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Steve Reil",
+        "firm": "DLA Piper",
+        "score": 67.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Michael Young",
+        "firm": "Massumi & Consoli LLP",
+        "score": 30.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Bryan Wasser",
+        "firm": "Baker & Hostetler LLP",
+        "score": 39.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Chicago | Health Care": [
+      {
+        "name": "Joelle Wilson",
+        "firm": "Polsinelli PC",
+        "score": 69.9,
+        "akin_match": "Healthcare",
+        "band": 1
+      },
+      {
+        "name": "Jaya White",
+        "firm": "Quarles & Brady LLP",
+        "score": 46.0,
+        "akin_match": "Healthcare",
+        "band": 1
+      },
+      {
+        "name": "Valerie Montague",
+        "firm": "Nixon Peabody LLP",
+        "score": 42.6,
+        "akin_match": "Healthcare",
+        "band": 1
+      },
+      {
+        "name": "Emily Johnson",
+        "firm": "McDonald Hopkins LLC",
+        "score": 29.7,
+        "akin_match": "Healthcare",
+        "band": 1
+      },
+      {
+        "name": "Alison Krieser",
+        "firm": "Katten Muchin Rosenman LLP",
+        "score": 65.2,
+        "akin_match": "Healthcare",
+        "band": 1
+      }
+    ],
+    "Los Angeles | Corporate, Banking": [
+      {
+        "name": "Shadi Jahangir",
+        "firm": "Blank Rome LLP",
+        "score": 60.2,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Boston | Litigation, Health Care": [
+      {
+        "name": "Eric Christofferson",
+        "firm": "DLA Piper",
+        "score": 67.0,
+        "akin_match": "Healthcare",
+        "band": 1
+      }
+    ],
+    "Chicago | Corporate": [
+      {
+        "name": "Cody Vitello",
+        "firm": "Vedder",
+        "score": 15,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Ryan Swan",
+        "firm": "Paul Hastings LLP",
+        "score": 38.3,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Tracy Jacobson",
+        "firm": "Polsinelli PC",
+        "score": 69.9,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Kevin Humphries",
+        "firm": "Benesch Friedlander Coplan & Aronoff LLP",
+        "score": 29.2,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Lynn Watkins",
+        "firm": "ArentFox Schiff",
+        "score": 34.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Nick Carreri",
+        "firm": "Kirkland & Ellis LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Matthew Misichko",
+        "firm": "Thompson Coburn LLP",
+        "score": 72.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Ursha Magajne",
+        "firm": "Polsinelli PC",
+        "score": 69.9,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Josh Feiger",
+        "firm": "Katten Muchin Rosenman LLP",
+        "score": 65.2,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Brent Williams",
+        "firm": "K&L Gates",
+        "score": 74.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Bob Morrow",
+        "firm": "Barack Ferrazzano",
+        "score": 51.2,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "New York | Corporate, Transportation": [
+      {
+        "name": "Todd Kornreich",
+        "firm": "Ropes & Gray LLP",
+        "score": 40.4,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Chicago | Health Care, FDA": [
+      {
+        "name": "Samuel Bernstein",
+        "firm": "McGuireWoods LLP",
+        "score": 75,
+        "akin_match": "Healthcare",
+        "band": 1
+      }
+    ],
+    "Washington, DC | Litigation, Health Care": [
+      {
+        "name": "Erica Bahnsen",
+        "firm": "Epstein Becker & Green",
+        "score": 61.2,
+        "akin_match": "Healthcare",
+        "band": 1
+      },
+      {
+        "name": "Lindsey Fetzer",
+        "firm": "Bass Berry & Sims",
+        "score": 53.3,
+        "akin_match": "Healthcare",
+        "band": 1
+      }
+    ],
+    "Houston | Corporate, Energy": [
+      {
+        "name": "David Thompson",
+        "firm": "Akerman LLP",
+        "score": 75,
+        "akin_match": "Energy Transition",
+        "band": 2
+      }
+    ],
+    "Washington, DC | Corporate": [
+      {
+        "name": "Bernardo Piereck",
+        "firm": "Dechert LLP",
+        "score": 45.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "William Bruno",
+        "firm": "Crowell & Moring LLP",
+        "score": 34.3,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Andrew Hard",
+        "firm": "Akerman LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Bhanu Mathur",
+        "firm": "Alston & Bird LLP",
+        "score": 34.1,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Iain Wood",
+        "firm": "Akin, Gump, Strauss, Hauer & Feld, LLP",
+        "score": 41.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Matthew Franker",
+        "firm": "Covington & Burling LLP",
+        "score": 67.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Micah Kegley",
+        "firm": "Skadden, Arps, Slate, Meagher & Flom LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Joseph Derrigo Jr",
+        "firm": "Foley & Lardner LLP",
+        "score": 53.1,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Pierce Han",
+        "firm": "Ice Miller",
+        "score": 34.1,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Matthew Vandergoot",
+        "firm": "Lowenstein Sandler",
+        "score": 58.7,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "New York | Real Estate, Corporate": [
+      {
+        "name": "Moty Ben Yona",
+        "firm": "Smith Gambrell & Russell LLP",
+        "score": 31.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Washington, DC | Real Estate, Corporate": [
+      {
+        "name": "Olesya Bakar",
+        "firm": "Holland & Knight LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Los Angeles | Litigation, Bankruptcy, Antitrust": [
+      {
+        "name": "Evelina Gentry",
+        "firm": "Akerman LLP",
+        "score": 75,
+        "akin_match": "Bankruptcy/Restructuring",
+        "band": 1
+      }
+    ],
+    "New York | Litigation, International Trade": [
+      {
+        "name": "Jonathan Cross",
+        "firm": "Herbert Smith Freehills Kramer LLP",
+        "score": 26.4,
+        "akin_match": "International Trade",
+        "band": 1
+      }
+    ],
+    "Philadelphia | Corporate": [
+      {
+        "name": "Andrew Rocks",
+        "firm": "Morgan, Lewis & Bockius LLP",
+        "score": 34.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Vanessa Tabler",
+        "firm": "Faegre Drinker Biddle & Reath LLP",
+        "score": 43.9,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Aaron Suh",
+        "firm": "Morgan, Lewis & Bockius LLP",
+        "score": 34.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Adam Rosenthal",
+        "firm": "Faegre Drinker Biddle & Reath LLP",
+        "score": 43.9,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Stephen Pratt",
+        "firm": "Dechert LLP",
+        "score": 38.5,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Ross MacConnell",
+        "firm": "Dechert LLP",
+        "score": 38.5,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      },
+      {
+        "name": "Remy Nshimiyimana",
+        "firm": "Faegre Drinker Biddle & Reath LLP",
+        "score": 43.9,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Chicago | Health Care, Government": [
+      {
+        "name": "Anthony Burba",
+        "firm": "Barnes & Thornburg LLP",
+        "score": 69.8,
+        "akin_match": "Healthcare",
+        "band": 1
+      }
+    ],
+    "New York | Intellectual Property, Corporate": [
+      {
+        "name": "Meryl Bernstein",
+        "firm": "Hogan Lovells",
+        "score": 45.3,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "New York | Litigation, Intellectual Property, Data Privacy": [
+      {
+        "name": "Jayashree Mitra",
+        "firm": "Carlton Fields, PA",
+        "score": 68.8,
+        "akin_match": "Privacy & Data Security",
+        "band": 1
+      }
+    ],
+    "New York | Health Care, Corporate, Intellectual Property": [
+      {
+        "name": "Oren Livne",
+        "firm": "Baker McKenzie",
+        "score": 53.0,
+        "akin_match": "Healthcare",
+        "band": 1
+      }
+    ],
+    "Washington, DC | Health Care": [
+      {
+        "name": "Victoria Wallace",
+        "firm": "Hogan Lovells",
+        "score": 45.3,
+        "akin_match": "Healthcare",
+        "band": 1
+      },
+      {
+        "name": "Jennifer Michael",
+        "firm": "Bass Berry & Sims",
+        "score": 53.3,
+        "akin_match": "Healthcare",
+        "band": 1
+      },
+      {
+        "name": "Brian Bewley",
+        "firm": "Reed Smith LLP",
+        "score": 75,
+        "akin_match": "Healthcare",
+        "band": 1
+      }
+    ],
+    "Houston | Energy": [
+      {
+        "name": "Bradford Gathright",
+        "firm": "Orrick, Herrington & Sutcliffe LLP",
+        "score": 36.4,
+        "akin_match": "Energy Transition",
+        "band": 2
+      }
+    ],
+    "Washington, DC | Health Care, Data Privacy": [
+      {
+        "name": "Nancy Halstead",
+        "firm": "Reed Smith LLP",
+        "score": 75,
+        "akin_match": "Privacy & Data Security",
+        "band": 1
+      }
+    ],
+    "New York | Health Care, Corporate, FDA": [
+      {
+        "name": "Aselle Kurmanova",
+        "firm": "Cozen O'Connor",
+        "score": 57.4,
+        "akin_match": "Healthcare",
+        "band": 1
+      }
+    ],
+    "Los Angeles | Corporate, Real Estate": [
+      {
+        "name": "Jeffrey Love",
+        "firm": "Gibbs Giden Locher Turner Senet & Wittbrodt LLP",
+        "score": 57.9,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Chicago | Litigation, Corporate": [
+      {
+        "name": "Douglas Sargent",
+        "firm": "Greenspoon Marder",
+        "score": 30.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Houston | Corporate, Real Estate": [
+      {
+        "name": "Jack Najarian",
+        "firm": "Chamberlain Hrdlicka",
+        "score": 67,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Boston | Health Care": [
+      {
+        "name": "Eric Gold",
+        "firm": "Manatt, Phelps & Phillips LLP",
+        "score": 48.9,
+        "akin_match": "Healthcare",
+        "band": 1
+      }
+    ],
+    "Boston | Entertainment, Corporate": [
+      {
+        "name": "Dinesh Melwani",
+        "firm": "Mintz, Levin, Cohn, Ferris, Glovsky and Popeo P.C.",
+        "score": 37.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Washington, DC | Litigation, Corporate, Health Care": [
+      {
+        "name": "Katie Heilman",
+        "firm": "ArentFox Schiff",
+        "score": 34.4,
+        "akin_match": "Healthcare",
+        "band": 1
+      }
+    ],
+    "New York | Litigation, Corporate": [
+      {
+        "name": "Elliot Rosner",
+        "firm": "Offit Kurman, PA",
+        "score": 31.9,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "New York | Corporate, Litigation": [
+      {
+        "name": "Aulden Burcher-Dupont",
+        "firm": "Kirkland & Ellis LLP",
+        "score": 75,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Los Angeles | Litigation, Data Privacy, Intellectual Property, Media, Entertainment": [
+      {
+        "name": "Jeremy Goldman",
+        "firm": "Frankfurt Kurnit Klein & Selz",
+        "score": 55.8,
+        "akin_match": "Privacy & Data Security",
+        "band": 1
+      }
+    ],
+    "Boston | Corporate, Tax": [
+      {
+        "name": "Brian Huber",
+        "firm": "Gunderson Dettmer Stough Villeneuve Franklin & Hachigian LLP",
+        "score": 56.9,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Boston | Corporate, Entertainment": [
+      {
+        "name": "Jonathan Calla",
+        "firm": "Goulston & Storrs",
+        "score": 48.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Los Angeles | Real Estate, Corporate": [
+      {
+        "name": "Ryan Barncastle",
+        "firm": "Barnes & Thornburg LLP",
+        "score": 69.8,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "New York | Litigation, Bankruptcy": [
+      {
+        "name": "Tatiana Markel",
+        "firm": "Baker & Hostetler LLP",
+        "score": 39.0,
+        "akin_match": "Bankruptcy/Restructuring",
+        "band": 1
+      }
+    ],
+    "Chicago | Real Estate, Corporate": [
+      {
+        "name": "Jeff Zanchelli",
+        "firm": "DLA Piper",
+        "score": 67.0,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "Philadelphia | Corporate, Real Estate": [
+      {
+        "name": "Kathy Keyser",
+        "firm": "Morgan, Lewis & Bockius LLP",
+        "score": 34.6,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ],
+    "New York | Corporate, Entertainment": [
+      {
+        "name": "Cynthia Katz",
+        "firm": "Fox Rothschild",
+        "score": 48.3,
+        "akin_match": "Corporate/M&A",
+        "band": 3
+      }
+    ]
+  }
+}
