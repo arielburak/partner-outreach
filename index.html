@@ -3017,38 +3017,72 @@ function wcList(){
   var rows=[];if(typeof fuData==='undefined'||!fuData)return rows;
   var today=todayStr();
   for(var key in fuData){
-    var f=fuData[key];if(!f||!f.callQueue||f.done)continue;
+    var f=fuData[key];if(!f||!f.callQueue||f.done)continue;    // done = resolved (interested/passed/benched)
     if(f.snoozedUntil&&f.snoozedUntil>today)continue;          // still snoozed
-    if(f.callReadyDate&&f.callReadyDate>today)continue;        // call not due yet
-    var nm=f.name||'';var ci=(typeof CC_INFO!=='undefined'&&CC_INFO[nm])||{};
+    if(f.callReadyDate&&f.callReadyDate>today)continue;        // first call not due yet
+    var nm=f.name||'';var wc=wcData[ccKey(nm)]||{};
+    if(wc.disp)continue;                                       // terminal disposition -> out of queue
+    if(wc.nextCall&&wc.nextCall>today)continue;                // rescheduled call not due yet
+    var ci=(typeof CC_INFO!=='undefined'&&CC_INFO[nm])||{};
     var sf=(typeof sfGlobal==='function')?sfGlobal:function(x){return x;};
     var firms=[];if(f.target)firms.push(sf(f.target));if(f.alt1&&f.alt1!==f.target)firms.push(sf(f.alt1));
+    var atts=wc.attempts||[];
     rows.push({name:nm,firm:f.firm||'',city:f.city||'',practice:f.practice||ci.pr||'',specialties:ci.sp||'',
       linkedin:f.linkedin||'',phone:ci.ph||'',url:ci.url||f.fp||'',firms:firms,reason:f.warmReason||'accepted + 2 messages',
-      readyDate:f.callReadyDate||'',called:!!wcData[ccKey(nm)]});
+      readyDate:wc.nextCall||f.callReadyDate||'',attempts:atts.length,lastAttempt:(atts.length?atts[atts.length-1]:null)});
   }
-  rows.sort(function(a,b){if(a.called!==b.called)return a.called?1:-1;return a.readyDate<b.readyDate?-1:a.readyDate>b.readyDate?1:0;});
+  rows.sort(function(a,b){return a.readyDate<b.readyDate?-1:a.readyDate>b.readyDate?1:0;});
   return rows;
 }
 function wcMarkCalled(name){var k=ccKey(name);if(!wcData[k])wcData[k]={calls:[]};if(!wcData[k].calls)wcData[k].calls=[];wcData[k].calls.push(todayStr());wcData[k].last=todayStr();wcSaveNow();ccRender();if(typeof showToast==='function')showToast('Logged a warm call to '+name);}
 function wcUncall(name){var k=ccKey(name);delete wcData[k];wcSaveNow();ccRender();}
 function wcCardHTML(r){
-  var k=ccKey(r.name),called=wcData[k];
+  var jn=ccJs(r.name);
   var firmsHtml=(r.firms&&r.firms.length)?r.firms.map(function(f){return '<span class="cc-pill">'+ccEsc(f)+'</span>';}).join(''):'<span style="color:#999;font-size:12px;">(no firms on file)</span>';
   var phoneHtml=r.phone?'<a href="tel:'+ccEsc((r.phone||'').replace(/[^+\d]/g,''))+'" class="cc-phone">'+ccEsc(r.phone)+'</a>':'<span style="color:#c0392b;font-size:12px;">no phone on file</span>';
   var liHtml=r.linkedin?'<a href="'+ccEsc(r.linkedin)+'" target="_blank" rel="noopener" class="cc-biolink">LinkedIn &#8599;</a>':'';
   var ps='';if(r.practice||r.specialties)ps='<div class="cc-ps">'+(r.practice?'<b>'+ccEsc(r.practice)+'</b>':'')+(r.practice&&r.specialties?' &middot; ':'')+(r.specialties?ccEsc(r.specialties):'')+'</div>';
-  return '<div class="cc-card wc-card'+(called?' cc-done':'')+'">'
+  var attLine=r.attempts?'<div class="wc-attline">&#9742; Attempt #'+(r.attempts+1)+(r.lastAttempt?' &middot; last: no answer '+ccEsc(ccFmt(r.lastAttempt.d)):'')+'</div>':'';
+  var naLabel=r.attempts>=2?'No answer (final)':'No answer';
+  return '<div class="cc-card wc-card">'
     +'<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;">'
     +'<div class="cc-name">'+ccEsc(r.name)+'</div><div class="wc-chip">'+ccEsc(r.reason)+'</div></div>'
     +'<div class="cc-meta">'+ccEsc(r.firm||'')+(r.city?' &middot; '+ccEsc(r.city):'')+'</div>'
     +ps
     +'<div style="margin:8px 0;font-size:15px;">'+phoneHtml+(liHtml?'  &middot;  '+liHtml:'')+'</div>'
-    +'<div class="cc-lbl">Firms pitched</div><div>'+firmsHtml+'</div>'
-    +'<div class="cc-btns">'+(called?'<span class="cc-called">Called '+ccEsc(called.last||'')+'</span>':'')
-    +'<button class="cc-mark" onclick="wcMarkCalled(\''+ccJs(r.name)+'\')">'+(called?'Log another call':'Mark called')+'</button>'
-    +(called?'<button onclick="wcUncall(\''+ccJs(r.name)+'\')">Undo</button>':'')+'</div>'
+    +'<div class="cc-lbl">Firms to pitch</div><div>'+firmsHtml+'</div>'
+    +attLine
+    +'<div class="cc-lbl" style="margin-top:12px;">After the call</div>'
+    +'<div class="wc-disp">'
+      +'<button class="wc-b wc-int" onclick="wcInterested(\''+jn+'\')">&#10003; Interested</button>'
+      +'<button class="wc-b wc-na" onclick="wcNoAnswer(\''+jn+'\')">'+naLabel+'</button>'
+      +'<button class="wc-b wc-no" onclick="wcNotInterested(\''+jn+'\')">&#10007; Not interested</button>'
+    +'</div>'
     +'</div>';
+}
+// ── Call cadence dispositions (resolve via the canonical fuLog/status path, same as the
+//    rest of the dashboard — nothing new/parallel; warm-call tracking stays in warmCallData).
+function _wcFuKey(nm){for(var k in fuData){if(fuData[k]&&fuData[k].name===nm)return k;}return null;}
+function wcMainKey(nm){try{var tabs=['general','fox'];for(var ti=0;ti<tabs.length;ti++){var arr=(typeof DS!=='undefined'&&DS[tabs[ti]])||[];for(var i=0;i<arr.length;i++){if(arr[i].name===nm)return sk(tabs[ti],i);}}}catch(e){}return null;}
+function wcResolve(name,outcome){
+  var fk=_wcFuKey(name);if(!fk)return;var fu=fuData[fk];var today=todayStr();
+  fu.done=true;fu.outcome=outcome;
+  try{fuLog.unshift({name:fu.name||'',first:fu.first||'',firm:fu.firm||'',city:fu.city||'',practice:fu.practice||'',target:fu.target||'',alt1:fu.alt1||'',alt2:fu.alt2||'',date_sent:today,linkedin:fu.linkedin||'',fp:fu.fp||'',stage:outcome});localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
+  var mk=wcMainKey(name);if(mk){status[mk]=(outcome==='interested'?'interested':outcome==='not_interested'?'not_interested':'benched');try{saveS();}catch(e){}}
+  try{saveFu();}catch(e){}try{updateFuBadge();}catch(e){}try{fbSaveNow();}catch(e){}
+  try{ccUpdateBadge();}catch(e){}try{ccRender();}catch(e){}try{if(typeof tdRender==='function')tdRender();}catch(e){}
+  if(typeof showToast==='function')showToast(name+' → '+(outcome==='interested'?'Interested ✓':outcome==='not_interested'?'Not interested':'Benched'));
+}
+function wcInterested(name){wcResolve(name,'interested');}
+function wcNotInterested(name){wcResolve(name,'not_interested');}
+function wcNoAnswer(name){
+  var k=ccKey(name),today=todayStr();if(!wcData[k])wcData[k]={};var wc=wcData[k];
+  wc.attempts=wc.attempts||[];wc.attempts.push({d:today,o:'no_answer'});wc.last=today;wc.calls=wc.calls||[];wc.calls.push(today);
+  var n=wc.attempts.length;
+  if(n>=3){wc.disp='exhausted';wc.dispDate=today;wcSaveNow();wcResolve(name,'exhausted');
+    if(typeof showToast==='function')showToast(name+': 3 calls, no contact — send a final LinkedIn note, then benched');}
+  else{wc.nextCall=addDays(today,n===1?3:5);wcSaveNow();try{ccUpdateBadge();}catch(e){}try{ccRender();}catch(e){}try{if(typeof tdRender==='function')tdRender();}catch(e){}
+    if(typeof showToast==='function')showToast(name+': no answer logged — call again '+wc.nextCall);}
 }
 function ccRender(){
   var list=document.getElementById('cc-list');if(!list)return;
@@ -3124,7 +3158,13 @@ function ccShow(){
    +'.wc-head{font-size:15px;font-weight:800;color:#1a3060;margin:4px 0 10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}'
    +'.wc-tag{font-size:11px;font-weight:600;color:#b8860b;background:#fbf4e2;border:1px solid #ead9a8;padding:2px 8px;border-radius:10px;}'
    +'.wc-chip{font-size:10.5px;font-weight:600;color:#b8860b;background:#fbf4e2;padding:2px 8px;border-radius:10px;}'
-   +'.wc-card{border-left:3px solid #d4a017;}';
+   +'.wc-card{border-left:3px solid #d4a017;}'
+   +'.wc-attline{margin-top:8px;font-size:12.5px;color:#b8860b;font-weight:600;}'
+   +'.wc-disp{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}'
+   +'.wc-b{font-size:13px;font-weight:600;padding:8px 14px;border-radius:8px;border:1px solid #d0d5e0;background:#fff;color:#333;cursor:pointer;font-family:inherit;}'
+   +'.wc-int{background:#1e8a5a;border-color:#1e8a5a;color:#fff;}.wc-int:hover{background:#186f49;}'
+   +'.wc-na{color:#8a6d1f;border-color:#e6d9a8;background:#fbf6e6;}.wc-na:hover{background:#f6edcf;}'
+   +'.wc-no{color:#c0392b;border-color:#eccac5;background:#fdf2f0;}.wc-no:hover{background:#f9e3df;}';
   document.head.appendChild(wcSt);
   setTimeout(ccInit,1100);
   setTimeout(wcInit,1150);
@@ -3313,6 +3353,133 @@ function mmShow(){
   setTimeout(mmInit,1300);
 })();
 /* ════════ END MANDATE MATCH ════════ */
+/* ════════ TODAY ════════ Unified worklist: everything due right now — warm/follow-up calls,
+   nudges, and mandate offers — in one priority-ordered queue with one-click actions. Read-only
+   aggregator over existing data (fuData / wcData / MANDATE_MATCHES); every action reuses the
+   canonical function (fuSent, wcInterested/wcNoAnswer, mmData) so nothing new is stored here and
+   no existing node/logic is touched. Self-contained: injects its own style, tab, view, switchTab. */
+var tdFilter='all';
+function tdCalls(){var out=[];try{var rows=wcList();for(var i=0;i<rows.length;i++)out.push({type:'call',data:rows[i],due:rows[i].readyDate||''});}catch(e){}return out;}
+function tdNudges(){var out=[];if(typeof fuData==='undefined'||!fuData)return out;var today=todayStr();
+  for(var k in fuData){var f=fuData[k];if(!f||f.done||f.callQueue)continue;if(f.snoozedUntil&&f.snoozedUntil>today)continue;
+    var due=f.nextDate||f.due_date||'';if(!due||due>today)continue;
+    out.push({type:'nudge',name:f.name||'',firm:f.firm||'',city:f.city||'',practice:f.practice||'',target:f.target||'',alt1:f.alt1||'',linkedin:f.linkedin||'',fp:f.fp||'',due:due});}
+  return out;}
+function tdMandates(){var out=[];if(typeof MANDATE_MATCHES==='undefined'||typeof mmUniverse!=='function')return out;
+  try{mmBuildFu();}catch(e){}
+  try{var uni=mmUniverse();for(var i=0;i<uni.length;i++){var m=uni[i];if(mmEligible(m)&&!mmResolved(m))out.push({type:'mandate',name:m.name,firm:m.firm||'',city:m.city||'',mandates:m.mandates||[],fp:m.fp||'',linkedin:m.linkedin||'',due:''});}}catch(e){}
+  return out;}
+function tdList(){var calls=tdCalls(),nudges=tdNudges(),mand=tdMandates();var all=[];
+  if(tdFilter==='all'||tdFilter==='call')all=all.concat(calls);
+  if(tdFilter==='all'||tdFilter==='nudge')all=all.concat(nudges);
+  if(tdFilter==='all'||tdFilter==='mandate')all=all.concat(mand);
+  var rank={call:0,nudge:1,mandate:2};
+  all.sort(function(a,b){if(rank[a.type]!==rank[b.type])return rank[a.type]-rank[b.type];var da=a.due||'9999',db=b.due||'9999';return da<db?-1:da>db?1:0;});
+  return {calls:calls.length,nudges:nudges.length,mand:mand.length,rows:all};}
+function _tdFk(name){for(var k in fuData){if(fuData[k]&&fuData[k].name===name)return k;}return null;}
+function tdDoNudge(name){var fk=_tdFk(name);if(!fk)return;
+  try{fuBuildQ();}catch(e){}
+  var idx=fuQ.indexOf(fk);if(idx<0){fuQ.push(fk);idx=fuQ.length-1;}
+  fuQi=idx;try{fuSent();}catch(e){console.error('[td nudge]',e);}
+  tdRender();if(typeof showToast==='function')showToast('Nudge sent — '+name+' moves to Warm Calls');}
+function tdCopyNudge(name){var fk=_tdFk(name);if(!fk)return;var fu=fuData[fk];var msg='';
+  try{msg=buildFuMsg(fu,fu.stage||1);}catch(e){}
+  try{navigator.clipboard.writeText(msg);if(typeof showToast==='function')showToast('Nudge message copied');}catch(e){if(typeof showToast==='function')showToast('Copy failed');}}
+function tdLaterNudge(name){var fk=_tdFk(name);if(!fk)return;var fu=fuData[fk];var nd=addDays(todayStr(),3);
+  fu.nextDate=nd;fu.due_date=nd;try{saveFu();}catch(e){}try{fbSaveNow();}catch(e){}
+  tdRender();if(typeof showToast==='function')showToast(name+': nudge moved to '+nd);}
+function tdMandateOffer(name){var m=null;for(var i=0;i<MANDATE_MATCHES.length;i++){if(MANDATE_MATCHES[i].name===name){m=MANDATE_MATCHES[i];break;}}
+  if(!m)return;var k=mmKey(name);if(!mmData[k])mmData[k]={};
+  for(var j=0;j<(m.mandates||[]).length;j++)mmData[k][mmFK(m.mandates[j].firm)]={s:'o',d:todayStr()};
+  try{mmSaveNow();}catch(e){}try{mmUpdateBadge();}catch(e){}tdRender();
+  if(typeof showToast==='function')showToast('Marked offered — '+name);}
+function tdCardHTML(x){
+  if(x.type==='call')return wcCardHTML(x.data);
+  var jn=ccJs(x.name);var sf=(typeof sfGlobal==='function')?sfGlobal:function(v){return v;};
+  var li=x.linkedin?'<a class="td-b td-link" href="'+ccEsc(x.linkedin)+'" target="_blank" rel="noopener">LinkedIn &#8599;</a>':'';
+  var meta='<div class="td-meta">'+ccEsc(x.firm||'')+(x.city?' &middot; '+ccEsc(x.city):'')+(x.practice?' &middot; '+ccEsc(x.practice):'')+'</div>';
+  if(x.type==='nudge'){
+    var pitched=sf(x.target)+((x.alt1&&x.alt1!==x.target)?' + '+sf(x.alt1):'');
+    return '<div class="td-card">'
+      +'<div class="td-row1"><span class="td-kind k-nudge">Nudge</span><span class="td-name">'+ccEsc(x.name)+'</span><span class="td-due">due '+ccEsc(ccFmt(x.due))+'</span></div>'
+      +meta+'<div class="td-sub">Following up on <b>'+ccEsc(pitched)+'</b></div>'
+      +'<div class="td-acts"><button class="td-b td-copy" onclick="tdCopyNudge(\''+jn+'\')">&#128203; Copy</button>'
+      +'<button class="td-b td-ok" onclick="tdDoNudge(\''+jn+'\')">&#10003; Sent</button>'
+      +'<button class="td-b" onclick="tdLaterNudge(\''+jn+'\')">Later</button>'+li+'</div></div>';
+  }
+  // mandate
+  var firms=(x.mandates||[]).map(function(mm){return ccEsc(mm.firm);}).filter(function(v,i,a){return a.indexOf(v)===i;}).join(', ');
+  var fp=x.fp?'<button class="td-b td-link" onclick="window.open(\''+ccJs(x.fp)+'\',\'_blank\')">Firm prospect &#8599;</button>':'';
+  return '<div class="td-card">'
+    +'<div class="td-row1"><span class="td-kind k-mandate">Mandate offer</span><span class="td-name">'+ccEsc(x.name)+'</span></div>'
+    +meta+'<div class="td-sub">Offer: <b>'+firms+'</b></div>'
+    +'<div class="td-acts"><button class="td-b td-pri" onclick="tdMandateOffer(\''+jn+'\')">Mark offered</button>'+fp+li+'</div></div>';
+}
+function tdRender(){var list=document.getElementById('td-list');if(!list)return;
+  if(!(typeof fuData!=='undefined'&&fuData)){list.innerHTML='<div class="td-empty">Loading&hellip;</div>';setTimeout(tdRender,600);return;}
+  var L=tdList();var chips=document.getElementById('td-chips');
+  if(chips)chips.innerHTML=[['all','All',L.calls+L.nudges+L.mand],['call','Calls',L.calls],['nudge','Nudges',L.nudges],['mandate','Mandate offers',L.mand]].map(function(c){return '<button class="td-chip'+(tdFilter===c[0]?' active':'')+'" onclick="tdSetFilter(\''+c[0]+'\')">'+c[1]+' <span class="td-n">'+c[2]+'</span></button>';}).join('');
+  var b=document.getElementById('td-badge');if(b)b.textContent=(L.calls+L.nudges+L.mand);
+  if(!L.rows.length){list.innerHTML='<div class="td-empty">Nothing due right now &mdash; you\'re all caught up.</div>';return;}
+  var CAP=40,shown=L.rows.slice(0,CAP);
+  var head='<div class="td-count">'+L.rows.length+' due today'+(L.rows.length>CAP?' &middot; showing top '+CAP:'')+'</div>';
+  var more=L.rows.length>CAP?'<div class="td-empty" style="padding:22px 12px;">'+(L.rows.length-CAP)+' more behind these &mdash; work the top of the list and they surface.</div>':'';
+  list.innerHTML=head+shown.map(tdCardHTML).join('')+more;}
+function tdSetFilter(f){tdFilter=f;tdRender();}
+function tdUpdateBadge(){var b=document.getElementById('td-badge');if(!b)return;try{var L=tdList();b.textContent=(L.calls+L.nudges+L.mand);}catch(e){}}
+function tdShow(){
+  var gm=document.getElementById('general-main');if(gm)gm.style.display='none';
+  var tb=document.querySelector('.topbar');if(tb)tb.style.display='none';
+  var fb=document.querySelector('.filter-bar');if(fb)fb.style.display='none';
+  ['fu-view','log-view','stats-view','live-view','push-view','cc-view','mm-view'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
+  var v=document.getElementById('td-view');if(v)v.style.display='flex';
+  ['general','fox','followups','log','stats','live','prospects','push','cc','mm'].forEach(function(x){var el=document.getElementById('tab-'+x);if(el)el.classList.remove('active');});
+  var t=document.getElementById('tab-td');if(t)t.classList.add('active');
+  tdRender();
+}
+(function tdBootstrap(){
+  var st=document.createElement('style');
+  st.textContent='.td-tab.active{background:#0d7a5f!important;border-color:#0d7a5f!important;color:#fff!important;}'
+   +'.td-view{flex:1;flex-direction:column;overflow:auto;background:#f7f8fa;}'
+   +'.td-wrap{max-width:780px;margin:0 auto;padding:20px 16px;width:100%;box-sizing:border-box;}'
+   +'.td-h{font-size:19px;font-weight:800;color:#12233d;}'
+   +'.td-sub2{font-size:12.5px;color:#8a8a9e;margin:2px 0 14px;line-height:1.5;}'
+   +'.td-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}'
+   +'.td-chip{padding:6px 12px;border-radius:20px;border:1px solid #d8dce3;background:#fff;color:#5a5a6e;font-size:12.5px;cursor:pointer;font-family:inherit;}'
+   +'.td-chip.active{background:#0d7a5f;border-color:#0d7a5f;color:#fff;}.td-chip .td-n{opacity:.6;margin-left:4px;font-weight:600;}'
+   +'.td-card{background:#fff;border:1px solid #e0e4ec;border-radius:12px;padding:14px 16px;margin-bottom:11px;box-shadow:0 1px 2px rgba(20,35,61,.04);}'
+   +'.td-row1{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}'
+   +'.td-kind{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:7px;}'
+   +'.k-call{background:#fbe7d6;color:#c07d1f;}.k-nudge{background:#e5edfd;color:#2f6df0;}.k-mandate{background:#efe7fe;color:#7c3aed;}'
+   +'.td-name{font-size:16px;font-weight:700;color:#1a1a2e;}'
+   +'.td-due{margin-left:auto;font-size:11.5px;color:#c0392b;font-weight:600;}'
+   +'.td-meta{font-size:12.5px;color:#666;margin:4px 0 0;}'
+   +'.td-sub{font-size:13px;color:#333;margin:7px 0 0;}.td-sub b{color:#1a3060;}'
+   +'.td-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center;}'
+   +'.td-b{font-size:12.5px;font-weight:600;padding:7px 13px;border-radius:8px;border:1px solid #d0d5e0;background:#fff;color:#333;cursor:pointer;font-family:inherit;text-decoration:none;}'
+   +'.td-pri{background:#0d7a5f;border-color:#0d7a5f;color:#fff;}.td-ok{background:#1e8a5a;border-color:#1e8a5a;color:#fff;}.td-copy{background:#2f6df0;border-color:#2f6df0;color:#fff;}'
+   +'.td-link{color:#2f6df0;}.td-empty{text-align:center;color:#8a8a9e;font-size:14px;padding:48px 12px;}'
+   +'.td-count{font-size:12px;color:#8a8a9e;font-weight:600;margin-bottom:12px;}';
+  document.head.appendChild(st);
+  var anchor=document.getElementById('tab-general');
+  if(anchor&&!document.getElementById('tab-td')){
+    var b=document.createElement('div');b.className='tab td-tab';b.id='tab-td';b.setAttribute('onclick',"switchTab('td')");
+    b.innerHTML='Today <span class="tab-badge" id="td-badge">0</span>';
+    anchor.parentNode.insertBefore(b,anchor);
+  }
+  var av=document.getElementById('cc-view')||document.getElementById('mm-view')||document.getElementById('fu-view');
+  if(av&&!document.getElementById('td-view')){
+    var v=document.createElement('div');v.className='td-view';v.id='td-view';v.style.display='none';
+    v.innerHTML='<div class="td-wrap"><div class="td-h">Today</div>'
+     +'<div class="td-sub2">Everything due right now in one queue &mdash; warm &amp; follow-up calls first, then nudges, then mandate offers. Each action advances the person automatically.</div>'
+     +'<div id="td-chips"></div><div id="td-list"></div></div>';
+    av.parentNode.insertBefore(v,av.nextSibling);
+  }
+  if(typeof switchTab==='function'){var _tdPrev=switchTab;switchTab=function(t){if(t==='td'){return tdShow();}var v=document.getElementById('td-view');if(v)v.style.display='none';var tp=document.getElementById('tab-td');if(tp)tp.classList.remove('active');return _tdPrev(t);};}
+  setTimeout(tdUpdateBadge,1600);
+})();
+/* ════════ END TODAY ════════ */
+
 
 
 
