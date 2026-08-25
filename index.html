@@ -2913,6 +2913,7 @@ function ccKey(n){return (n||'').replace(/[.#$/\[\]]/g,'_');}
 function ccJs(k){return String(k).replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
 function ccEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function ccFmt(d){try{return (typeof fmtD==='function')?fmtD(d):d;}catch(e){return d;}}
+function ccFmtPhone(p){p=(''+(p||'')).trim();if(!p)return p;var d=p.replace(/[^\d]/g,'');if(d.length===10)return d.slice(0,3)+'-'+d.slice(3,6)+'-'+d.slice(6);if(d.length===11&&d.charAt(0)==='1')return d.slice(1,4)+'-'+d.slice(4,7)+'-'+d.slice(7);return p;}
 function ccInit(){
   if(typeof _fbRef==='undefined'||!_fbRef){setTimeout(ccInit,500);return;}
   _fbRef.child('coldCallData').once('value').then(function(s){ccData=s.val()||{};try{_ccSynced=JSON.parse(JSON.stringify(ccData));}catch(e){}ccUpdateBadge();setTimeout(ccUpdateBadge,2500);var cv=document.getElementById('cc-view');if(cv&&cv.style.display!=='none')ccRender();}).catch(function(e){console.error('[ccInit]',e);});
@@ -3028,7 +3029,7 @@ function wcList(){
     var firms=[];if(f.target)firms.push(sf(f.target));if(f.alt1&&f.alt1!==f.target)firms.push(sf(f.alt1));
     var atts=wc.attempts||[];
     rows.push({name:nm,firm:f.firm||'',city:f.city||'',practice:f.practice||ci.pr||'',specialties:ci.sp||'',
-      linkedin:f.linkedin||'',phone:ci.ph||'',url:ci.url||f.fp||'',firms:firms,reason:f.warmReason||'accepted + 2 messages',
+      linkedin:f.linkedin||'',phone:ci.ph||'',cell:(typeof PERSONAL_CELLS!=='undefined'&&PERSONAL_CELLS[nm])||'',fp:f.fp||ci.url||'',url:ci.url||f.fp||'',firms:firms,reason:f.warmReason||'accepted + 2 messages',
       readyDate:wc.nextCall||f.callReadyDate||'',attempts:atts.length,lastAttempt:(atts.length?atts[atts.length-1]:null)});
   }
   rows.sort(function(a,b){return a.readyDate<b.readyDate?-1:a.readyDate>b.readyDate?1:0;});
@@ -3041,6 +3042,8 @@ function wcCardHTML(r){
   var firmsHtml=(r.firms&&r.firms.length)?r.firms.map(function(f){return '<span class="cc-pill">'+ccEsc(f)+'</span>';}).join(''):'<span style="color:#999;font-size:12px;">(no firms on file)</span>';
   var phoneHtml=r.phone?'<a href="tel:'+ccEsc((r.phone||'').replace(/[^+\d]/g,''))+'" class="cc-phone">'+ccEsc(r.phone)+'</a>':'<span style="color:#c0392b;font-size:12px;">no phone on file</span>';
   var liHtml=r.linkedin?'<a href="'+ccEsc(r.linkedin)+'" target="_blank" rel="noopener" class="cc-biolink">LinkedIn &#8599;</a>':'';
+  var cellHtml=r.cell?'<a href="tel:'+ccEsc((r.cell||'').replace(/[^+\d]/g,''))+'" class="cc-cell" title="Personal cell">&#128241; '+ccEsc(ccFmtPhone(r.cell))+'</a>':'';
+  var fpHtml=r.fp?'<button class="cc-fpbtn" onclick="window.open(\''+ccJs(r.fp)+'\',\'_blank\')">FP &#8599;</button>':'';
   var ps='';if(r.practice||r.specialties)ps='<div class="cc-ps">'+(r.practice?'<b>'+ccEsc(r.practice)+'</b>':'')+(r.practice&&r.specialties?' &middot; ':'')+(r.specialties?ccEsc(r.specialties):'')+'</div>';
   var attLine=r.attempts?'<div class="wc-attline">&#9742; Attempt #'+(r.attempts+1)+(r.lastAttempt?' &middot; last: no answer '+ccEsc(ccFmt(r.lastAttempt.d)):'')+'</div>':'';
   var naLabel=r.attempts>=2?'No answer (final)':'No answer';
@@ -3049,7 +3052,7 @@ function wcCardHTML(r){
     +'<div class="cc-name">'+ccEsc(r.name)+'</div><div class="wc-chip">'+ccEsc(r.reason)+'</div></div>'
     +'<div class="cc-meta">'+ccEsc(r.firm||'')+(r.city?' &middot; '+ccEsc(r.city):'')+'</div>'
     +ps
-    +'<div style="margin:8px 0;font-size:15px;">'+phoneHtml+(liHtml?'  &middot;  '+liHtml:'')+'</div>'
+    +'<div class="wc-contact">'+phoneHtml+(cellHtml?'  &middot;  '+cellHtml:'')+(liHtml?'  &middot;  '+liHtml:'')+(fpHtml?'  '+fpHtml:'')+'</div>'
     +'<div class="cc-lbl">Firms to pitch</div><div>'+firmsHtml+'</div>'
     +attLine
     +'<div class="cc-lbl" style="margin-top:12px;">After the call</div>'
@@ -3164,7 +3167,11 @@ function ccShow(){
    +'.wc-b{font-size:13px;font-weight:600;padding:8px 14px;border-radius:8px;border:1px solid #d0d5e0;background:#fff;color:#333;cursor:pointer;font-family:inherit;}'
    +'.wc-int{background:#1e8a5a;border-color:#1e8a5a;color:#fff;}.wc-int:hover{background:#186f49;}'
    +'.wc-na{color:#8a6d1f;border-color:#e6d9a8;background:#fbf6e6;}.wc-na:hover{background:#f6edcf;}'
-   +'.wc-no{color:#c0392b;border-color:#eccac5;background:#fdf2f0;}.wc-no:hover{background:#f9e3df;}';
+   +'.wc-no{color:#c0392b;border-color:#eccac5;background:#fdf2f0;}.wc-no:hover{background:#f9e3df;}'
+   +'.wc-contact{margin:8px 0;font-size:14px;display:flex;gap:4px 10px;flex-wrap:wrap;align-items:center;}'
+   +'.cc-cell{color:#0d7a5f;font-weight:600;text-decoration:none;}'
+   +'.cc-fpbtn{font-size:11.5px;font-weight:600;color:#7c3aed;background:#f6f2ff;border:1px solid #ddd0f5;border-radius:6px;padding:3px 9px;cursor:pointer;font-family:inherit;}'
+   +'.td-cell{color:#0d7a5f!important;border-color:#bfe3d4!important;background:#eafaf3!important;}';
   document.head.appendChild(wcSt);
   setTimeout(ccInit,1100);
   setTimeout(wcInit,1150);
@@ -3353,6 +3360,7 @@ function mmShow(){
   setTimeout(mmInit,1300);
 })();
 /* ════════ END MANDATE MATCH ════════ */
+const PERSONAL_CELLS={"Leon Yel": "917-627-8557", "Samantha Banks": "610.209.1877", "Shams Billah": "(212) 837-6107", "Benjamin Allen": "202-257-8298", "Ryan Swan": "8153837473", "Joshua Reif": "(205) 721-3458", "Blair Lichtenfels": "303.913.3909.", "Frank Schoen": "516.526.5846", "Joseph Bernardi": "617-678-2278.", "Steve Reil": "213.330.7709", "Van Whiting": "323-333-1227", "David Hengstler": "9493064088", "John Willding": "(214) 663-5209", "Watson Bowen": "5122402489", "Francis McCabe": "949.412.1592.", "Brian Gingold": "212-351-4037", "Samir Bakhru": "513-910-9052", "Jeffrey Escobar": "212 896 0614", "Rachel Gillette": "303-295-8241", "Philip Marchion": "561-252-4759.", "Anne Cox-Johnson": "678-595-9745", "Linda Igarashi": "972 358 9995", "Jessica Springsteen": "202-258-4664", "Abe Wehbi": "708.288.8273", "Aaron Blynn": "7864689338", "David Martin": "713.823.7196", "Larry Medvinsky": "212-878-8149", "Mark Nicoletti": "626-233-1777", "Jeremy Alexander": "3013670504", "Ari Lustig": "201-401-5491", "Zohar Nevo": "857-234-8349", "Jason Koenig": "917-524-4850", "Jennifer Nellany": "856-264-6821", "John Mcdonnell": "(312) 519-5092", "Loryn Arkow": "310-556-5985", "Alexander Davis": "949-633-9759", "Natalie Hilmandolar": "704-909-1089", "Eli Wolfe": "215-806-5802", "Joseph Derrigo Jr": "315.528.7500", "Javad Husain": "(347) 330-1917", "Anthony Burba": "3122145638", "Jose Vivanco Letelier": "1-310-857-9230", "Tyler Keenan": "412 580 3493", "Thomas Balmat": "720-453-6652", "Andrew Freedland": "(212) 278-1083", "Mark Semotiuk": "310.995.5569", "Kevin Badgley": "248-343-0255", "Chian Wu": "2063596232", "Hilary Atzrott": "845-235-5592", "Shah Nizami": "9784908158", "Jessica Macallister": "404-710-8385", "Andrew Mullen": "(303)583-9984", "Nathan Pagett": "212-789-3116", "David Conway": "+1 858 888 6993", "Bryan Joggerst": "607-760-5163", "Brian Huber": "6175269675", "Daniel Leyva": "3052030630", "Michael Steinberg": "774-255-0332", "Ariel Shaeps": "(760) 449-1525", "Mary Katherine Rawls": "6785927738", "Christina Barringer": "330-509-0104", "Sean Fitzpatrick": "212-479-6863", "Donald Lussier": "617-981-1851", "Adam Mandelsberg": "917-428-1008", "Eric Knickrehm": "(712) 281-0158.", "Micah Myers": "202-258-8189", "Sander Zagzebski": "213.604.3404", "Richard Smith": "973 735 7310", "Massimo D'Angelo": "732 232-1617", "Kaitlinn Sliter": "630-263-4729", "Matthew Vandergoot": "202-271-5131.", "Sean Cichowski": "7132247800", "Anna Carr": "615-550-3075", "Marla Matusic": "412-651-2354", "Isaac Neill": "704.331.3648", "Brett De Jarnette": "6509965253", "Angela Bernardi": "650-743-7297.", "Nishant Dharia": "516 348 3050.", "Christopher Ellis": "8285510701", "Zachary Samton": "917 612-7617", "Michael Swoyer": "215-806-1657", "Andrew Kreider": "3039095525", "Noam Fischman": "(202) 626-8360", "Michael Rinaldi": "(610) 986-8448.", "Aaron Weiss": "305-539-7382", "Celia Cohen": "9174205908", "Jessica Natali": "267-239-1626", "Ira Teicher": "305 459 6643", "Megan Foscaldi": "9142047312", "Kait Kelly": "248-345-4858", "Nicholas Secco": "773-519-4657.", "Aaron Scow": "214-673-4711", "Skyler Anderson": "2063219308", "Roy Liu": "2027214621", "Matthew Kelly": "(847) 702-0228", "Marisa Wilson": "786-635-0522", "Jason Bradford": "847.370.0537", "Cassandra Mott": "713-951-5803", "Peter Morreale": "202-862-2258", "Daniel Sylvester": "7736333973", "Monty Cooper": "301.875.5399.", "Gregory Speier": "973-879-8156", "Timothy Donovan": "410-852-2380", "Paul Alp": "+1 202 639 5357", "Kevin Cao": "1", "Michael Black": "(312)835-4977", "Andrew Thorpe": "415.794.6495", "Jaimie Nawaday": "6075921698", "Jerome Shuman": "202-415-8208", "David Blank": "(202) 322-1246", "Amanda Genovese": "(203) 506-7251", "Victoria Bruno": "4105455820", "Michael Penney": "3125832363", "Mario Dolan": "972.951.8796", "Kevin Crews": "214-406-2173", "John Owen": "512-991-1100", "Eileen Boyce": "(713) 229-1343 (", "Dave Pierson": "7136549613", "Joshua Hager": "(973) 698-3600", "Jason Hopkins": "214.665.3660", "Audrey Pumariega": "305-508-8657.", "Justin Huff": "703-801-0394", "Brian Shue": "908-229-1236", "Fria Kermani": "202-812-6833", "Sarah Hall": "202 263 4192", "Justin Scott": "346.310.6010", "Cody Vitello": "360-510-1416", "Julian Perlman": "212-841-0566", "Elizabeth Christen": "217.652.9262.", "Benjamin Montanez": "210-803-1712", "Efren Acosta": "713-229-1728", "Timothy Mcginn": "305-376-6084", "Jared Shwartz": "(203) 337-4153", "Colby Smith": "1.215.963.5496", "Ross MacConnell": "(610) 597-6985", "Kendra Berardi": "617.895.6321", "Blake Osborn": "213-612-2020", "Ashton Butcher": "972-658-5650", "Alejandro Arias": "786-525-3856", "Vincent Rizzo": "815-690-4056", "Soo Park": "213-700-9927", "Matthew Grosack": "3054238554", "Kenneth Duvall": "314.920.1096", "Diba Rastegar": "(310) 990-8457", "Mark Liang": "415-984-8882", "Karen Luong": "2133376559", "Jesse Dyer": "312.607.2560", "Jennifer Lada": "478-714-4911", "Zachary Swartz": "(202) 251-7942", "Xochitl Strohbehn": "347-331-6922", "Raffi Zerounian": "310-874-5909", "Rachel Welford": "248 302 7853", "Alberto Rivera": "(202) 302 8043", "Benjamin Weinberg": "(305) 495-8257.", "Meryl Bernstein": "+1 848 459 4588", "Jonathan Rotenberg": "201-294-7846", "Scott Beal": "+1 212 450 4006", "Lance Lange": "515-991-7677", "Sarah Greenberg": "2149528091", "Bernardo Piereck": "(202) 261-3405", "Michael Dyson": "+1 (703) 946-0376", "Samuel Hu": "3605995305", "Luis Torres": "203-258-3803", "Adam Herring": "404-213-1701", "Bruce Thompson II": "919-828-0564", "Natalia Smychkovich": "617-619-7220", "Michael Spirtos": "650-228-4177", "Lisa Wren": "609-475-5184", "Mark Kmiecik": "+1 414-225-1406", "Jennifer Tolsky": "312.849.4139", "Latrice Baptiste": "312 515 7971", "Scott Schonfeld": "9545584567", "Matt Stockstill": "214-740-8551", "Crystal Becker": "310 210 4979", "Joshua Broderson": "6102203450", "Morgan Miller": "(301) 801 8831.", "Suzanne Filippi": "6462799538", "Peter Munk": "404-543-1030", "Simone Riley": "(818) 917-3865", "Michael Lehrman": "608-469-3989", "Jaesuk Yoo": "+1 (646) 979-1612.", "Tracy Jacobson": "847-946-8149", "Jennifer Karnes": "585-738-5136", "Jon-Luc Dupuy": "617-429-2353", "David Rothschild": "650-492-0781", "Kristin Rice-Gonzalez": "+1 (708) 465-4621", "Alan Pryor": "1-404-881-7852", "Jennifer Michael": "202.213.4901.", "En-Min Chua": "+1 267 334 8126", "Alexandra Mora": "+1 (305) 205-8224", "Gregory Gistenson": "(312) 214-4573", "Andrew Smith": "(917) 687-2099", "Patrick Reagin": "504.460.5479", "Matthew Gases": "212-589-4654", "Enoch Varner": "+1 713 836 3377", "Aaron Cargain": "415-917-5468", "Matthew Scheer": "(954) 292-2188", "Marina Kofsman": "646-825-0870.", "Utibe Ikpe": "786-406-9569", "Dayron Silverio": "305-632-3024", "Alexander Argyris": "6462212754", "Brittany Cambre": "(404) 285-4231", "David Salhanick": "203-494-7012", "Yonaton Rosenzweig": "3102705778", "Ashley Mahoney": "+1 (802) 345-3808", "Anthony Scali": "+1 (732) 446-4085", "Sarah Smith": "nan", "Brandea Bidelspach": "nan", "Michael Lee": "nan"};
 /* ════════ TODAY ════════ Unified worklist: everything due right now — warm/follow-up calls,
    nudges, and mandate offers — in one priority-ordered queue with one-click actions. Read-only
    aggregator over existing data (fuData / wcData / MANDATE_MATCHES); every action reuses the
@@ -3397,6 +3405,9 @@ function tdCardHTML(x){
   if(x.type==='call')return wcCardHTML(x.data);
   var jn=ccJs(x.name);var sf=(typeof sfGlobal==='function')?sfGlobal:function(v){return v;};
   var li=x.linkedin?'<a class="td-b td-link" href="'+ccEsc(x.linkedin)+'" target="_blank" rel="noopener">LinkedIn &#8599;</a>':'';
+  var fpHtml=x.fp?'<button class="td-b td-link" onclick="window.open(\''+ccJs(x.fp)+'\',\'_blank\')">Firm prospect &#8599;</button>':'';
+  var cell=(typeof PERSONAL_CELLS!=='undefined'&&PERSONAL_CELLS[x.name])||'';
+  var cellHtml=cell?'<a class="td-b td-cell" href="tel:'+ccEsc((''+cell).replace(/[^+\d]/g,''))+'" title="Personal cell">&#128241; '+ccEsc(ccFmtPhone(cell))+'</a>':'';
   var meta='<div class="td-meta">'+ccEsc(x.firm||'')+(x.city?' &middot; '+ccEsc(x.city):'')+(x.practice?' &middot; '+ccEsc(x.practice):'')+'</div>';
   if(x.type==='nudge'){
     var pitched=sf(x.target)+((x.alt1&&x.alt1!==x.target)?' + '+sf(x.alt1):'');
@@ -3405,15 +3416,14 @@ function tdCardHTML(x){
       +meta+'<div class="td-sub">Following up on <b>'+ccEsc(pitched)+'</b></div>'
       +'<div class="td-acts"><button class="td-b td-copy" onclick="tdCopyNudge(\''+jn+'\')">&#128203; Copy</button>'
       +'<button class="td-b td-ok" onclick="tdDoNudge(\''+jn+'\')">&#10003; Sent</button>'
-      +'<button class="td-b" onclick="tdLaterNudge(\''+jn+'\')">Later</button>'+li+'</div></div>';
+      +'<button class="td-b" onclick="tdLaterNudge(\''+jn+'\')">Later</button>'+cellHtml+li+fpHtml+'</div></div>';
   }
   // mandate
   var firms=(x.mandates||[]).map(function(mm){return ccEsc(mm.firm);}).filter(function(v,i,a){return a.indexOf(v)===i;}).join(', ');
-  var fp=x.fp?'<button class="td-b td-link" onclick="window.open(\''+ccJs(x.fp)+'\',\'_blank\')">Firm prospect &#8599;</button>':'';
   return '<div class="td-card">'
     +'<div class="td-row1"><span class="td-kind k-mandate">Mandate offer</span><span class="td-name">'+ccEsc(x.name)+'</span></div>'
     +meta+'<div class="td-sub">Offer: <b>'+firms+'</b></div>'
-    +'<div class="td-acts"><button class="td-b td-pri" onclick="tdMandateOffer(\''+jn+'\')">Mark offered</button>'+fp+li+'</div></div>';
+    +'<div class="td-acts"><button class="td-b td-pri" onclick="tdMandateOffer(\''+jn+'\')">Mark offered</button>'+cellHtml+fpHtml+li+'</div></div>';
 }
 function tdRender(){var list=document.getElementById('td-list');if(!list)return;
   if(!(typeof fuData!=='undefined'&&fuData)){list.innerHTML='<div class="td-empty">Loading&hellip;</div>';setTimeout(tdRender,600);return;}
