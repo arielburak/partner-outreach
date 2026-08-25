@@ -3016,6 +3016,14 @@ function wcSaveNow(){
 }
 // count calls already made (new touches + legacy attempts)
 function wcCallCount(wc){if(!wc)return 0;var n=(wc.attempts||[]).length;(wc.touches||[]).forEach(function(x){if(x.t==='call')n++;});return n;}
+// mandate-seat lookup (which active board cluster/firms this candidate fits) — for the call reasoning
+var _wcMmMap=null;
+function wcMandateSeat(name){
+  if(_wcMmMap===null){_wcMmMap={};try{for(var i=0;i<MANDATE_MATCHES.length;i++)_wcMmMap[MANDATE_MATCHES[i].name]=MANDATE_MATCHES[i];}catch(e){}}
+  var m=_wcMmMap[name];if(!m)return null;
+  var firms=[];(m.mandates||[]).forEach(function(x){if(firms.indexOf(x.firm)<0)firms.push(x.firm);});
+  return {clusters:(m.clusters||[]).join(', '),firms:firms.join(', ')};
+}
 // the current due step for a candidate: {t:'call'|'li', d:date}
 function wcStep(f,wc){
   if(wc){if(wc.next&&wc.next.d)return {t:wc.next.t,d:wc.next.d};
@@ -3037,7 +3045,7 @@ function wcList(){
     var firms=[];if(f.target)firms.push(sf(f.target));if(f.alt1&&f.alt1!==f.target)firms.push(sf(f.alt1));
     rows.push({name:nm,firm:f.firm||'',city:f.city||'',practice:f.practice||ci.pr||'',specialties:ci.sp||'',
       linkedin:f.linkedin||'',phone:ci.ph||'',cell:(typeof PERSONAL_CELLS!=='undefined'&&PERSONAL_CELLS[nm])||'',fp:f.fp||ci.url||'',url:ci.url||f.fp||'',firms:firms,reason:f.warmReason||'accepted + 2 messages',
-      readyDate:step.d||'',stepType:step.t,callsMade:wcCallCount(wc)});
+      readyDate:step.d||'',stepType:step.t,callsMade:wcCallCount(wc),seat:wcMandateSeat(nm)});
   }
   rows.sort(function(a,b){return a.readyDate<b.readyDate?-1:a.readyDate>b.readyDate?1:0;});
   return rows;
@@ -3053,6 +3061,7 @@ function wcCardHTML(r){
   var fpHtml=r.fp?'<button class="cc-fpbtn" onclick="window.open(\''+ccJs(r.fp)+'\',\'_blank\')">FP &#8599;</button>':'';
   var ps='';if(r.practice||r.specialties)ps='<div class="cc-ps">'+(r.practice?'<b>'+ccEsc(r.practice)+'</b>':'')+(r.practice&&r.specialties?' &middot; ':'')+(r.specialties?ccEsc(r.specialties):'')+'</div>';
   var isLi=r.stepType==='li';
+  var seatLine=r.seat?'<div class="wc-seat">&#9733; Mandate seat: <b>'+ccEsc(r.seat.clusters)+'</b>'+(r.seat.firms?' &middot; '+ccEsc(r.seat.firms):'')+'</div>':'';
   var stepChip=isLi?'<span class="wc-step wc-step-li">&#128279; LinkedIn between calls</span>':(r.callsMade?'<span class="wc-step wc-step-call">&#9742; Call attempt #'+(r.callsMade+1)+'</span>':'');
   var common='<div class="cc-card wc-card'+(isLi?' wc-li-card':'')+'">'
     +'<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;">'
@@ -3060,6 +3069,7 @@ function wcCardHTML(r){
     +'<div class="cc-meta">'+ccEsc(r.firm||'')+(r.city?' &middot; '+ccEsc(r.city):'')+'</div>'
     +ps
     +'<div class="wc-contact">'+phoneHtml+(cellHtml?'  &middot;  '+cellHtml:'')+(liHtml?'  &middot;  '+liHtml:'')+(fpHtml?'  '+fpHtml:'')+'</div>'
+    +seatLine
     +'<div class="cc-lbl">Firms to pitch</div><div>'+firmsHtml+'</div>'
     +(stepChip?'<div class="wc-attline">'+stepChip+'</div>':'');
   if(isLi){
@@ -3210,7 +3220,8 @@ function ccShow(){
    +'.td-cell{color:#0d7a5f!important;border-color:#bfe3d4!important;background:#eafaf3!important;}'
    +'.wc-sent{color:#2f6df0;border-color:#cfe0f5;background:#f2f7ff;}.wc-sent:hover{background:#e5eefd;}'
    +'.wc-li-card{border-left-color:#2f6df0;}'
-   +'.wc-step{font-size:12px;font-weight:600;}.wc-step-li{color:#2f6df0;}.wc-step-call{color:#b8860b;}';
+   +'.wc-step{font-size:12px;font-weight:600;}.wc-step-li{color:#2f6df0;}.wc-step-call{color:#b8860b;}'
+   +'.wc-seat{margin:8px 0 2px;font-size:12.5px;color:#7c3aed;background:#f6f2ff;border:1px solid #e5dcfa;border-radius:8px;padding:7px 10px;line-height:1.45;}.wc-seat b{color:#5b21b6;}';
   document.head.appendChild(wcSt);
   setTimeout(ccInit,1100);
   setTimeout(wcInit,1150);
@@ -3414,7 +3425,9 @@ function tdNudges(){var out=[];if(typeof fuData==='undefined'||!fuData)return ou
   return out;}
 function tdMandates(){var out=[];if(typeof MANDATE_MATCHES==='undefined'||typeof mmUniverse!=='function')return out;
   try{mmBuildFu();}catch(e){}
-  try{var uni=mmUniverse();for(var i=0;i<uni.length;i++){var m=uni[i];if(mmEligible(m)&&!mmResolved(m))out.push({type:'mandate',name:m.name,firm:m.firm||'',city:m.city||'',mandates:m.mandates||[],fp:m.fp||'',linkedin:m.linkedin||'',due:''});}}catch(e){}
+  // candidates already in the warm-call queue show their mandate as a seat on the call card — don't double-list
+  var inWarm={};try{for(var k in fuData){var f=fuData[k];if(f&&f.callQueue&&!f.done)inWarm[f.name]=1;}}catch(e){}
+  try{var uni=mmUniverse();for(var i=0;i<uni.length;i++){var m=uni[i];if(mmEligible(m)&&!mmResolved(m)&&!inWarm[m.name])out.push({type:'mandate',name:m.name,firm:m.firm||'',city:m.city||'',mandates:m.mandates||[],fp:m.fp||'',linkedin:m.linkedin||'',due:''});}}catch(e){}
   return out;}
 function tdList(){var calls=tdCalls(),nudges=tdNudges(),mand=tdMandates();var all=[];
   if(tdFilter==='all'||tdFilter==='call')all=all.concat(calls);
