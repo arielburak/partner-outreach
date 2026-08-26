@@ -3434,12 +3434,17 @@ function tdMandates(){var out=[];if(typeof MANDATE_MATCHES==='undefined'||typeof
   var inWarm={};try{for(var k in fuData){var f=fuData[k];if(f&&f.callQueue&&!f.done)inWarm[f.name]=1;}}catch(e){}
   try{var uni=mmUniverse();for(var i=0;i<uni.length;i++){var m=uni[i];if(mmEligible(m)&&!mmResolved(m)&&!inWarm[m.name])out.push({type:'mandate',name:m.name,firm:m.firm||'',city:m.city||'',mandates:m.mandates||[],fp:m.fp||'',linkedin:m.linkedin||'',due:''});}}catch(e){}
   return out;}
-function tdList(){var calls=tdCalls(),mand=tdMandates();var all=[];  // nudges live on the dedicated Follow-ups tab, not here
+var TD_DAILY=10;  // daily call target — Today shows only the oldest N still-open calls
+function tdList(){var callsAll=tdCalls(),mand=tdMandates();var all=[];  // nudges live on the dedicated Follow-ups tab, not here
+  // tdCalls is already oldest-due-first, so the top N are the calls that have been waiting longest.
+  // If you don't finish today's N, the same N stay at the top tomorrow (nothing new pushes them down);
+  // the moment you resolve one it leaves and the next-oldest fills the slot. Missed work never piles up on-screen.
+  var calls=callsAll.slice(0,TD_DAILY);
   if(tdFilter==='all'||tdFilter==='call')all=all.concat(calls);
   if(tdFilter==='all'||tdFilter==='mandate')all=all.concat(mand);
   var rank={call:0,mandate:2};
   all.sort(function(a,b){if(rank[a.type]!==rank[b.type])return rank[a.type]-rank[b.type];var da=a.due||'9999',db=b.due||'9999';return da<db?-1:da>db?1:0;});
-  return {calls:calls.length,nudges:0,mand:mand.length,rows:all};}
+  return {calls:calls.length,callsDue:callsAll.length,nudges:0,mand:mand.length,rows:all};}
 function _tdFk(name){for(var k in fuData){if(fuData[k]&&fuData[k].name===name)return k;}return null;}
 function tdDoNudge(name){var fk=_tdFk(name);if(!fk)return;
   try{fuBuildQ();}catch(e){}
@@ -3488,10 +3493,10 @@ function tdRender(){var list=document.getElementById('td-list');if(!list)return;
   if(chips)chips.innerHTML=[['all','All',L.calls+L.mand],['call','Calls',L.calls],['mandate','Mandate offers',L.mand]].map(function(c){return '<button class="td-chip'+(tdFilter===c[0]?' active':'')+'" onclick="tdSetFilter(\''+c[0]+'\')">'+c[1]+' <span class="td-n">'+c[2]+'</span></button>';}).join('');
   var b=document.getElementById('td-badge');if(b)b.textContent=(L.calls+L.nudges+L.mand);
   if(!L.rows.length){list.innerHTML='<div class="td-empty">Nothing due right now &mdash; you\'re all caught up.</div>';return;}
-  var CAP=40,shown=L.rows.slice(0,CAP);
-  var head='<div class="td-count">'+L.rows.length+' due today'+(L.rows.length>CAP?' &middot; showing top '+CAP:'')+'</div>';
-  var more=L.rows.length>CAP?'<div class="td-empty" style="padding:22px 12px;">'+(L.rows.length-CAP)+' more behind these &mdash; work the top of the list and they surface.</div>':'';
-  list.innerHTML=head+shown.map(tdCardHTML).join('')+more;}
+  var back=(L.callsDue||0)-L.calls;
+  var head='<div class="td-count">'+L.rows.length+' for today'+(back>0?' &middot; '+back+' more in the backlog':'')+'</div>';
+  var more=back>0?'<div class="td-empty" style="padding:18px 12px;">'+back+' more warm calls waiting &mdash; clear today\'s '+L.calls+' and the next batch surfaces.</div>':'';
+  list.innerHTML=head+L.rows.map(tdCardHTML).join('')+more;}
 function tdSetFilter(f){tdFilter=f;tdRender();}
 function tdUpdateBadge(){var b=document.getElementById('td-badge');if(!b)return;try{var L=tdList();b.textContent=(L.calls+L.nudges+L.mand);}catch(e){}}
 function tdShow(){
