@@ -3433,13 +3433,12 @@ function tdMandates(){var out=[];if(typeof MANDATE_MATCHES==='undefined'||typeof
   var inWarm={};try{for(var k in fuData){var f=fuData[k];if(f&&f.callQueue&&!f.done)inWarm[f.name]=1;}}catch(e){}
   try{var uni=mmUniverse();for(var i=0;i<uni.length;i++){var m=uni[i];if(mmEligible(m)&&!mmResolved(m)&&!inWarm[m.name])out.push({type:'mandate',name:m.name,firm:m.firm||'',city:m.city||'',mandates:m.mandates||[],fp:m.fp||'',linkedin:m.linkedin||'',due:''});}}catch(e){}
   return out;}
-function tdList(){var calls=tdCalls(),nudges=tdNudges(),mand=tdMandates();var all=[];
+function tdList(){var calls=tdCalls(),mand=tdMandates();var all=[];  // nudges live on the dedicated Follow-ups tab, not here
   if(tdFilter==='all'||tdFilter==='call')all=all.concat(calls);
-  if(tdFilter==='all'||tdFilter==='nudge')all=all.concat(nudges);
   if(tdFilter==='all'||tdFilter==='mandate')all=all.concat(mand);
-  var rank={call:0,nudge:1,mandate:2};
+  var rank={call:0,mandate:2};
   all.sort(function(a,b){if(rank[a.type]!==rank[b.type])return rank[a.type]-rank[b.type];var da=a.due||'9999',db=b.due||'9999';return da<db?-1:da>db?1:0;});
-  return {calls:calls.length,nudges:nudges.length,mand:mand.length,rows:all};}
+  return {calls:calls.length,nudges:0,mand:mand.length,rows:all};}
 function _tdFk(name){for(var k in fuData){if(fuData[k]&&fuData[k].name===name)return k;}return null;}
 function tdDoNudge(name){var fk=_tdFk(name);if(!fk)return;
   try{fuBuildQ();}catch(e){}
@@ -3485,7 +3484,7 @@ function tdCardHTML(x){
 function tdRender(){var list=document.getElementById('td-list');if(!list)return;
   if(!(typeof fuData!=='undefined'&&fuData)){list.innerHTML='<div class="td-empty">Loading&hellip;</div>';setTimeout(tdRender,600);return;}
   var L=tdList();var chips=document.getElementById('td-chips');
-  if(chips)chips.innerHTML=[['all','All',L.calls+L.nudges+L.mand],['call','Calls',L.calls],['nudge','Nudges',L.nudges],['mandate','Mandate offers',L.mand]].map(function(c){return '<button class="td-chip'+(tdFilter===c[0]?' active':'')+'" onclick="tdSetFilter(\''+c[0]+'\')">'+c[1]+' <span class="td-n">'+c[2]+'</span></button>';}).join('');
+  if(chips)chips.innerHTML=[['all','All',L.calls+L.mand],['call','Calls',L.calls],['mandate','Mandate offers',L.mand]].map(function(c){return '<button class="td-chip'+(tdFilter===c[0]?' active':'')+'" onclick="tdSetFilter(\''+c[0]+'\')">'+c[1]+' <span class="td-n">'+c[2]+'</span></button>';}).join('');
   var b=document.getElementById('td-badge');if(b)b.textContent=(L.calls+L.nudges+L.mand);
   if(!L.rows.length){list.innerHTML='<div class="td-empty">Nothing due right now &mdash; you\'re all caught up.</div>';return;}
   var CAP=40,shown=L.rows.slice(0,CAP);
