@@ -3435,11 +3435,14 @@ function tdMandates(){var out=[];if(typeof MANDATE_MATCHES==='undefined'||typeof
   try{var uni=mmUniverse();for(var i=0;i<uni.length;i++){var m=uni[i];if(mmEligible(m)&&!mmResolved(m)&&!inWarm[m.name])out.push({type:'mandate',name:m.name,firm:m.firm||'',city:m.city||'',mandates:m.mandates||[],fp:m.fp||'',linkedin:m.linkedin||'',due:''});}}catch(e){}
   return out;}
 var TD_DAILY=10;  // daily call target — Today shows only the oldest N still-open calls
+var tdMore=0;     // session-only expansion when Ari wants to do more than the daily 10 (resets to 0 each visit)
+function tdExpand(){tdMore=(typeof tdMore==='number'?tdMore:0)+TD_DAILY;tdRender();}
+function tdCollapse(){tdMore=0;tdRender();}
 function tdList(){var callsAll=tdCalls(),mand=tdMandates();var all=[];  // nudges live on the dedicated Follow-ups tab, not here
   // tdCalls is already oldest-due-first, so the top N are the calls that have been waiting longest.
   // If you don't finish today's N, the same N stay at the top tomorrow (nothing new pushes them down);
   // the moment you resolve one it leaves and the next-oldest fills the slot. Missed work never piles up on-screen.
-  var calls=callsAll.slice(0,TD_DAILY);
+  var calls=callsAll.slice(0,TD_DAILY+(typeof tdMore==='number'?tdMore:0));
   if(tdFilter==='all'||tdFilter==='call')all=all.concat(calls);
   if(tdFilter==='all'||tdFilter==='mandate')all=all.concat(mand);
   var rank={call:0,mandate:2};
@@ -3495,7 +3498,14 @@ function tdRender(){var list=document.getElementById('td-list');if(!list)return;
   if(!L.rows.length){list.innerHTML='<div class="td-empty">Nothing due right now &mdash; you\'re all caught up.</div>';return;}
   var back=(L.callsDue||0)-L.calls;
   var head='<div class="td-count">'+L.rows.length+' for today'+(back>0?' &middot; '+back+' more in the backlog':'')+'</div>';
-  var more=back>0?'<div class="td-empty" style="padding:18px 12px;">'+back+' more warm calls waiting &mdash; clear today\'s '+L.calls+' and the next batch surfaces.</div>':'';
+  var eb='background:#0d7a5f;color:#fff;border:none;border-radius:9px;padding:9px 16px;font-weight:600;cursor:pointer;font-size:13px;';
+  var lb='background:transparent;color:#0d7a5f;border:1px solid #0d7a5f;border-radius:9px;padding:9px 16px;font-weight:600;cursor:pointer;font-size:13px;';
+  var more='';
+  if(back>0){more='<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 4px 8px;">'
+      +'<button style="'+eb+'" onclick="tdExpand()">+ Show '+TD_DAILY+' more</button>'
+      +'<span style="color:#8a97ac;font-size:12.5px;">'+back+' still in the backlog</span>'
+      +(tdMore>0?'<button style="'+lb+'" onclick="tdCollapse()">Back to '+TD_DAILY+'</button>':'')+'</div>';}
+  else if(tdMore>0){more='<div style="padding:16px 4px 8px;"><button style="'+lb+'" onclick="tdCollapse()">Back to '+TD_DAILY+'</button></div>';}
   list.innerHTML=head+L.rows.map(tdCardHTML).join('')+more;}
 function tdSetFilter(f){tdFilter=f;tdRender();}
 function tdUpdateBadge(){var b=document.getElementById('td-badge');if(!b)return;try{var L=tdList();b.textContent=(L.calls+L.nudges+L.mand);}catch(e){}}
@@ -3507,6 +3517,7 @@ function tdShow(){
   var v=document.getElementById('td-view');if(v)v.style.display='flex';
   ['general','fox','followups','log','stats','live','prospects','push','cc','mm'].forEach(function(x){var el=document.getElementById('tab-'+x);if(el)el.classList.remove('active');});
   var t=document.getElementById('tab-td');if(t)t.classList.add('active');
+  tdMore=0;  // every visit to Today starts at the daily 10 unless Ari expands
   tdRender();
 }
 (function tdBootstrap(){
