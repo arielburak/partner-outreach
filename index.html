@@ -3087,6 +3087,7 @@ function wcCardHTML(r){
         +'<button class="wc-b wc-sent" onclick="wcLiSent(\''+jn+'\')">&#10003; LI sent</button>'
         +'<button class="wc-b wc-int" onclick="wcInterested(\''+jn+'\')">Interested</button>'
         +'<button class="wc-b wc-no" onclick="wcNotInterested(\''+jn+'\')">&#10007; Not interested</button>'
+        +'<button class="wc-b wc-skip" onclick="wcSkip(\''+jn+'\')" title="Take off my list — don\'t contact">Skip</button>'
       +'</div></div>';
   }
   var naLabel=r.callsMade>=2?'No answer (final)':'No answer';
@@ -3096,6 +3097,7 @@ function wcCardHTML(r){
       +'<button class="wc-b wc-int" onclick="wcInterested(\''+jn+'\')">&#10003; Interested</button>'
       +'<button class="wc-b wc-na" onclick="wcNoAnswer(\''+jn+'\')">'+naLabel+'</button>'
       +'<button class="wc-b wc-no" onclick="wcNotInterested(\''+jn+'\')">&#10007; Not interested</button>'
+      +'<button class="wc-b wc-skip" onclick="wcSkip(\''+jn+'\')" title="Take off my list — don\'t call">Skip</button>'
     +'</div>'
     +'</div>';
 }
@@ -3110,10 +3112,11 @@ function wcResolve(name,outcome){
   var mk=wcMainKey(name);if(mk){status[mk]=(outcome==='interested'?'interested':outcome==='not_interested'?'not_interested':'benched');try{saveS();}catch(e){}}
   try{saveFu();}catch(e){}try{updateFuBadge();}catch(e){}try{fbSaveNow();}catch(e){}
   try{ccUpdateBadge();}catch(e){}try{ccRender();}catch(e){}try{if(typeof tdRender==='function')tdRender();}catch(e){}
-  if(typeof showToast==='function')showToast(name+' → '+(outcome==='interested'?'Interested ✓':outcome==='not_interested'?'Not interested':'Benched'));
+  if(typeof showToast==='function')showToast(name+' → '+(outcome==='interested'?'Interested ✓':outcome==='not_interested'?'Not interested':outcome==='skipped'?'Skipped — off your list':'Benched'));
 }
 function wcInterested(name){wcResolve(name,'interested');}
 function wcNotInterested(name){wcResolve(name,'not_interested');}
+function wcSkip(name){wcResolve(name,'skipped');}  // "don't call this one" — removes from the queue, no call made
 function _wcRefresh(){try{ccUpdateBadge();}catch(e){}try{ccRender();}catch(e){}try{if(typeof tdRender==='function')tdRender();}catch(e){}try{if(typeof tdUpdateBadge==='function')tdUpdateBadge();}catch(e){}}
 function wcNoAnswer(name){
   var k=ccKey(name),today=todayStr();if(!wcData[k])wcData[k]={};var wc=wcData[k];
@@ -3121,7 +3124,7 @@ function wcNoAnswer(name){
   var calls=wcCallCount(wc);
   if(calls>=3){wc.disp='exhausted';wc.dispDate=today;wcSaveNow();wcResolve(name,'exhausted');
     if(typeof showToast==='function')showToast(name+': 3 calls, no contact — send a final LinkedIn note, benched');}
-  else{wc.callDue=addDays(today,7);wc.next={t:'li',d:addDays(today,3)};wcSaveNow();_wcRefresh();
+  else{wc.callDue=addDays(today,14);wc.next={t:'li',d:addDays(today,7)};wcSaveNow();_wcRefresh();
     if(typeof showToast==='function')showToast(name+': no answer — LinkedIn note queued for '+wc.next.d+', next call '+wc.callDue);}
 }
 function wcLiMsg(name){
@@ -3221,6 +3224,7 @@ function ccShow(){
    +'.wc-int{background:#1e8a5a;border-color:#1e8a5a;color:#fff;}.wc-int:hover{background:#186f49;}'
    +'.wc-na{color:#8a6d1f;border-color:#e6d9a8;background:#fbf6e6;}.wc-na:hover{background:#f6edcf;}'
    +'.wc-no{color:#c0392b;border-color:#eccac5;background:#fdf2f0;}.wc-no:hover{background:#f9e3df;}'
+   +'.wc-skip{color:#5b6a82;border-color:#d7dde6;background:#f3f5f8;}.wc-skip:hover{background:#e8ecf2;}'
    +'.wc-contact{margin:8px 0;font-size:14px;display:flex;gap:4px 10px;flex-wrap:wrap;align-items:center;}'
    +'.cc-cell{color:#0d7a5f;font-weight:600;text-decoration:none;}'
    +'.cc-fpbtn{font-size:11.5px;font-weight:600;color:#7c3aed;background:#f6f2ff;border:1px solid #ddd0f5;border-radius:6px;padding:3px 9px;cursor:pointer;font-family:inherit;}'
@@ -3524,7 +3528,8 @@ function tdStatsHTML(){
   var legend='<div style="background:var(--card,#fff);border:1px solid #e6eaf1;border-radius:11px;padding:12px 14px;margin-bottom:15px;">'
     +'<div style="font-weight:700;font-size:12.5px;color:#15233d;margin-bottom:7px;">After the call &mdash; what happens next</div>'
     +row('#dcefe6','#137a4f','&#10003; Interested','moves to your pipeline. Done, leaves the queue.')
-    +row('#fdf3d8','#b7791f','&#9742; No answer','a <b>LinkedIn note</b> surfaces in <b>3 days</b>, then the <b>next call in 7 days</b>. After 3 tries with no contact, benched.')
+    +row('#fdf3d8','#b7791f','&#9742; No answer','a <b>LinkedIn note</b> surfaces in <b>7 days</b>, then the <b>next call 7 days after that</b>. After 3 tries with no contact, benched.')
+    +row('#f3f5f8','#5b6a82','&#8594; Skip','taken off your list, no call made. (For people you don\'t want to call.)')
     +row('#f8e2df','#c0392b','&#10007; Not interested','benched, leaves the queue.')
     +'</div>';
   return strip+legend;
