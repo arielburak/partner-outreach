@@ -3066,10 +3066,7 @@ function wcCardHTML(r){
   var fpHtml=r.fp?'<button class="cc-fpbtn" onclick="window.open(\''+ccJs(r.fp)+'\',\'_blank\')">FP &#8599;</button>':'';
   var ps='';if(r.practice||r.specialties)ps='<div class="cc-ps">'+(r.practice?'<b>'+ccEsc(r.practice)+'</b>':'')+(r.practice&&r.specialties?' &middot; ':'')+(r.specialties?ccEsc(r.specialties):'')+'</div>';
   var isLi=r.stepType==='li';
-  var bioLine='';
-  if(r.bio){ bioLine = r.bio.length>320
-    ? '<div class="wc-bioWrap"><div class="wc-bio wc-clamp">'+ccEsc(r.bio)+'</div><span class="wc-biotoggle" onclick="wcBioToggle(this)">&#9662; more</span></div>'
-    : '<div class="wc-bio">'+ccEsc(r.bio)+'</div>'; }
+  var bioLine=r.bio?'<div class="wc-bio">'+ccEsc(r.bio)+'</div>':'';  // always show the full bio, no clamp
   var seatLine=r.seat?'<div class="wc-seat">&#9733; Mandate seat: <b>'+ccEsc(r.seat.clusters)+'</b>'+(r.seat.firms?' &middot; '+ccEsc(r.seat.firms):'')+'</div>':'';
   var stepChip=isLi?'<span class="wc-step wc-step-li">&#128279; LinkedIn between calls</span>':(r.callsMade?'<span class="wc-step wc-step-call">&#9742; Call attempt #'+(r.callsMade+1)+'</span>':'');
   var common='<div class="cc-card wc-card'+(isLi?' wc-li-card':'')+'">'
