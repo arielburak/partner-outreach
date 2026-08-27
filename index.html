@@ -3107,7 +3107,7 @@ function _wcFuKey(nm){for(var k in fuData){if(fuData[k]&&fuData[k].name===nm)ret
 function wcMainKey(nm){try{var tabs=['general','fox'];for(var ti=0;ti<tabs.length;ti++){var arr=(typeof DS!=='undefined'&&DS[tabs[ti]])||[];for(var i=0;i<arr.length;i++){if(arr[i].name===nm)return sk(tabs[ti],i);}}}catch(e){}return null;}
 function wcResolve(name,outcome){
   var fk=_wcFuKey(name);if(!fk)return;var fu=fuData[fk];var today=todayStr();
-  fu.done=true;fu.outcome=outcome;
+  fu.done=true;fu.outcome=outcome;fu.resolvedDate=today;  // stamp so the tracker counts THIS push, not old history
   try{fuLog.unshift({name:fu.name||'',first:fu.first||'',firm:fu.firm||'',city:fu.city||'',practice:fu.practice||'',target:fu.target||'',alt1:fu.alt1||'',alt2:fu.alt2||'',date_sent:today,linkedin:fu.linkedin||'',fp:fu.fp||'',stage:outcome});localStorage.setItem(LOG_SK,JSON.stringify(fuLog));}catch(e){}
   var mk=wcMainKey(name);if(mk){status[mk]=(outcome==='interested'?'interested':outcome==='not_interested'?'not_interested':'benched');try{saveS();}catch(e){}}
   try{saveFu();}catch(e){}try{updateFuBadge();}catch(e){}try{fbSaveNow();}catch(e){}
@@ -3498,13 +3498,21 @@ function tdCardHTML(x){
 }
 // ── Progress tracker over the warm-call universe (callQueue), computed from fuData + wcData.
 function tdStats(){
-  var today=todayStr(),S={total:0,resolved:0,interested:0,passed:0,working:0,notStarted:0,doneToday:0};
+  var today=todayStr(),S={total:0,resolved:0,interested:0,passed:0,skipped:0,working:0,notStarted:0,doneToday:0};
   var ck=(typeof ccKey==='function')?ccKey:function(x){return (''+x).trim().toLowerCase();};
-  for(var k in fuData){var f=fuData[k];if(!f||!f.callQueue)continue;S.total++;
+  for(var k in fuData){var f=fuData[k];if(!f||!f.callQueue)continue;
+    if(f.outcome==='removed')continue;             // firm-removal artifact — never a call Ari made
+    if(f.done&&!f.resolvedDate)continue;           // resolved in a prior phase (before the warm-call push) — not "done" now
+    S.total++;
     var w=(typeof wcData!=='undefined'&&wcData[ck(f.name||'')])||null;
-    if(f.done){S.resolved++; if(f.outcome==='interested')S.interested++; else S.passed++;}
-    else{var touched=w&&((w.touches&&w.touches.length)||w.last); if(touched)S.working++; else S.notStarted++;}
-    var acted=false; if(w){ if(w.dispDate===today)acted=true; var t=w.touches||[]; for(var i=0;i<t.length;i++){if(t[i].d===today){acted=true;break;}} }
+    if(f.done){ S.resolved++;
+      if(f.outcome==='interested')S.interested++;
+      else if(f.outcome==='skipped')S.skipped++;
+      else S.passed++;                             // not_interested + exhausted
+    } else {
+      var touched=w&&((w.touches&&w.touches.length)||w.last); if(touched)S.working++; else S.notStarted++;
+    }
+    var acted=(f.resolvedDate===today); if(w){ if(w.dispDate===today)acted=true; var t=w.touches||[]; for(var i=0;i<t.length;i++){if(t[i].d===today){acted=true;break;}} }
     if(acted)S.doneToday++;
   }
   return S;
@@ -3517,11 +3525,11 @@ function tdStatsHTML(){
   var pct=S.total?Math.round(S.resolved/S.total*100):0;
   var strip='<div style="display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 11px;">'
     +tile(S.doneToday,'Done today','#0d7a5f')+tile(S.interested,'Interested','#1c855a')
-    +tile(S.working,'Working','#b7791f')+tile(S.passed,'Passed / benched','#c0392b')
-    +tile(S.notStarted,'Not started','#5b6a82')+'</div>'
+    +tile(S.working,'Working','#b7791f')+tile(S.passed,'Not interested','#c0392b')
+    +tile(S.skipped,'Skipped','#5b6a82')+tile(S.notStarted,'To do','#3f4d63')+'</div>'
     +'<div style="background:#eef1f6;border-radius:20px;height:9px;overflow:hidden;">'
       +'<div style="width:'+pct+'%;height:100%;background:#0d7a5f;border-radius:20px;transition:width .4s;"></div></div>'
-    +'<div style="font-size:12px;color:#5b6a82;margin:5px 0 15px;">'+S.resolved+' of '+S.total+' worked through &middot; '+pct+'% &middot; '+S.notStarted+' still to start</div>';
+    +'<div style="font-size:12px;color:#5b6a82;margin:5px 0 15px;">'+S.resolved+' worked this push &middot; '+pct+'% of '+S.total+' &middot; '+S.notStarted+' still to call</div>';
   var row=function(bg,fg,lab,desc){return '<div style="display:flex;gap:9px;align-items:baseline;margin:6px 0;font-size:13px;color:#42506a;">'
     +'<span style="flex:none;background:'+bg+';color:'+fg+';font-weight:600;font-size:11.5px;padding:3px 9px;border-radius:20px;white-space:nowrap;">'+lab+'</span>'
     +'<span>&rarr; '+desc+'</span></div>';};
