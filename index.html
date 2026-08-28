@@ -1524,7 +1524,9 @@ function logSent(p){
 }
 
 function updateFuBadge(){
-  const pending=Object.values(fuData).filter(f=>!f.done&&!f.callQueue).length;
+  var _tb=todayStr();
+  // Count only actionable nudges — exclude future-snoozed (they're set aside, not pending), matching fuBuildQ.
+  const pending=Object.values(fuData).filter(f=>!f.done&&!f.callQueue&&!(f.snoozedUntil&&f.snoozedUntil>_tb)).length;
   const el=document.getElementById('fu-badge');if(el)el.textContent=pending;
   const lel=document.getElementById('log-badge');if(lel)lel.textContent=fuLog.length;
 }
