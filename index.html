@@ -3518,8 +3518,10 @@ function tdCardHTML(x){
     +'<div class="td-acts"><button class="td-b td-pri" onclick="tdMandateOffer(\''+jn+'\')">Mark offered</button>'+cellHtml+fpHtml+li+'</div></div>';
 }
 // ── Progress tracker over the warm-call universe (callQueue), computed from fuData + wcData.
+var TD_WEEK_GOAL=50;  // weekly call goal (replaces the "10 every day" framing; burst days are fine)
+function tdWeekStart(){var d=new Date(todayStr()+'T12:00:00');var dow=(d.getDay()+6)%7;d.setDate(d.getDate()-dow);return d.toISOString().slice(0,10);}  // Monday
 function tdStats(){
-  var today=todayStr(),S={total:0,resolved:0,interested:0,passed:0,skipped:0,working:0,notStarted:0,doneToday:0};
+  var today=todayStr(),wk=tdWeekStart(),S={total:0,resolved:0,interested:0,passed:0,skipped:0,working:0,notStarted:0,doneToday:0,doneWeek:0};
   var ck=(typeof ccKey==='function')?ccKey:function(x){return (''+x).trim().toLowerCase();};
   for(var k in fuData){var f=fuData[k];if(!f||!f.callQueue)continue;
     if(f.outcome==='removed')continue;             // firm-removal artifact — never a call Ari made
@@ -3533,8 +3535,11 @@ function tdStats(){
     } else {
       var touched=w&&((w.touches&&w.touches.length)||w.last); if(touched)S.working++; else S.notStarted++;
     }
-    var acted=(f.resolvedDate===today); if(w){ if(w.dispDate===today)acted=true; var t=w.touches||[]; for(var i=0;i<t.length;i++){if(t[i].d===today){acted=true;break;}} }
+    var acted=(f.resolvedDate===today), actedWk=(f.resolvedDate&&f.resolvedDate>=wk&&f.resolvedDate<=today);
+    if(w){ if(w.dispDate===today)acted=true; if(w.dispDate&&w.dispDate>=wk&&w.dispDate<=today)actedWk=true;
+      var t=w.touches||[]; for(var i=0;i<t.length;i++){var td=t[i].d||'';if(td===today)acted=true;if(td>=wk&&td<=today)actedWk=true;} }
     if(acted)S.doneToday++;
+    if(actedWk)S.doneWeek++;
   }
   return S;
 }
@@ -3544,7 +3549,17 @@ function tdStatsHTML(){
     +'<div style="font-size:22px;font-weight:700;color:'+c+';font-variant-numeric:tabular-nums;line-height:1;">'+v+'</div>'
     +'<div style="font-size:10.5px;color:#8a97ac;font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin-top:4px;">'+l+'</div></div>';};
   var pct=S.total?Math.round(S.resolved/S.total*100):0;
-  var strip='<div style="display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 11px;">'
+  var wkPct=Math.min(100,Math.round(S.doneWeek/TD_WEEK_GOAL*100));
+  var wkLeft=Math.max(0,TD_WEEK_GOAL-S.doneWeek);
+  var wkBar='<div style="background:var(--card,#fff);border:1px solid #e6eaf1;border-radius:11px;padding:12px 15px;margin:2px 0 11px;">'
+    +'<div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;">'
+      +'<span style="font-weight:700;font-size:13.5px;color:#15233d;">This week: <span style="color:#0d7a5f;font-size:17px;">'+S.doneWeek+'</span> of '+TD_WEEK_GOAL+' calls</span>'
+      +'<span style="font-size:12px;color:#5b6a82;">'+(wkLeft>0?(wkLeft+' to go — any day, any pace'):'weekly goal hit &#10003;')+'</span>'
+    +'</div>'
+    +'<div style="background:#eef1f6;border-radius:20px;height:10px;overflow:hidden;margin-top:8px;">'
+      +'<div style="width:'+wkPct+'%;height:100%;background:'+(wkLeft>0?'#0d7a5f':'#1c855a')+';border-radius:20px;transition:width .4s;"></div></div>'
+    +'</div>';
+  var strip=wkBar+'<div style="display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 11px;">'
     +tile(S.doneToday,'Done today','#0d7a5f')+tile(S.interested,'Interested','#1c855a')
     +tile(S.working,'Working','#b7791f')+tile(S.passed,'Not interested','#c0392b')
     +tile(S.skipped,'Skipped','#5b6a82')+tile(S.notStarted,'To do','#3f4d63')+'</div>'
@@ -3572,7 +3587,7 @@ function tdRender(){var list=document.getElementById('td-list');if(!list)return;
   var b=document.getElementById('td-badge');if(b)b.textContent=(L.calls+L.nudges+L.mand);
   if(!L.rows.length){list.innerHTML=sh+'<div class="td-empty">Nothing due right now &mdash; you\'re all caught up.</div>';return;}
   var back=(tdFilter==='callback')?0:((L.callsDue||0)-L.calls);
-  var head='<div class="td-count">'+(tdFilter==='callback'?(L.rows.length+' scheduled callback'+(L.rows.length===1?'':'s')):(L.rows.length+' for today'+(back>0?' &middot; '+back+' more in the backlog':'')))+'</div>';
+  var head='<div class="td-count">'+(tdFilter==='callback'?(L.rows.length+' scheduled callback'+(L.rows.length===1?'':'s')):(L.rows.length+' up next'+(back>0?' &middot; '+back+' more in the backlog':'')))+'</div>';
   var eb='background:#0d7a5f;color:#fff;border:none;border-radius:9px;padding:9px 16px;font-weight:600;cursor:pointer;font-size:13px;';
   var lb='background:transparent;color:#0d7a5f;border:1px solid #0d7a5f;border-radius:9px;padding:9px 16px;font-weight:600;cursor:pointer;font-size:13px;';
   var more='';
