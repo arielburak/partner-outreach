@@ -1494,13 +1494,29 @@ function loadFu(){
 // again. Additive fields only (callQueue/callReadyDate/warmReason); stage, due_date, nextDate
 // and the fuLog ledger are all preserved untouched so old backups still restore cleanly.
 // Idempotent: the callQueue flag guards against re-running.
+/* Next open day in the paced schedule: the first weekday from today whose warm-call load is
+   under the daily target. Without this, a batch of nudges all convert with callReadyDate=today
+   and land as one lump of same-day-due calls, bypassing the pacing entirely. */
+function wcNextOpenSlot(){
+  var cap=(typeof TD_WEEK_GOAL==='number'?Math.round(TD_WEEK_GOAL/5):10);
+  var load={};
+  for(var k in fuData){var f=fuData[k];
+    if(f&&f.callQueue&&!f.done&&f.callReadyDate)load[f.callReadyDate]=(load[f.callReadyDate]||0)+1;}
+  var d=new Date(todayStr()+'T12:00:00');
+  for(var i=0;i<400;i++){
+    var iso=d.toISOString().slice(0,10);
+    if(d.getDay()!==0&&d.getDay()!==6&&(load[iso]||0)<cap)return iso;
+    d.setDate(d.getDate()+1);
+  }
+  return todayStr();
+}
 function migrateKillFollowup2(){
   if(typeof fuData==='undefined'||!fuData)return;
   var today=todayStr(),changed=0;
   for(var k in fuData){var f=fuData[k];if(!f)continue;
     if((f.stage||1)>=2&&!f.callQueue){
       f.callQueue=true;
-      if(!f.callReadyDate)f.callReadyDate=today;   // already past the nudge -> callable now
+      if(!f.callReadyDate)f.callReadyDate=wcNextOpenSlot();  // past the nudge -> next open paced day
       if(!f.warmReason)f.warmReason='accepted + 2 messages';
       changed++;
     }
