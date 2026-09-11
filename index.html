@@ -278,6 +278,183 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<style id="refresh-2026">
+/* ============================================================================
+   VISUAL REFRESH (2026-09-11) — appearance only.
+   No JS, no markup, no button labels or handlers touched. Everything here is
+   override CSS; deleting this single block restores the previous look exactly.
+   Accent stays #0d7a5f so the inline-styled weekly bar and expand controls
+   remain coherent without editing any script.
+   ========================================================================== */
+:root{
+  --ink:#17212f; --ink-2:#41506a; --ink-3:#7b899e; --hair:#e3e8ef;
+  --bg:#f5f7fa; --surface:#ffffff; --surface-2:#f9fafc;
+  --accent:#0d7a5f; --accent-dk:#0a6049; --accent-sf:#e6f2ee;
+  --good:#12795a; --good-sf:#e3f2ec;
+  --warn:#a86a12; --warn-sf:#fbf1de;
+  --bad:#b93a2c;  --bad-sf:#fbeae7;
+  --cb:#6d4ad6;   --cb-sf:#eee9fc;
+  --mut:#5f6d85;  --mut-sf:#eef1f6;
+  --r:12px; --r-sm:9px;
+  --sh:0 1px 2px rgba(23,33,47,.05), 0 6px 18px rgba(23,33,47,.05);
+}
+body{
+  background:var(--bg)!important; color:var(--ink)!important;
+  font-family:-apple-system,"SF Pro Text","Segoe UI",system-ui,"Helvetica Neue",Arial,sans-serif!important;
+  -webkit-font-smoothing:antialiased; font-size:14px; line-height:1.5;
+}
+h1,h2,h3,.live-title,.wc-head,.mm-h,.cc-h,.td-h{letter-spacing:-.012em}
+.tab-badge,.counter,.td-n,.cc-count,.mm-count,.td-count,.td-due{font-variant-numeric:tabular-nums}
+
+/* retired surfaces — hidden, code and data untouched */
+#tab-fox,#tab-live,#tab-prospects,#tab-push,#tab-cc{display:none!important}
+
+/* ---------- nav ---------- */
+.tab-bar{
+  background:var(--surface)!important; border-bottom:1px solid var(--hair)!important;
+  padding:0 14px!important; gap:2px!important; align-items:stretch!important;
+  box-shadow:0 1px 0 rgba(23,33,47,.03);
+}
+.tab{
+  border:none!important; background:transparent!important; border-radius:0!important;
+  padding:15px 15px 13px!important; margin:0!important;
+  font-size:13.5px!important; font-weight:600!important; color:var(--ink-3)!important;
+  letter-spacing:-.005em; position:relative; transition:color .13s ease;
+  display:flex!important; align-items:center; gap:7px; white-space:nowrap;
+}
+.tab:hover{color:var(--ink-2)!important;background:transparent!important}
+.tab.active{color:var(--ink)!important;background:transparent!important}
+.tab.active:after{
+  content:"";position:absolute;left:12px;right:12px;bottom:0;height:2.5px;
+  background:var(--accent);border-radius:3px 3px 0 0;
+}
+.tab-badge,.counter{
+  background:var(--mut-sf)!important; color:var(--ink-3)!important;
+  border:none!important; border-radius:20px!important;
+  padding:2px 8px!important; font-size:11px!important; font-weight:700!important;
+}
+.tab.active .tab-badge,.tab.active .counter{background:var(--accent-sf)!important;color:var(--accent-dk)!important}
+
+/* ---------- cards ---------- */
+.card,.cc-card,.wc-card,.td-card,.mm-card,.live-fcard{
+  background:var(--surface)!important; border:1px solid var(--hair)!important;
+  border-radius:var(--r)!important; box-shadow:var(--sh)!important;
+  padding:16px 18px!important; margin-bottom:12px!important;
+}
+.wc-card{border-left:3px solid var(--accent)!important}
+.wc-li-card{border-left-color:var(--cb)!important}
+.cc-name,.td-name,.mm-name,.log-name{
+  font-size:17px!important; font-weight:700!important; color:var(--ink)!important; letter-spacing:-.015em;
+}
+.cc-meta,.td-meta,.mm-meta{color:var(--ink-3)!important;font-size:13px!important}
+.cc-ps{color:var(--ink-2)!important;font-size:13px!important;margin-top:3px!important}
+.cc-lbl,.wc-head,.mm-lbl{
+  font-size:10.5px!important; font-weight:700!important; letter-spacing:.07em!important;
+  text-transform:uppercase!important; color:var(--ink-3)!important; margin:14px 0 7px!important;
+}
+.wc-bio{
+  background:var(--surface-2)!important; border:1px solid var(--hair)!important;
+  border-radius:var(--r-sm)!important; padding:11px 13px!important;
+  color:var(--ink-2)!important; font-size:13px!important; line-height:1.6!important;
+}
+.wc-seat{
+  background:var(--cb-sf)!important; border:1px solid #e0d8f8!important; color:var(--cb)!important;
+  border-radius:var(--r-sm)!important; padding:8px 12px!important; font-size:12.5px!important;
+}
+.wc-seat b{color:#5433b5!important}
+.wc-contact{margin:11px 0 4px!important;font-size:13.5px!important}
+.cc-phone{color:var(--accent-dk)!important;font-weight:700!important;text-decoration:none!important}
+.cc-biolink,.cc-cell{color:#1f5fbf!important;font-weight:600!important;text-decoration:none!important}
+.cc-pill{
+  background:var(--mut-sf)!important; color:var(--ink-2)!important; border:1px solid var(--hair)!important;
+  border-radius:20px!important; padding:5px 12px!important; font-size:12.5px!important;
+  font-weight:600!important; margin:0 6px 6px 0!important; display:inline-block!important;
+}
+.wc-chip,.td-kind,.fu-stage-badge,.log-stage-pill,.mm-chip{
+  border-radius:20px!important; font-size:11px!important; font-weight:700!important;
+  padding:3px 10px!important; letter-spacing:.01em;
+}
+.wc-chip{background:var(--warn-sf)!important;color:var(--warn)!important;border:none!important}
+.wc-step{border-radius:20px!important;font-size:11.5px!important;font-weight:600!important;padding:4px 11px!important}
+
+/* ---------- buttons (look only; labels and handlers untouched) ---------- */
+.wc-b,.td-b,.btn,.filter-btn,.mm-btns button,.cc-fpbtn{
+  border-radius:var(--r-sm)!important; font-weight:600!important; font-size:13px!important;
+  padding:9px 15px!important; border:1px solid var(--hair)!important;
+  transition:background .13s ease,border-color .13s ease,transform .06s ease;
+  cursor:pointer;
+}
+.wc-b:hover,.td-b:hover,.btn:hover,.filter-btn:hover{border-color:#c9d2df!important}
+.wc-b:active,.td-b:active,.btn:active{transform:translateY(1px)}
+.wc-int{background:var(--good)!important;color:#fff!important;border-color:var(--good)!important}
+.wc-int:hover{background:#0e6449!important;border-color:#0e6449!important}
+.wc-na{background:var(--warn-sf)!important;color:var(--warn)!important;border-color:#eeddbc!important}
+.wc-no{background:var(--bad-sf)!important;color:var(--bad)!important;border-color:#f2d3cd!important}
+.wc-skip{background:var(--surface-2)!important;color:var(--ink-3)!important}
+.wc-cb{background:var(--cb-sf)!important;color:var(--cb)!important;border-color:#e0d8f8!important}
+.wc-cb-go{background:var(--cb)!important;color:#fff!important;border-color:var(--cb)!important}
+.wc-sent{background:var(--accent-sf)!important;color:var(--accent-dk)!important;border-color:#cfe6dd!important}
+.wc-cb-date{border:1px solid var(--hair)!important;border-radius:var(--r-sm)!important;padding:8px 10px!important;font-size:13px!important;font-family:inherit!important}
+.wc-disp,.td-acts,.cc-btns{display:flex!important;flex-wrap:wrap!important;gap:8px!important;align-items:center!important}
+
+/* ---------- chips / filters ---------- */
+.td-chip,.filter-btn{
+  background:var(--surface)!important; color:var(--ink-2)!important;
+  border:1px solid var(--hair)!important; border-radius:20px!important;
+  padding:7px 14px!important; font-size:12.5px!important; font-weight:600!important;
+}
+.td-chip.active,.filter-btn.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
+.td-chip .td-n{background:rgba(0,0,0,.07)!important;border-radius:20px;padding:1px 7px;margin-left:5px;font-size:11px}
+.td-chip.active .td-n{background:rgba(255,255,255,.22)!important;color:#fff!important}
+.td-chips{display:flex!important;gap:8px!important;flex-wrap:wrap!important;margin:2px 0 14px!important}
+.td-count,.cc-count,.mm-count{color:var(--ink-3)!important;font-size:12.5px!important;font-weight:600!important;margin-bottom:12px!important}
+.td-empty{color:var(--ink-3)!important;font-size:13.5px!important;text-align:center}
+.fu-overdue{color:var(--bad)!important;font-weight:700!important}
+
+/* ---------- log / stats tables ---------- */
+.log-table{border-collapse:separate!important;border-spacing:0!important;font-size:13px!important;width:100%}
+.log-table th{
+  background:var(--surface-2)!important; color:var(--ink-3)!important;
+  font-size:10.5px!important; font-weight:700!important; letter-spacing:.06em!important;
+  text-transform:uppercase!important; padding:10px 12px!important;
+  border-bottom:1px solid var(--hair)!important; text-align:left;
+}
+.log-table td{padding:10px 12px!important;border-bottom:1px solid #eef1f6!important;color:var(--ink-2)!important}
+.log-table tr:hover td{background:var(--surface-2)!important}
+.log-wrap,.stats-wrap{background:var(--surface)!important;border:1px solid var(--hair)!important;border-radius:var(--r)!important;box-shadow:var(--sh)!important;overflow:hidden}
+
+/* ---------- containers ---------- */
+.cc-wrap,.td-wrap,.mm-wrap,.fu-view,.log-view,.stats-view{padding:22px 20px!important;max-width:1180px;margin:0 auto}
+.topbar,.filter-bar,.fu-filter-bar,.log-toolbar{
+  background:var(--surface)!important; border-bottom:1px solid var(--hair)!important; padding:11px 16px!important;
+}
+input,select,textarea{font-family:inherit!important}
+::selection{background:#cfe8df;color:var(--ink)}
+
+/* ---------- General Outreach action row (appearance only) ---------- */
+.btn-copy,.btn-li,.btn-fp,.btn-next,.btn-later,.btn-skip,.btn-prev,.btn-done-fu,.btn-save-firms,.btn-cancel-edit{
+  border-radius:var(--r-sm)!important; font-weight:600!important; font-size:13.5px!important;
+  padding:11px 16px!important; border:1px solid transparent!important; box-shadow:none!important;
+  transition:background .13s ease,border-color .13s ease,transform .06s ease;
+}
+.btn-copy{background:var(--surface)!important;color:var(--ink-2)!important;border-color:var(--hair)!important}
+.btn-copy:hover{background:var(--surface-2)!important}
+.btn-li{background:#e8f0fb!important;color:#1c4f9c!important;border-color:#d3e2f7!important}
+.btn-li:hover{background:#dce8f8!important}
+.btn-fp{background:var(--cb-sf)!important;color:var(--cb)!important;border-color:#e0d8f8!important}
+.btn-fp:hover{background:#e7dffb!important}
+.btn-next,.btn-done-fu,.btn-save-firms{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important;font-weight:700!important}
+.btn-next:hover,.btn-done-fu:hover{background:var(--accent-dk)!important;border-color:var(--accent-dk)!important}
+.btn-later{background:var(--warn-sf)!important;color:var(--warn)!important;border-color:#eeddbc!important}
+.btn-skip,.btn-prev,.btn-cancel-edit{background:var(--surface-2)!important;color:var(--ink-3)!important;border-color:var(--hair)!important}
+.btn-skip:hover,.btn-prev:hover{background:#eef1f6!important}
+.btn-copy:active,.btn-li:active,.btn-fp:active,.btn-next:active,.btn-later:active,.btn-skip:active{transform:translateY(1px)}
+
+/* ---------- Available Firms sidebar ---------- */
+.cc-set,.live-fcard,.card-header{border-radius:var(--r)!important}
+table{font-variant-numeric:tabular-nums}
+</style>
 </head>
 <body>
 <div class="tab-bar">
@@ -286,8 +463,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
   <div class="tab fu-tab" id="tab-followups" onclick="switchTab('followups')">Follow-ups <span class="tab-badge" id="fu-badge">0</span></div>
   <div class="tab log-tab" id="tab-log" onclick="switchTab('log')">Log <span class="tab-badge" id="log-badge">0</span></div>
   <div class="tab stats-tab" id="tab-stats" onclick="switchTab('stats')">Stats</div>
-  <div class="tab live-tab" id="tab-live" onclick="switchTab('live')">Live Call</div>
-  <div class="tab prospects-tab" id="tab-prospects" onclick="switchTab('prospects')">Not Accepted LI <span class="counter" id="tab-prospects-count"></span></div>
+  <div class="tab live-tab" id="tab-live" onclick="switchTab('live')" style="display:none">Live Call</div>
+  <div class="tab prospects-tab" id="tab-prospects" onclick="switchTab('prospects')" style="display:none">Not Accepted LI <span class="counter" id="tab-prospects-count"></span></div>
   <div style="margin-left:auto;display:flex;gap:6px;align-items:center;padding-right:8px;">
     <span id="fb-status" style="font-size:10px;padding:4px 11px;border-radius:6px;border:1px solid #e8d080;background:#fff0e0;color:#b8860b;font-weight:600;white-space:nowrap;">⏳ Connecting...</span>
     <button onclick="exportData()" style="font-size:10px;padding:4px 10px;border-radius:6px;border:1px solid #d8dce3;background:#ffffff;color:#6a6a7e;cursor:pointer;font-weight:600;">Backup</button>
