@@ -3039,7 +3039,7 @@ function ccList(){
 }
 function ccMarkCalled(name){var k=ccKey(name);if(!ccData[k])ccData[k]={calls:[]};if(!ccData[k].calls)ccData[k].calls=[];ccData[k].calls.push(todayStr());ccData[k].last=todayStr();ccSaveNow();ccUpdateBadge();ccRender();showToast('Logged a call to '+name);}
 function ccUncall(name){var k=ccKey(name);delete ccData[k];ccSaveNow();ccUpdateBadge();ccRender();}
-function ccUpdateBadge(){var b=document.getElementById('cc-badge');if(!b)return;try{var n=ccList().filter(function(r){return !r.called;}).length;if(typeof wcList==='function')n+=wcList().filter(function(r){return !r.called;}).length;b.textContent=n;}catch(e){}}
+function ccUpdateBadge(){var b=document.getElementById('cc-badge');if(!b)return;try{b.textContent=ccList().filter(function(r){return !r.called;}).length;}catch(e){}}
 function ccCardHTML(r){
   var k=ccKey(r.name),called=ccData[k];
   var firmsHtml=(r.offers&&r.offers.length)?r.offers.map(function(o){return '<div class="cc-set">'+o.firms.map(function(f){return '<span class="cc-pill">'+ccEsc(f)+'</span>';}).join('')+'<span class="cc-setdate">'+ccEsc(ccFmt(o.date))+'</span></div>';}).join(''):'<span style="color:#999;font-size:12px;">(none on file)</span>';
@@ -3225,17 +3225,12 @@ function wcLiSent(name){
 }
 function ccRender(){
   var list=document.getElementById('cc-list');if(!list)return;
-  var warm=(typeof wcList==='function')?wcList():[];
   var cold=ccList();
-  var warmUn=warm.filter(function(r){return !r.called;}).length;
   var coldUn=cold.filter(function(r){return !r.called;}).length;
-  var bb=document.getElementById('cc-badge');if(bb)bb.textContent=warmUn+coldUn;
+  var bb=document.getElementById('cc-badge');if(bb)bb.textContent=coldUn;
   var html='';
-  if(warm.length){
-    html+='<div class="wc-sec"><div class="wc-head">Warm Calls <span class="wc-tag">warm: accepted + 2 messages</span></div>'
-      +'<div class="cc-count">'+warm.length+' warm &middot; '+warmUn+' not yet called &middot; follow-up cadence complete — call them instead of re-pitching</div>'
-      +warm.map(wcCardHTML).join('')+'</div>';
-  }
+  /* Warm Calls used to be duplicated here. They now live ONLY on the Today tab so there is a
+     single place to work them (Ari, 2026-09-11). */
   html+='<div class="wc-sec"><div class="wc-head">Cold Calls</div>';
   if(!cold.length){html+='<div style="color:#999;font-size:14px;padding:10px 2px;">No one to cold-call yet. People appear here once you have offered them firms.</div>';}
   else{html+='<div class="cc-count">'+cold.length+' offered firms &middot; '+coldUn+' not yet called &middot; most recent offer first</div>'+cold.map(ccCardHTML).join('');}
@@ -3287,7 +3282,7 @@ function ccShow(){
   if(anchorV&&!document.getElementById('cc-view')){
     var v=document.createElement('div');v.className='cc-view';v.id='cc-view';v.style.display='none';
     v.innerHTML='<div class="cc-wrap"><div class="cc-h">Cold Call</div>'
-     +'<div class="cc-sub"><b>Warm Calls</b> are partners who finished the message cadence (initial pitch + nudge) — call them instead of re-pitching. <b>Cold Calls</b> are everyone you have offered firms to. Read-only over your log; the only thing saved here is which calls you log. Nothing in your message sequence is touched.</div>'
+     +'<div class="cc-sub"><b>Cold Calls</b> are everyone you have offered firms to. Warm calls (partners who finished the message cadence) live on the <b>Today</b> tab. Read-only over your log; the only thing saved here is which calls you log. Nothing in your message sequence is touched.</div>'
      +'<div id="cc-list"></div></div>';
     anchorV.parentNode.insertBefore(v,anchorV.nextSibling);
   }
@@ -3528,7 +3523,7 @@ function tdList(){var callsAll=tdCalls(),mand=tdMandates(),cbs=tdCallbacks();var
   // tdCalls is already oldest-due-first, so the top N are the calls that have been waiting longest.
   // If you don't finish today's N, the same N stay at the top tomorrow (nothing new pushes them down);
   // the moment you resolve one it leaves and the next-oldest fills the slot. Missed work never piles up on-screen.
-  var calls=callsAll.slice(0,TD_DAILY+(typeof tdMore==='number'?tdMore:0));
+  var calls=callsAll;   // no daily cap — the list is one continuous scroll (Ari, 2026-09-11)
   if(tdFilter==='callback'){all=cbs;}
   else{if(tdFilter==='all'||tdFilter==='call')all=all.concat(calls);
   if(tdFilter==='all'||tdFilter==='mandate')all=all.concat(mand);}
@@ -3647,16 +3642,37 @@ function tdRender(){var list=document.getElementById('td-list');if(!list)return;
   var b=document.getElementById('td-badge');if(b)b.textContent=(L.calls+L.nudges+L.mand);
   if(!L.rows.length){list.innerHTML=sh+'<div class="td-empty">Nothing due right now &mdash; you\'re all caught up.</div>';return;}
   var back=(tdFilter==='callback')?0:((L.callsDue||0)-L.calls);
-  var head='<div class="td-count">'+(tdFilter==='callback'?(L.rows.length+' scheduled callback'+(L.rows.length===1?'':'s')):(L.rows.length+' up next'+(back>0?' &middot; '+back+' more in the backlog':'')))+'</div>';
-  var eb='background:#0d7a5f;color:#fff;border:none;border-radius:9px;padding:9px 16px;font-weight:600;cursor:pointer;font-size:13px;';
-  var lb='background:transparent;color:#0d7a5f;border:1px solid #0d7a5f;border-radius:9px;padding:9px 16px;font-weight:600;cursor:pointer;font-size:13px;';
-  var more='';
-  if(back>0){more='<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 4px 8px;">'
-      +'<button style="'+eb+'" onclick="tdExpand()">+ Show '+TD_DAILY+' more</button>'
-      +'<span style="color:#8a97ac;font-size:12.5px;">'+back+' still in the backlog</span>'
-      +(tdMore>0?'<button style="'+lb+'" onclick="tdCollapse()">Back to '+TD_DAILY+'</button>':'')+'</div>';}
-  else if(tdMore>0){more='<div style="padding:16px 4px 8px;"><button style="'+lb+'" onclick="tdCollapse()">Back to '+TD_DAILY+'</button></div>';}
-  list.innerHTML=sh+head+L.rows.map(tdCardHTML).join('')+more;}
+  var head='<div class="td-count">'+(tdFilter==='callback'?(L.rows.length+' scheduled callback'+(L.rows.length===1?'':'s')):(L.rows.length+' in your call queue &middot; scroll for all of them'))+'</div>';
+  // One continuous list. Cards render in chunks as you scroll so a 1000-row queue with full
+  // bios does not blow up the DOM on first paint.
+  _tdRows=L.rows; tdWindow=Math.min(TD_CHUNK,_tdRows.length);
+  list.innerHTML=sh+head+_tdRows.slice(0,tdWindow).map(tdCardHTML).join('')+'<div id="td-sentinel"></div>';
+  if(!window._tdScrollAttached){
+    window._tdScrollAttached=true;
+    window.addEventListener('scroll',_tdOnScroll,{passive:true});
+    var _tv=document.getElementById('td-view'); if(_tv)_tv.addEventListener('scroll',_tdOnScroll,{passive:true});
+  }
+  setTimeout(_tdOnScroll,60);   // fill a tall viewport straight away
+}
+var TD_CHUNK=15, tdWindow=0, _tdRows=[];
+function tdRenderMore(){
+  var sent=document.getElementById('td-sentinel'); if(!sent)return;
+  if(tdWindow>=_tdRows.length){
+    sent.innerHTML=_tdRows.length?'<div class="td-empty" style="padding:20px 12px;">That is everyone &mdash; '+_tdRows.length+' in the queue.</div>':'';
+    return;
+  }
+  var next=_tdRows.slice(tdWindow,tdWindow+TD_CHUNK);
+  sent.insertAdjacentHTML('beforebegin',next.map(tdCardHTML).join(''));
+  tdWindow+=next.length;
+  if(tdWindow>=_tdRows.length)sent.innerHTML='<div class="td-empty" style="padding:20px 12px;">That is everyone &mdash; '+_tdRows.length+' in the queue.</div>';
+}
+function _tdOnScroll(){
+  var sent=document.getElementById('td-sentinel'); if(!sent)return;
+  var v=document.getElementById('td-view');
+  if(v&&v.style.display==='none')return;
+  var r=sent.getBoundingClientRect();
+  if(r.top<(window.innerHeight||800)+700)tdRenderMore();
+}
 function tdSetFilter(f){tdFilter=f;tdRender();}
 function tdUpdateBadge(){var b=document.getElementById('td-badge');if(!b)return;try{var L=tdList();b.textContent=(L.calls+L.nudges+L.mand);}catch(e){}}
 function tdShow(){
@@ -3667,7 +3683,7 @@ function tdShow(){
   var v=document.getElementById('td-view');if(v)v.style.display='flex';
   ['general','fox','followups','log','stats','live','prospects','push','cc','mm'].forEach(function(x){var el=document.getElementById('tab-'+x);if(el)el.classList.remove('active');});
   var t=document.getElementById('tab-td');if(t)t.classList.add('active');
-  tdMore=0;  // every visit to Today starts at the daily 10 unless Ari expands
+  tdWindow=0;  // start the scroll window fresh on each visit
   tdRender();
 }
 (function tdBootstrap(){
