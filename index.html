@@ -466,6 +466,7 @@ table{font-variant-numeric:tabular-nums}
 .am-chev{margin-left:auto;color:#6b6790;font-size:12px;transition:transform .15s}
 .am-panel[open]>.am-head .am-chev{transform:rotate(180deg)}
 .am-panel{padding:7px 12px}
+.am-none{margin:8px 0 6px;font-size:11.5px;color:#8a879f;padding:5px 12px;border:1px dashed #dcd8ee;border-radius:8px;display:inline-block}
 .am-badge{display:inline-block;background:#4b3fb0;color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.02em}
 .am-sub{font-size:11px;color:#6b6790}
 .am-item{border-top:1px solid #e6e2f8;padding:7px 0}
@@ -3977,7 +3978,7 @@ function amUpdateBtn(){var b=document.getElementById('am-btn');if(!b)return;
   if(AM_LOCAL){b.classList.add('on');b.textContent='Mandates ✓';}else{b.classList.remove('on');b.textContent='Mandates';}}
 function amRefresh(){try{render();}catch(e){}try{if(typeof tdRender==='function')tdRender();}catch(e){}try{ccRender();}catch(e){}}
 function amFor(name){if(!AM_LOCAL||!window._fbAuthed||!name)return [];return (AM_LOCAL.partners||{})[name]||[];}
-function amPanelHTML(name){var L=amFor(name);if(!L.length)return '';
+function amPanelHTML(name){var L=amFor(name);if(!L.length)return (AM_LOCAL&&window._fbAuthed&&name)?'<div class="am-none">No active mandates</div>':'';
   var esc=(typeof ccEsc==='function')?ccEsc:function(x){return String(x==null?'':x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
   var nRel=L.filter(function(h){return h.relationship_flag;}).length,nStale=L.filter(function(h){return h.stale;}).length;
   var firms=L.map(function(m){return m.firm;}).filter(function(f,i,a){return a.indexOf(f)===i;});
