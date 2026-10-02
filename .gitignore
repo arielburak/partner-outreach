@@ -1,0 +1,21 @@
+# Confidential client intel (firm names, verbatim needs, contacts). Never commit, never publish.
+# See ~/Documents/Partner Recruiting/state/mandates_feed_SPEC.md rule 5.
+mandates_feed*
+*mandates_feed*
+active_mandates*
+*.local.json
+# local backups
+*.backup-*
+*.before-*
+
+# Firebase service-account key (never commit)
+*firebase-key*
+*adminsdk*
+
+# PUBLIC REPO = PUBLIC WEBSITE. Only the empty app shell is published; all data lives in
+# Firebase (locked) and ~/Documents/Partner Recruiting/state. Everything else stays local.
+/*
+!/index.html
+!/.nojekyll
+!/.gitignore
+!/README.md
