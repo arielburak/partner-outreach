@@ -477,6 +477,7 @@ table{font-variant-numeric:tabular-nums}
 .am-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px;background:#ece9fb;color:#4b3fb0}
 .am-tag.rel{background:#e3f4ec;color:#0d7a5f}
 .am-tag.stale{background:#fdecea;color:#b03a2e}
+.am-tag.book{background:#fff4e5;color:#9a5b00}
 .am-tag.pri-high{background:#fff1dc;color:#a35b00}
 .am-ask{margin:6px 0 2px;font-size:12px;line-height:1.5;color:#2c2a3e;white-space:pre-wrap;background:#fff;border:1px solid #ebe8f7;border-radius:7px;padding:7px 9px}
 .am-meta{font-size:11px;color:#6b6790;margin-top:3px}
@@ -3953,7 +3954,7 @@ function amFromFirebase(v){var mm=v.mandates||{},partners={};
   (v.rows||[]).forEach(function(r){var name=r[0];partners[name]=(r[1]||[]).map(function(x){var m=mm[x[0]]||{};
     return {id:x[0],firm:m.firm,ask_verbatim:m.ask_verbatim,contact:m.contact,date_last_confirmed:m.date_last_confirmed,
       relationship_flag:!!m.relationship_flag,priority:m.priority,stale:!!m.stale,stale_tag:m.stale_tag||'',
-      matched_on:x[1]||[],geo_basis:x[2]||'',book_floor:x[3]||null};});});
+      matched_on:x[1]||[],geo_basis:x[2]||'',book_floor:x[3]||null,book_note:x[4]||''};});});
   return {generated:v.generated,partners:partners};}
 function amInit(){var b=document.getElementById('am-btn');if(b)b.style.display='';
   if(!AM_LOCAL){try{var raw=sessionStorage.getItem(AM_KEY);if(raw)AM_LOCAL=JSON.parse(raw);}catch(e){AM_LOCAL=null;}}
@@ -3990,6 +3991,7 @@ function amPanelHTML(name){var L=amFor(name);if(!L.length)return (AM_LOCAL&&wind
       +(m.relationship_flag?'<span class="am-tag rel">Relationship</span>':'')
       +(m.priority?'<span class="am-tag'+(m.priority==='high'?' pri-high':'')+'">'+esc(m.priority)+'</span>':'')
       +(m.stale?'<span class="am-tag stale">'+esc(m.stale_tag||'stale, reconfirm')+'</span>':'')
+      +(m.book_note?'<span class="am-tag book">'+esc(m.book_note)+'</span>':'')
       +'<span class="am-sub">confirmed '+esc(m.date_last_confirmed||'?')+'</span></summary>'
       +'<div class="am-ask">'+esc(m.ask_verbatim||'')+'</div>'
       +'<div class="am-meta"><b>Contact:</b> '+esc(m.contact||'n/a')+' · <b>Fit:</b> '+esc((m.matched_on||[]).join(', '))+' · '+esc(m.geo_basis||'')
