@@ -4009,6 +4009,65 @@ function amRenderGeneral(p,isFox){var el=document.getElementById('am-panel');if(
   var html=(!isFox&&p)?amPanelHTML(p.name):'';el.innerHTML=html;el.style.display=html?'':'none';}
 </script>
 <script>
+/* ===== WAVE ORIGIN =====
+   Shows which connection-wave worklist each partner came from, the cluster behind it, and the
+   buyer firms it was built for. Client intel is NEVER in this public file or the repo: after
+   sign-in it loads from Firebase outreach/waveOrigin (locked, readable only when signed in;
+   written by wave_match.py from state/wave_membership.json). Added 2026-10-15 per Ari. */
+var WO_DATA=null;
+(function(){var css='.wo-panel{margin:8px 0 6px;border:1px solid #c9e4d6;border-radius:10px;background:#f4fbf7;padding:8px 12px}'
+ +'.wo-head{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;font-size:12.5px;flex-wrap:wrap}'
+ +'.wo-head::-webkit-details-marker{display:none}'
+ +'.wo-badge{font-weight:700;color:#0d7a5f;font-size:12px;white-space:nowrap}'
+ +'.wo-name{color:#2b4a3c;font-weight:600}'
+ +'.wo-sub{color:#7d938a;font-size:11.5px}'
+ +'.wo-chev{margin-left:auto;color:#9ab5a8;transition:transform .15s}'
+ +'.wo-panel[open]>.wo-head .wo-chev{transform:rotate(180deg)}'
+ +'.wo-item{margin:6px 0 0;padding:6px 8px;border:1px solid #ddeee5;border-radius:8px;background:#fff;font-size:12px}'
+ +'.wo-item summary{cursor:pointer;list-style:none;display:flex;gap:7px;align-items:center;flex-wrap:wrap}'
+ +'.wo-item summary::-webkit-details-marker{display:none}'
+ +'.wo-firm{font-weight:700;color:#15233d}'
+ +'.wo-ask{margin:5px 0 2px;color:#3f5247;font-style:italic}'
+ +'.wo-meta{color:#8a97ac;font-size:11px;margin-top:3px}'
+ +'.wo-tag{font-size:10px;padding:1px 7px;border-radius:9px;background:#e7f4ed;color:#0d7a5f;font-weight:600}';
+ var st=document.createElement('style');st.textContent=css;document.head.appendChild(st);})();
+function woEsc(x){return String(x==null?'':x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function woInit(){try{firebase.database().ref('outreach/waveOrigin').once('value').then(function(s){var v=s.val();
+  if(!v||!v.partners||!window._fbAuthed)return;WO_DATA=v;
+  try{if(typeof render==='function')render();}catch(e){}
+}).catch(function(e){console.error('[waves]',e);});}catch(e){}}
+function woFor(name){if(!WO_DATA||!window._fbAuthed||!name)return [];
+  var ids=(WO_DATA.partners||{})[name]||[],out=[];
+  ids.forEach(function(id){var L=(WO_DATA.lists||{})[id];if(L){var c={};for(var k in L)c[k]=L[k];c.id=id;out.push(c);}});
+  return out;}
+function woPanelHTML(name){var L=woFor(name);if(!L.length)return '';
+  var h='';
+  L.forEach(function(w){
+    var buyers=(w.targets||[]).map(function(t){return t.firm;}).filter(function(f,i,a){return f&&a.indexOf(f)===i;});
+    h+='<details class="wo-panel"><summary class="wo-head">'
+      +'<span class="wo-badge">◈ Wave origin</span>'
+      +'<span class="wo-name">'+woEsc(w.name)+'</span>'
+      +(w.type==='calls'?'<span class="wo-tag">calls list</span>':'')
+      +'<span class="wo-sub">'+woEsc(w.cluster||'')+'</span>'
+      +(buyers.length?'<span class="wo-sub">built for: '+woEsc(buyers.slice(0,3).join(', '))+(buyers.length>3?' +'+(buyers.length-3):'')+'</span>':'')
+      +'<span class="wo-chev">▾</span></summary>';
+    (w.targets||[]).forEach(function(t){
+      h+='<details class="wo-item"><summary><span class="wo-firm">'+woEsc(t.firm)+'</span>'
+        +(t.need_id?'<span class="wo-meta">'+woEsc(t.need_id)+'</span>':'')+'</summary>'
+        +'<div class="wo-ask">'+woEsc(t.ask||'')+'</div></details>';});
+    h+='<div class="wo-meta">'+(w.link?'<a href="'+woEsc(w.link)+'" target="_blank" rel="noopener">open worklist in FP</a> · ':'')
+      +'week '+woEsc(w.week||'?')+(w.note?' · '+woEsc(w.note):'')+'</div></details>';});
+  return h;}
+function woRenderGeneral(p,isFox){var am=document.getElementById('am-panel');if(!am)return;
+  var el=document.getElementById('wo-panel-host');
+  if(!el){el=document.createElement('div');el.id='wo-panel-host';el.style.display='none';am.parentNode.insertBefore(el,am.nextSibling);}
+  var html=(!isFox&&p)?woPanelHTML(p.name):'';el.innerHTML=html;el.style.display=html?'':'none';}
+if(typeof amRenderGeneral==='function'){var _woPrevAm=amRenderGeneral;amRenderGeneral=function(p,isFox){_woPrevAm(p,isFox);try{woRenderGeneral(p,isFox);}catch(e){}};}
+if(typeof amInit==='function'){var _woPrevInit=amInit;amInit=function(){_woPrevInit();try{woInit();}catch(e){}};}
+if(typeof amClear==='function'){var _woPrevClear=amClear;amClear=function(so){_woPrevClear(so);WO_DATA=null;try{var el=document.getElementById('wo-panel-host');if(el){el.innerHTML='';el.style.display='none';}}catch(e){}};}
+
+</script>
+<script>
 /* BOOTSTRAP: this public page contains no pipeline data. After sign-in, the data is fetched
    from Firebase outreach/appData (readable only when signed in), cached on this device, and
    only then is the app code (#app-main) started, exactly as it used to run. */
