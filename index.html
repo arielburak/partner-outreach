@@ -481,6 +481,12 @@ table{font-variant-numeric:tabular-nums}
 .am-tag.pri-high{background:#fff1dc;color:#a35b00}
 .am-ask{margin:6px 0 2px;font-size:12px;line-height:1.5;color:#2c2a3e;white-space:pre-wrap;background:#fff;border:1px solid #ebe8f7;border-radius:7px;padding:7px 9px}
 .am-meta{font-size:11px;color:#6b6790;margin-top:3px}
+.am-src{margin-top:3px}
+.am-src>summary{font-size:10.5px;color:#8a879f;cursor:pointer;list-style:none;display:inline-block}
+.am-src>summary::-webkit-details-marker{display:none}
+.am-src>summary::before{content:'\21B3  '}
+.am-src[open]>summary{color:#4b3fb0}
+.am-src>div{font-size:11px;line-height:1.45;color:#5d5a72;margin:3px 0 2px 12px;padding-left:8px;border-left:2px solid #e3dff5}
 </style>
 </head>
 <body>
@@ -3952,7 +3958,7 @@ function tdShow(){
 var AM_LOCAL=null;var AM_KEY='am_local_v1';
 function amFromFirebase(v){var mm=v.mandates||{},partners={};
   (v.rows||[]).forEach(function(r){var name=r[0];partners[name]=(r[1]||[]).map(function(x){var m=mm[x[0]]||{};
-    return {id:x[0],firm:m.firm,ask_verbatim:m.ask_verbatim,contact:m.contact,date_last_confirmed:m.date_last_confirmed,
+    return {id:x[0],firm:m.firm,ask_verbatim:m.ask_verbatim,contact:m.contact,date_last_confirmed:m.date_last_confirmed,source_note:m.notes||'',date_logged:m.date_logged||'',
       relationship_flag:!!m.relationship_flag,priority:m.priority,stale:!!m.stale,stale_tag:m.stale_tag||'',
       matched_on:x[1]||[],geo_basis:x[2]||'',book_floor:x[3]||null,book_note:x[4]||''};});});
   return {generated:v.generated,partners:partners};}
@@ -3995,7 +4001,9 @@ function amPanelHTML(name){var L=amFor(name);if(!L.length)return (AM_LOCAL&&wind
       +'<span class="am-sub">confirmed '+esc(m.date_last_confirmed||'?')+'</span></summary>'
       +'<div class="am-ask">'+esc(m.ask_verbatim||'')+'</div>'
       +'<div class="am-meta"><b>Contact:</b> '+esc(m.contact||'n/a')+' · <b>Fit:</b> '+esc((m.matched_on||[]).join(', '))+' · '+esc(m.geo_basis||'')
-      +(m.book_floor?' · floor $'+(m.book_floor/1e6).toFixed(1)+'M':'')+' · <span title="mandate id">'+esc(m.id)+'</span></div></details>';});
+      +(m.book_floor?' · floor $'+(m.book_floor/1e6).toFixed(1)+'M':'')+' · <span title="mandate id">'+esc(m.id)+'</span></div>'
+      +(m.source_note?'<details class="am-src"><summary>source</summary><div>'+esc((m.date_logged?m.date_logged+' · ':'')+m.source_note)+'</div></details>':'')
+      +'</details>';});
   return h+'</details>';}
 function amRenderGeneral(p,isFox){var el=document.getElementById('am-panel');if(!el)return;
   var html=(!isFox&&p)?amPanelHTML(p.name):'';el.innerHTML=html;el.style.display=html?'':'none';}
