@@ -4062,10 +4062,14 @@ function woRenderGeneral(p,isFox){var am=document.getElementById('am-panel');if(
   var el=document.getElementById('wo-panel-host');
   if(!el){el=document.createElement('div');el.id='wo-panel-host';el.style.display='none';am.parentNode.insertBefore(el,am.nextSibling);}
   var html=(!isFox&&p)?woPanelHTML(p.name):'';el.innerHTML=html;el.style.display=html?'':'none';}
-if(typeof amRenderGeneral==='function'){var _woPrevAm=amRenderGeneral;amRenderGeneral=function(p,isFox){_woPrevAm(p,isFox);try{woRenderGeneral(p,isFox);}catch(e){}};}
-if(typeof amInit==='function'){var _woPrevInit=amInit;amInit=function(){_woPrevInit();try{woInit();}catch(e){}};}
-if(typeof amClear==='function'){var _woPrevClear=amClear;amClear=function(so){_woPrevClear(so);WO_DATA=null;try{var el=document.getElementById('wo-panel-host');if(el){el.innerHTML='';el.style.display='none';}}catch(e){}};}
-
+(function woHook(){
+  if(typeof amRenderGeneral==='function'&&typeof amInit==='function'&&typeof amClear==='function'){
+    var _woPrevAm=amRenderGeneral;amRenderGeneral=function(p,isFox){_woPrevAm(p,isFox);try{woRenderGeneral(p,isFox);}catch(e){}};
+    var _woPrevInit=amInit;amInit=function(){_woPrevInit();try{woInit();}catch(e){}};
+    var _woPrevClear=amClear;amClear=function(so){_woPrevClear(so);WO_DATA=null;try{var el=document.getElementById('wo-panel-host');if(el){el.innerHTML='';el.style.display='none';}}catch(e){}};
+    if(window._fbAuthed){try{woInit();}catch(e){}try{if(typeof render==='function')render();}catch(e){}}
+  }else{setTimeout(woHook,800);}
+})();
 </script>
 <script>
 /* BOOTSTRAP: this public page contains no pipeline data. After sign-in, the data is fetched
