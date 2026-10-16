@@ -3942,14 +3942,14 @@ function tdShow(){
   var anchor=document.getElementById('tab-general');
   if(anchor&&!document.getElementById('tab-td')){
     var b=document.createElement('div');b.className='tab td-tab';b.id='tab-td';b.setAttribute('onclick',"switchTab('td')");
-    b.innerHTML='Today <span class="tab-badge" id="td-badge">0</span>';
+    b.innerHTML='Calls <span class="tab-badge" id="td-badge">0</span>';
     anchor.parentNode.insertBefore(b,anchor);
   }
   var av=document.getElementById('cc-view')||document.getElementById('mm-view')||document.getElementById('fu-view');
   if(av&&!document.getElementById('td-view')){
     var v=document.createElement('div');v.className='td-view';v.id='td-view';v.style.display='none';
-    v.innerHTML='<div class="td-wrap"><div class="td-h">Today</div>'
-     +'<div class="td-sub2">Everything due right now in one queue &mdash; warm &amp; follow-up calls first, then nudges, then mandate offers. Each action advances the person automatically.</div>'
+    v.innerHTML='<div class="td-wrap"><div class="td-h">Calls</div>'
+     +'<div class="td-sub2">The agreed cadence: pitch, follow-up, then calls starting 7 days after the last touch. 10 per weekday, most recent first; missed calls roll over.</div>'
      +'<div id="td-chips"></div><div id="td-list"></div></div>';
     av.parentNode.insertBefore(v,av.nextSibling);
   }
@@ -3963,6 +3963,89 @@ function tdShow(){
 
 
 
+
+/* ════════ HOT LEADS ════════
+   Agent-verified exceptional mandate matches among partners Ari has already pitched.
+   Data: Firebase outreach/hotLeads {generated, leads:[{name, why, mandates:[ids]}]} (locked,
+   sign-in only; refreshed on demand by Claude, not by the daily sync). Cards reuse the
+   warm-call card, so every disposition flows through the same cadence machinery. */
+var HOT_LEADS=null;
+function hlLoad(){
+  if(typeof firebase==='undefined'||!window._fbAuthed){setTimeout(hlLoad,900);return;}
+  try{firebase.database().ref('outreach/hotLeads').once('value').then(function(snp){
+    HOT_LEADS=snp.val();hlUpdateBadge();
+    var v=document.getElementById('hot-view');if(v&&v.style.display!=='none')hotRender();
+  }).catch(function(e){console.error('[hot]',e);});}catch(e){}
+}
+function hlResolved(name){
+  try{
+    var st=status['general_'+name];
+    if(st==='interested'||st==='not_interested'||st==='benched')return true;
+    for(var k in fuData){var f=fuData[k];if(f&&f.name===name&&f.done)return true;}
+    var w=wcData[ccKey(name)];if(w&&w.disp)return true;
+  }catch(e){}
+  return false;
+}
+function hlOpenLeads(){
+  if(!HOT_LEADS||!HOT_LEADS.leads)return [];
+  return HOT_LEADS.leads.filter(function(l){return l&&l.name&&!hlResolved(l.name);});
+}
+function hlUpdateBadge(){var b=document.getElementById('hot-badge');if(b){try{b.textContent=hlOpenLeads().length;}catch(e){}}}
+function hotRender(){
+  var list=document.getElementById('hot-list');if(!list)return;
+  var leads=hlOpenLeads();
+  var fuByName={};try{for(var k in fuData){var f=fuData[k];if(f&&f.name)fuByName[f.name]=f;}}catch(e){}
+  var hdr=document.getElementById('hot-sub');
+  if(hdr)hdr.textContent=leads.length+' exceptional matches, agent-verified against the live mandates'+(HOT_LEADS&&HOT_LEADS.generated?' (checked '+HOT_LEADS.generated.slice(0,10)+')':'')+'. Resolved leads drop off automatically.';
+  if(!leads.length){list.innerHTML='<div class="td-empty">No open hot leads. Ask Claude to re-run the hot-leads pass after the next mandate or upload change.</div>';return;}
+  var html='';
+  leads.forEach(function(l){
+    var f=fuByName[l.name];
+    var why='<div class="hot-why">&#9733; '+ccEsc(l.why||'')+'</div>';
+    if(f){html+='<div class="hot-card">'+why+wcCardHTML(wcMkRow(f))+'</div>';}
+    else{html+='<div class="hot-card">'+why+'<div class="cc-card wc-card"><div class="cc-name">'+ccEsc(l.name)+'</div>'+amPanelHTML(l.name)+'</div></div>';}
+  });
+  list.innerHTML=html;
+}
+function hlShow(){
+  var gm=document.getElementById('general-main');if(gm)gm.style.display='none';
+  var tb=document.querySelector('.topbar');if(tb)tb.style.display='none';
+  var fb=document.querySelector('.filter-bar');if(fb)fb.style.display='none';
+  ['fu-view','log-view','stats-view','live-view','push-view','cc-view','mm-view','td-view'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
+  var v=document.getElementById('hot-view');if(v)v.style.display='flex';
+  ['general','fox','followups','log','stats','live','prospects','push','cc','mm','td'].forEach(function(x){var el=document.getElementById('tab-'+x);if(el)el.classList.remove('active');});
+  var t=document.getElementById('tab-hot');if(t)t.classList.add('active');
+  hotRender();
+}
+(function hlBootstrap(){
+  var st=document.createElement('style');
+  st.textContent='.hot-tab.active{background:#b03a2e!important;border-color:#b03a2e!important;color:#fff!important;}'
+   +'.hot-view{flex:1;flex-direction:column;overflow:auto;background:#f7f8fa;}'
+   +'.hot-wrap{max-width:780px;margin:0 auto;padding:20px 16px;width:100%;box-sizing:border-box;}'
+   +'.hot-h{font-size:19px;font-weight:800;color:#5a1510;}'
+   +'.hot-card{margin-bottom:14px;}'
+   +'.hot-why{background:#fdf1ef;border:1px solid #f2cdc8;border-bottom:none;border-radius:10px 10px 0 0;padding:7px 12px;font-size:12.5px;color:#8c2f24;font-weight:600;}'
+   +'.hot-card .cc-card{border-radius:0 0 10px 10px;margin-top:0;}';
+  document.head.appendChild(st);
+  var anchor=document.getElementById('tab-td')||document.getElementById('tab-general');
+  if(anchor&&!document.getElementById('tab-hot')){
+    var b=document.createElement('div');b.className='tab hot-tab';b.id='tab-hot';b.setAttribute('onclick',"switchTab('hot')");
+    b.innerHTML='&#128293; Hot Leads <span class="tab-badge" id="hot-badge">0</span>';
+    anchor.parentNode.insertBefore(b,anchor);
+  }
+  var av=document.getElementById('td-view')||document.getElementById('cc-view')||document.getElementById('fu-view');
+  if(av&&!document.getElementById('hot-view')){
+    var v=document.createElement('div');v.className='hot-view';v.id='hot-view';v.style.display='none';
+    v.innerHTML='<div class="hot-wrap"><div class="hot-h">&#128293; Hot Leads</div>'
+     +'<div class="td-sub2" id="hot-sub"></div><div id="hot-list"></div></div>';
+    av.parentNode.insertBefore(v,av.nextSibling);
+  }
+  if(typeof switchTab==='function'){var _hlPrev=switchTab;switchTab=function(t){if(t==='hot'){return hlShow();}var v=document.getElementById('hot-view');if(v)v.style.display='none';var tp=document.getElementById('tab-hot');if(tp)tp.classList.remove('active');return _hlPrev(t);};}
+  if(typeof _wcRefresh==='function'){var _hlR=_wcRefresh;_wcRefresh=function(){_hlR();try{hlUpdateBadge();var v=document.getElementById('hot-view');if(v&&v.style.display!=='none')hotRender();}catch(e){}};}
+  hlLoad();
+  setTimeout(hlUpdateBadge,2500);
+})();
+/* ════════ END HOT LEADS ════════ */
 
 /* ===== ACTIVE MANDATES =====
    Client intel (firm names, verbatim asks, contacts) is NEVER in this public file or the repo.
